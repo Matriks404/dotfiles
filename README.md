@@ -1,8 +1,8 @@
-These are my personal **Debian GNU/Linux** **trixie** dotfiles.
+These are my personal **Debian GNU/Linux** 13 (trixie) dotfiles.
 
-# Cloning
+# Getting just latest version
 
-Run following commands:
+Run following commands in some safe directory (probably not home if you don't want to replace your already configured setup):
 
 ```bash
 
@@ -11,6 +11,19 @@ unzip -j master.zip dotfiles-master/.bash*
 rm master.zip
 
 ```
+
+# Getting regularly updated version
+
+Make sure that you have `git` installed, you are in the directory with your repos (such as `~/repos` or whatever you like) and just run:
+
+```bash
+git clone https://github.com/Matriks404/dotfiles.git
+cd dotfiles
+```
+
+If you need to update your local repository, run: `git pull`.
+
+If you then to copy these files to your home directory run: `cp .bash* ~/`.
 
 # Files
 
