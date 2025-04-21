@@ -1,0 +1,5 @@
+alias cls='clear'
+alias h='history'
+alias l='ls -lh'
+alias q='exit'
+alias sysupd='sudo apt update && sudo apt upgrade -y && flatpak update -y'
