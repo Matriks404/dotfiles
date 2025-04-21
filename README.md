@@ -23,7 +23,7 @@ cd dotfiles
 
 If you need to update your local repository, run: `git pull`.
 
-If you then to copy these files to your home directory run: `cp .bash* ~/`.
+If you need to copy these files to your home directory run: `cp .bash* ~/`.
 
 # Files
 
