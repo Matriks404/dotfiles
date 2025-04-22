@@ -1,6 +1,8 @@
 alias cls='clear'
 alias h='history'
+alias ii='ip addr'
 alias l='ls -lh'
 alias la='ls -Alh'
+alias pi='ping 8.8.8.8'
 alias q='exit'
 alias sysupd='sudo apt update && sudo apt upgrade -y && flatpak update -y'
