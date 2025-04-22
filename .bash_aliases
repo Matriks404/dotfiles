@@ -1,3 +1,6 @@
+alias cd..='cd ..'
+alias cd...='cd ../..'
+alias cd....='cd ../../..'
 alias cls='clear'
 alias h='history'
 alias ii='ip addr'
