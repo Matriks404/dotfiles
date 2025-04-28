@@ -1,3 +1,4 @@
+alias a='aptitude'
 alias cd..='cd ..'
 alias cd...='cd ../..'
 alias cd....='cd ../../..'
