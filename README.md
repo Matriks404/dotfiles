@@ -1,4 +1,4 @@
-These are my personal **Debian GNU/Linux** 13 (trixie) dotfiles.
+These are my personal **openSUSE** Tumbleweed dotfiles.
 
 # Getting just latest version
 
@@ -6,9 +6,9 @@ Run following commands in some safe directory (probably not home if you don't wa
 
 ```bash
 
-wget https://github.com/Matriks404/dotfiles/archive/refs/heads/master.zip
-unzip -j master.zip dotfiles-master/.bash*
-rm master.zip
+wget https://github.com/Matriks404/dotfiles/archive/refs/heads/opensuse.zip
+unzip -j master.zip dotfiles-opensuse/.bash*
+rm opensuse.zip
 
 ```
 
@@ -19,6 +19,7 @@ Make sure that you have `git` installed, you are in the directory with your repo
 ```bash
 git clone https://github.com/Matriks404/dotfiles.git
 cd dotfiles
+git checkout opensuse
 ```
 
 If you need to update your local repository, run: `git pull`.
