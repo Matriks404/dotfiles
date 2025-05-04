@@ -7,7 +7,7 @@ Run following commands in some safe directory (probably not home if you don't wa
 ```bash
 
 wget https://github.com/Matriks404/dotfiles/archive/refs/heads/opensuse.zip
-unzip -j master.zip dotfiles-opensuse/.bash*
+unzip -j opensuse.zip dotfiles-opensuse/.bash*
 rm opensuse.zip
 
 ```
