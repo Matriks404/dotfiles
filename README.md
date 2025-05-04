@@ -17,9 +17,8 @@ rm opensuse.zip
 Make sure that you have `git` installed, you are in the directory with your repos (such as `~/repos` or whatever you like) and just run:
 
 ```bash
-git clone https://github.com/Matriks404/dotfiles.git
+git clone https://github.com/Matriks404/dotfiles.git --branch opensuse
 cd dotfiles
-git checkout opensuse
 ```
 
 If you need to update your local repository, run: `git pull`.
