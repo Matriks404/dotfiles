@@ -1,4 +1,4 @@
-These are my personal **Debian GNU/Linux** 13 (trixie) dotfiles.
+These are my personal **Debian GNU/Linux** 11+ (bullseye and newer) dotfiles.
 
 **openSUSE Tumbleweed** dotfiles are in `opensuse` branch [right here](https://github.com/Matriks404/dotfiles/tree/opensuse).
 
