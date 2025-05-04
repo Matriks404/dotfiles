@@ -1,14 +1,16 @@
 These are my personal **Debian GNU/Linux** 13 (trixie) dotfiles.
 
+**openSUSE Tumbleweed** dotfiles are in `opensuse` branch [right here](https://github.com/Matriks404/dotfiles/tree/opensuse).
+
 # Getting just latest version
 
 Run following commands in some safe directory (probably not home if you don't want to replace your already configured setup):
 
 ```bash
 
-wget https://github.com/Matriks404/dotfiles/archive/refs/heads/master.zip
-unzip -j master.zip dotfiles-master/.bash*
-rm master.zip
+wget https://github.com/Matriks404/dotfiles/archive/refs/heads/debian.zip
+unzip -j debian.zip dotfiles-debian/.bash*
+rm debian.zip
 
 ```
 
