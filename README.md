@@ -12,7 +12,7 @@ unzip -j debian.zip dotfiles-debian/.bash*
 rm debian.zip
 ```
 
-Otherwise, execute: `get-new-dotfiles` in your bash session.
+Otherwise, execute: `get-new-dotfiles` in your bash session (it will execute same cammonds as described above).
 
 # Getting regularly updated version
 
