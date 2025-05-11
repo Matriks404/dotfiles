@@ -17,5 +17,5 @@ Otherwise, execute: `get-new-dotfiles` in your bash session (it will execute sam
 * `.bashrc` - generic bash profile configuration file.
 * `.bash_aliases` - various useful bash aliases.
 * `.bash_functions` - various useful bash functions.
-* `.bash_local_aliases` - LOCAL bash aliases (not included in the repo, but you can create this file and it will be respected).
-* `.bash_local_functions` - LOCAL bash functions (see above).
+* `.bash_local_aliases` - **LOCAL** bash aliases (not included in the repo, but you can create this file and it will be respected).
+* `.bash_local_functions` - **LOCAL** bash functions (see above).
