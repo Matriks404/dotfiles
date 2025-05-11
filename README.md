@@ -11,7 +11,6 @@ rm opensuse.zip
 ```
 
 Otherwise, execute: `get-new-dotfiles` in your bash session (it will execute same commands as described above).
->>>>>>> debian
 
 # Files
 
