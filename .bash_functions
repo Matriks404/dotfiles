@@ -1,15 +1,34 @@
-# Function which adds an alias to the current shell and to the ~/.bash_aliases file.
-add-alias ()
+copy-dotfiles-to-repos-directory ()
 {
-   local name=$1 value="$2"
-   echo alias $name=\'$value\' >>~/.bash_aliases
-   eval alias $name=\'$value\'
-   alias $name
+    cp .bashrc .bash_aliases .bash_functions repos/dotfiles
+}
+
+get-new-dotfiles ()
+{
+    wget https://github.com/Matriks404/dotfiles/archive/refs/heads/opensuse.zip
+    unzip -j opensuse.zip dotfiles-opensuse/.bash*
+    rm opensuse.zip
+}
+
+git-commit ()
+{
+    local comment=$1
+
+    git add .
+    git commit "$comment"
+}
+
+git-push ()
+{
+    local comment=$1
+
+    git-commit "$comment"
+    git push
 }
 
 wiki ()
 {
     local article=$1
 
-    wikipedia2text "$1" | less
+    wikipedia2text "$article" | less
 }
