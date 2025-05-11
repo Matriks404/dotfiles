@@ -1,6 +1,7 @@
-# ~/.bashrc: executed by bash(1) for non-login shells.
-# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# for examples
+# IMPORTANT!
+# .bashrc is originally taken from Debian bookworm and appropriate license applies.
+# The only real change is removing bash completion stuff (it's instead re-added in the /etc/bash.bashrc on Debian)
+# and added calls to custom aliases and functions at the bottom.
 
 # If not running interactively, don't do anything
 case $- in
