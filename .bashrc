@@ -99,3 +99,15 @@ fi
 if [ -f ~/.bash_functions ]; then
     . ~/.bash_functions
 fi
+
+# Custom LOCAL bash aliases
+
+if [ -f ~/.bash_local_aliases ]; then
+    . ~/.bash_local_aliases
+fi
+
+# Custom LOCAL bash functions
+
+if [ -f ~/.bash_local_functions ]; then
+    . ~/.bash_local_functions
+fi
