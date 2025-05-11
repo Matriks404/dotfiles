@@ -12,7 +12,7 @@ alias la='ls -Alh'
 alias wf='tail -f'
 
 # Aliases for Debian commands (might not be available if your're running non-Debian-based Linux distribution or they are not installed on your system)
-alias a='aptitude'
+#alias a='aptitude'
 
 # Aliases for other commands (might not be available on your system)
 alias ii='ip addr'
