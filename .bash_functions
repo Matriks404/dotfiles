@@ -15,7 +15,7 @@ git-commit ()
     local comment=$1
 
     git add .
-    git commit "$comment"
+    git commit -m "$comment"
 }
 
 git-push ()
