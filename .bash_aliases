@@ -24,4 +24,4 @@ alias gitd='git diff'
 alias gits='git status'
 
 # More advanced aliases for system management
-alias sysupd='sudo zypper dup && sudo flatpak update -y'
+alias sysupd='sudo zypper dup && sudo flatpak update'
