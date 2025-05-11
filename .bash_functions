@@ -6,3 +6,10 @@ add-alias ()
    eval alias $name=\'$value\'
    alias $name
 }
+
+wiki ()
+{
+    local article=$1
+
+    wikipedia2text "$1" | less
+}
