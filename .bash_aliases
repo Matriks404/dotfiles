@@ -15,6 +15,8 @@ alias wf='tail -f'
 #alias a='aptitude'
 
 # Aliases for other commands (might not be available on your system)
+# NOTE: Comment-out man command alias if you want to have man pages in your system language.
+alias man='LANG=en_US.UTF-8 man'
 alias ii='ip addr'
 alias pi='ping 8.8.8.8'
 alias psx='ps aux'
