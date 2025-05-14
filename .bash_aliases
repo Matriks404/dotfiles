@@ -1,3 +1,6 @@
+# Check version of the dotfiles
+alias dotver='echo "r1 (built on 2025-05-15 00:34)"'
+
 # Shell aliases (should work on any Unix-like OS with Bash)
 alias cd..='cd ..'
 alias cd...='cd ../..'
@@ -7,8 +10,14 @@ alias h='history'
 alias q='exit'
 
 # Aliases for GNU core utilities (could work on other implementations of coreutils as well)
-alias l='ls -lh'
-alias la='ls -Alh'
+alias ls_g='ls --group-directories-first'
+
+alias l='ls -ho --time-style long-iso'
+alias l_g='l --group-directories-first'
+
+alias la='LC_COLLATE="C" ls -Aho --time-style long-iso'
+alias la_g='la --group-directories-first'
+
 alias wf='tail -f'
 
 # Aliases for Debian commands (might not be available if your're running non-Debian-based Linux distribution or they are not installed on your system)
