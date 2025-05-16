@@ -1,4 +1,4 @@
-These are my personal **openSUSE** Tumbleweed dotfiles.
+These are my personal **openSUSE** Tumbleweed (fully updated as of 2025-05-16) dotfiles.
 
 # Getting latest version
 
