@@ -1,5 +1,5 @@
 # Check version of the dotfiles
-alias dotver='echo "r3-openbsd2 (built on 2025-05-16 20:09 -- 2025.05.16 20:52)"'
+alias dotver='echo "r3-openbsd3 (built on 2025-05-16 20:09 -- 2025.05.16 20:54)"'
 
 # Shell aliases (should work on any Unix-like OS with Bash)
 alias cd..='cd ..'
@@ -11,7 +11,7 @@ alias q='exit'
 
 # Aliases for BSD core utilities
 alias l='ls -hl'
-alias la='LC_COLLATE="C" ls -Ahl
+alias la='LC_COLLATE="C" ls -Ahl'
 
 alias wf='tail -f'
 
