@@ -5,6 +5,15 @@ Dotfiles for other operating systems:
 * **openBSD** 7.6+ dotfiles are in `openbsd` branch [right here](https://github.com/Matriks404/dotfiles/tree/openbsd).
 * **openSUSE Tumbleweed** dotfiles are in `opensuse` branch [right here](https://github.com/Matriks404/dotfiles/tree/opensuse).
 
+# Essential software
+
+For getting full potential of these dotfiles you need to install following packages (using any **APT** frontend such as `apt`, `pkcon`, `aptitude`, etc.):
+
+* `aptitude` (for `a` Bash alias);
+* `flatpak` (for `sysupd` Bash alias);
+* `git` (for `gitd` and `gits` Bash aliases and `git-commit` and `git-push` Bash functions);
+* `wikipedia2text` (for `wiki` Bash alias).
+
 # Getting latest version
 
 If getting dotfiles for the first time, run following commands in some safe directory (probably not home if you don't want to replace your already configured setup):
