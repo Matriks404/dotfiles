@@ -1,15 +1,13 @@
-These are my personal **Debian GNU/Linux** 11+ (bullseye and newer) dotfiles.
-
-**openSUSE Tumbleweed** dotfiles are in `opensuse` branch [right here](https://github.com/Matriks404/dotfiles/tree/opensuse).
+These are my personal **openBSD** 7.6+ dotfiles.
 
 # Getting latest version
 
 If getting dotfiles for the first time, run following commands in some safe directory (probably not home if you don't want to replace your already configured setup):
 
 ```bash
-wget https://github.com/Matriks404/dotfiles/archive/refs/heads/debian.zip
-unzip -j debian.zip dotfiles-debian/.bash*
-rm debian.zip
+wget https://github.com/Matriks404/dotfiles/archive/refs/heads/openbsd.zip
+unzip -j openbsd.zip dotfiles-openbsd/.bash*
+rm openbsd.zip
 ```
 
 Otherwise, execute: `get-new-dotfiles` in your bash session (it will execute same commands as described above).
