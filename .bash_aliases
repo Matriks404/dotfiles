@@ -1,5 +1,5 @@
 # Check version of the dotfiles
-alias dotver='echo "r3 (built on 2025-05-16 20:09)"'
+alias dotver='echo "r3-openbsd1 (built on 2025-05-16 20:09 -- 2025.05.16 20:37)"'
 
 # Shell aliases (should work on any Unix-like OS with Bash)
 alias cd..='cd ..'
@@ -9,27 +9,19 @@ alias cls='clear'
 alias h='history'
 alias q='exit'
 
-# Aliases for GNU core utilities (could work on other implementations of coreutils as well)
-alias ls_g='ls --group-directories-first'
-
-alias l='ls -ho --time-style long-iso'
-alias l_g='l --group-directories-first'
-
-alias la='LC_COLLATE="C" ls -Aho --time-style long-iso'
-alias la_g='la --group-directories-first'
+# Aliases for BSD core utilities
+alias l='ls -hl'
+alias la='LC_COLLATE="C" ls -Ahl
 
 alias wf='tail -f'
 
-# Aliases for Debian commands (might not be available if your're running non-Debian-based Linux distribution or they are not installed on your system)
-alias a='aptitude'
-
 # Aliases for other commands (might not be available on your system)
 # NOTE: Comment-out man command alias if you want to have man pages in your system language.
-alias e='editor'
-alias se='sudo editor'
+alias e='nano'
+alias se='su root -c "nano"'
 
 alias man='LANG=en_US.UTF-8 man'
-alias ii='ip addr'
+alias ii='ifconfig'
 alias pi='ping 8.8.8.8'
 alias psx='ps aux'
 
@@ -38,4 +30,4 @@ alias gitd='git diff'
 alias gits='git status'
 
 # More advanced aliases for system management
-alias sysupd='sudo apt update && sudo apt upgrade && flatpak update'
+alias sysupd='su root -c "syspatch" && su root -c "pkg_add -u"'
