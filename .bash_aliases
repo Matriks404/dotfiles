@@ -1,5 +1,5 @@
 # Check version of the dotfiles
-alias dotver='echo "r1 (built on 2025-05-15 00:34)"'
+alias dotver='echo "r2 (built on 2025-05-16 19:55)"'
 
 # Shell aliases (should work on any Unix-like OS with Bash)
 alias cd..='cd ..'

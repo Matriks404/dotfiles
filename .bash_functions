@@ -3,11 +3,29 @@ copy-dotfiles-to-repos-directory ()
     cp .bashrc .bash_aliases .bash_functions repos/dotfiles
 }
 
+edit-repos ()
+{
+    if [ -f /etc/apt/sources.list ]; then
+        sudo editor /etc/apt/sources.list
+    else
+        sudo editor /etc/apt/sources.list.d/debian.sources
+    fi
+}
+
 get-new-dotfiles ()
 {
     wget https://github.com/Matriks404/dotfiles/archive/refs/heads/debian.zip
     unzip -j debian.zip dotfiles-debian/.bash*
     rm debian.zip
+}
+
+get-repos ()
+{
+    if [ -f /etc/apt/sources.list ]; then
+        cat /etc/apt/sources.list
+    else
+        cat /etc/apt/sources.list.d/debian.sources
+    fi
 }
 
 git-commit ()
