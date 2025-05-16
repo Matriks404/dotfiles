@@ -1,6 +1,9 @@
 These are my personal **Debian GNU/Linux** 11+ (bullseye and newer) dotfiles.
 
-**openSUSE Tumbleweed** dotfiles are in `opensuse` branch [right here](https://github.com/Matriks404/dotfiles/tree/opensuse).
+Dotfiles for other operating systems:
+
+* **openBSD** 7.6+ dotfiles are in `openbsd` branch [right here](https://github.com/Matriks404/dotfiles/tree/openbsd).
+* **openSUSE Tumbleweed** dotfiles are in `opensuse` branch [right here](https://github.com/Matriks404/dotfiles/tree/opensuse).
 
 # Getting latest version
 
