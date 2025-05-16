@@ -1,6 +1,15 @@
 These are my personal **openBSD** 7.6+ dotfiles.
 
+# Essential software
+
+For getting full potential of these dotfiles you need to install following packages (using `pkg_add` command as `root` user):
+
+* `bash` (for Bash dotfiles);
+* `git` (for `gitd` and `gits` Bash aliases and `git-commit` and `git-push` Bash functions);
+* `nano` (for `e` and `se` Bash aliases).
+
 # Getting latest version
+**NOTE:** If `unzip` is not available on your system, install it using `pkg_add unzip` command as a `root` user before going any further!
 
 If getting dotfiles for the first time, run following commands in some safe directory (probably not home if you don't want to replace your already configured setup):
 
