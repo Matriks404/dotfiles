@@ -1,6 +1,3 @@
-# Check version of the dotfiles
-alias dotver='cat .dotfiles_version'
-
 # Shell aliases (should work on any Unix-like OS with Bash)
 alias cd..='cd ..'
 alias cd...='cd ../..'
@@ -10,6 +7,9 @@ alias h='history'
 alias q='exit'
 
 # Aliases for GNU core utilities (could work on other implementations of coreutils as well)
+alias dotver='cat .dotfiles_version'
+alias diskfree='df -hT -x efivarfs -x tmpfs -x devtmpfs'
+
 alias ls_g='ls --group-directories-first'
 
 alias l='ls -ho --time-style long-iso'
@@ -31,6 +31,12 @@ alias apts='apt-cache search'
 # Aliases for other commands (might not be available on your system)
 alias e='editor'
 alias se='sudo editor'
+
+alias ebaliases='editor ~/.bash_aliases'
+alias ebfunctions='editor ~/.bash_functions'
+
+alias eblaliases='editor ~/.bash_local_aliases'
+alias eblfunctions='editor ~/.bash_local_functions'
 
 # NOTE: Comment-out man command alias if you want to have man pages in your system language.
 alias man='LANG=en_US.UTF-8 man'

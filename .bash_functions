@@ -1,6 +1,18 @@
 copy-dotfiles-to-repos-directory ()
 {
-    cp .bashrc .bash_aliases .bash_functions .dotfiles_version repos/dotfiles
+    local repos_dir=$HOME/repos
+    local dotfiles_repo_dir=$HOME/repos/dotfiles
+
+    # Check if neccessary directories exist.
+    if [ ! -d $dotfiles_repo_dir ]; then
+        if [ ! -d $repos_dir ]; then
+            mkdir $repos_dir
+        fi
+
+        mkdir $dotfiles_repo_dir
+    fi
+
+    cp $HOME/.bashrc $HOME/.bash_aliases $HOME/.bash_functions $HOME/.dotfiles_version $dotfiles_repo_dir
 }
 
 edit-repos ()
