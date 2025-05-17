@@ -20,7 +20,7 @@ If getting dotfiles for the first time, run following commands in some safe dire
 
 ```bash
 wget https://github.com/Matriks404/dotfiles/archive/refs/heads/debian.zip
-unzip -j debian.zip dotfiles-debian/.bash*
+unzip -j debian.zip dotfiles-debian/.*
 rm debian.zip
 ```
 
