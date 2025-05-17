@@ -1,3 +1,24 @@
+github_base_url=https://github.com/Matriks404/dotfiles
+os_target=$(cat $HOME/.dotfiles_os_target)
+
+clone-dotfiles-repository ()
+{
+    local repos_dir=$HOME/repos
+    local dotfiles_repo_dir=$HOME/repos/dotfiles
+
+    # Return prematurely if dotfiles repository already exists.
+    if [ -d $repos_dir ]; then
+        return 1
+    fi
+
+    # Check if neccesary repostitories directory exists.
+    if [ ! -d $repos_dir ]; then
+        mkdir $repos_dir
+    fi
+
+    git clone --branch $os_target $github_base_url.git $dotfiles_repo_dir
+}
+
 copy-dotfiles-to-repos-directory ()
 {
     local repos_dir=$HOME/repos
@@ -26,9 +47,9 @@ edit-repos ()
 
 get-new-dotfiles ()
 {
-    wget https://github.com/Matriks404/dotfiles/archive/refs/heads/debian.zip
-    unzip -j debian.zip dotfiles-debian/.*
-    rm debian.zip
+    wget $github_base_url/archive/refs/heads/$os_target.zip
+    unzip -j $os_target.zip dotfiles-$os_target/.*
+    rm $os_target.zip
 }
 
 get-repos ()
