@@ -33,7 +33,7 @@ copy-dotfiles-to-repos-directory ()
         mkdir $dotfiles_repo_dir
     fi
 
-    cp $HOME/.bashrc $HOME/.bash_aliases $HOME/.bash_functions $HOME/.dotfiles_version $dotfiles_repo_dir
+    cp $HOME/.bashrc $HOME/.bash_aliases $HOME/.bash_functions $HOME/.dotfiles* $dotfiles_repo_dir
 }
 
 edit-repos ()
