@@ -1,6 +1,6 @@
 copy-dotfiles-to-repos-directory ()
 {
-    cp .bashrc .bash_aliases .bash_functions repos/dotfiles
+    cp .bashrc .bash_aliases .bash_functions .dotfiles_version repos/dotfiles
 }
 
 edit-repos ()
@@ -15,7 +15,7 @@ edit-repos ()
 get-new-dotfiles ()
 {
     wget https://github.com/Matriks404/dotfiles/archive/refs/heads/debian.zip
-    unzip -j debian.zip dotfiles-debian/.bash*
+    unzip -j debian.zip dotfiles-debian/.*
     rm debian.zip
 }
 
