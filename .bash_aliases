@@ -49,4 +49,4 @@ alias gitd='git diff'
 alias gits='git status'
 
 # More advanced aliases for system management
-alias sysupd='sudo apt update && sudo apt upgrade && flatpak update'
+alias sysupd='sudo upgrade-system && flatpak update'

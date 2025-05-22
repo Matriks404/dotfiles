@@ -12,6 +12,7 @@ For getting full potential of these dotfiles you need to install following packa
 * `aptitude` (for `a` Bash alias);
 * `flatpak` (for `sysupd` Bash alias);
 * `git` (for `gitd` and `gits` Bash aliases and `git-commit` and `git-push` Bash functions);
+* `upgrade-system` (for `sysupd` Bash alias);
 * `wikipedia2text` (for `wiki` Bash alias).
 
 # Getting latest version
