@@ -65,7 +65,8 @@ get-new-dotfiles ()
     # Boostrap the script that upgrades dotfiles.
     $dotfiles_dir/build/upgrade_dotfiles.sh
 
-    # Remove the archive.
+    # Cleanup.
+    rmdir $dotfiles_dir
     rm $os_target.zip
 }
 
