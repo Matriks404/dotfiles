@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-current_dir=$(basename "$0")
+current_dir=$(dirname "$0")
 root_dir=$current_dir/..
 
 os_target=$(cat $root_dir/.dotfiles_os_target)
