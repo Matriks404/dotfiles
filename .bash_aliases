@@ -68,9 +68,16 @@ alias ebfunctions="$editor ~/.bash_functions"
 alias eblaliases="$editor ~/.bash_local_aliases"
 alias eblfunctions="$editor ~/.bash_local_functions"
 
+# Other aliases
 # NOTE: Comment-out man command alias if you want to have man pages in your system language.
 alias man='LANG=en_US.UTF-8 man'
-alias ii='ip addr'
+
+if [ "$OS_NAME" == "Linux" ]; then
+    alias ii='ip addr'
+elif [ "$OS_NAME" == "OpenBSD" ]; then
+    alias ii='ifconfig'
+fi
+
 alias pi='ping 8.8.8.8'
 alias psx='ps aux'
 
