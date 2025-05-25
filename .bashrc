@@ -1,7 +1,14 @@
 # IMPORTANT!
-# .bashrc is originally taken from Debian bookworm and appropriate license applies.
-# The only real change is removing bash completion stuff (it's instead re-added in the /etc/bash.bashrc on Debian)
+# .bashrc is originally taken from Debian GNU/Linux bookworm (12)
+# and appropriate license applies.
+# 
+# The only real change is removing bash completion stuff
 # and added calls to custom aliases and functions at the bottom.
+
+
+# NOTE: On Debian GNU/Linux edit the file /etc/bash.bashrc and uncomment
+# the code fragment which enables bash completion in interactive shells.
+
 
 # If not running interactively, don't do anything
 case $- in
