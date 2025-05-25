@@ -16,16 +16,24 @@ alias dotver='cat .dotfiles_version'
 if [ "$OS_NAME" == "Linux" ]; then
     alias diskfree='df -hT -x efivarfs -x tmpfs -x devtmpfs'
 elif [ "$OS_NAME" == "openBSD" ]; then
-    alias diskfree='df'
+    alias diskfree='df -t ffs'
 fi
 
-alias ls_g='ls --group-directories-first'
+# ls aliases
+alias ls='ls -F'
 
-alias l='ls -ho --time-style long-iso'
-alias l_g='l --group-directories-first'
+if [ "OS_NAME" == "Linux" ]; then
+    alias ls_g='ls --group-directories-first'
 
-alias la='LC_COLLATE="C" ls -Aho --time-style long-iso'
-alias la_g='la --group-directories-first'
+    alias l='ls -ho --time-style long-iso'
+    alias l_g='l --group-directories-first'
+
+    alias la='LC_COLLATE="C" ls -Aho --time-style long-iso'
+    alias la_g='la --group-directories-first'
+elif [ "OS_NAME" == "OpenBSD" ]; then
+    alias l='ls -hl'
+    alias la='LC_COLLATE="C" ls -AhgT'
+fi
 
 alias wf='tail -f'
 
