@@ -55,7 +55,7 @@ if [ "$OS_NAME" == "Linux" ]; then
     superuser_cmd='sudo'
     editor='editor'
 elif [ "$OS_NAME" == "OpenBSD" ]; then
-    superuser_command='doas'
+    superuser_cmd='doas'
     editor='nano'
 fi
 
