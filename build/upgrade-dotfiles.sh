@@ -16,8 +16,8 @@ fi
 mv $root_dir/bin/* $bin_dir
 
 # Remove itself.
-rm $current_dir/upgrade-all.sh
+rm $root_dir/upgrade-all.sh
 
 # Cleanup
-rmdir $root_dir/bin
 rmdir $root_dir/build
+rmdir $root_dir/bin
