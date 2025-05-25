@@ -27,7 +27,7 @@ unzip master.zip -x dotfiles-master/README.md
 dotfiles-master/build/upgrade-dotfiles.sh
 
 rm dotfiles-master/build/upgrade-dotfiles.sh
-rmdir --parents dotfiles-master/build
+rmdir -p dotfiles-master/build
 rm master.zip
 ```
 

@@ -66,7 +66,7 @@ get-new-dotfiles ()
 
     # Cleanup.
     rm $dotfiles_dir/build/upgrade-dotfiles.sh
-    rmdir --parents $dotfiles_dir/build
+    rmdir -p $dotfiles_dir/build
     rm $os_target.zip
 }
 
