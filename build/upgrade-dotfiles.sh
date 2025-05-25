@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-os_target=$(cat ../.dotfiles_os_target)
-dotfiles_dir=..
+root_dir=$PWD/..
+os_target=$(cat $root_dir/.dotfiles_os_target)
 
-mv $dotfiles_dir/.* $HOME
+mv $root_dir/.* $HOME
 
 local bin_dir=$HOME/bin
 
@@ -11,7 +11,9 @@ if [ ! -d $bin_dir ]; then
     mkdir $bin_dir
 fi
 
-mv $dotfiles_dir/bin/* $bin_dir
+mv $root_dir/bin/* $bin_dir
 
 # Cleanup
-rmdir --parents $dotfiles_dir/bin
+rmdir $root_dir/bin
+
+#TODO: REST
