@@ -1,3 +1,6 @@
+# Getting operating system name
+OS_NAME=$(uname -s)
+
 # Shell aliases (should work on any Unix-like OS with Bash)
 alias cd..='cd ..'
 alias cd...='cd ../..'
@@ -8,7 +11,13 @@ alias q='exit'
 
 # Aliases for GNU core utilities (could work on other implementations of coreutils as well)
 alias dotver='cat .dotfiles_version'
-alias diskfree='df -hT -x efivarfs -x tmpfs -x devtmpfs'
+
+# diskfree alias
+if [ "$OS_NAME" == "Linux" ]; then
+    alias diskfree='df -hT -x efivarfs -x tmpfs -x devtmpfs'
+elif [ "OS_NAME" == "openBSD" ]; then
+    alias diskfree='df'
+fi
 
 alias ls_g='ls --group-directories-first'
 
