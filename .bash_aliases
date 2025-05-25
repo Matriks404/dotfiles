@@ -15,7 +15,7 @@ alias dotver='cat .dotfiles_version'
 # diskfree alias
 if [ "$OS_NAME" == "Linux" ]; then
     alias diskfree='df -hT -x efivarfs -x tmpfs -x devtmpfs'
-elif [ "OS_NAME" == "openBSD" ]; then
+elif [ "$OS_NAME" == "openBSD" ]; then
     alias diskfree='df'
 fi
 
