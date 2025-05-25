@@ -25,6 +25,8 @@ unzip debian.zip -x dotfiles-debian/README.md
 
 dotfiles-debian/build/upgrade-dotfiles.sh
 
+rm dotfiles-debian/build/upgrade-dotfiles.sh
+rmdir --parents dotfiles-debian/build
 rm debian.zip
 ```
 
