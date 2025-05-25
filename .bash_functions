@@ -1,5 +1,5 @@
 github_base_url=https://github.com/Matriks404/dotfiles
-os_target=$(cat $HOME/.dotfiles_os_target)
+#os_target=$(cat $HOME/.dotfiles_os_target)
 
 clone-dotfiles-repository ()
 {
@@ -16,7 +16,8 @@ clone-dotfiles-repository ()
         mkdir $repos_dir
     fi
 
-    git clone --branch $os_target $github_base_url.git $dotfiles_repo_dir
+    #git clone --branch $os_target $github_base_url.git $dotfiles_repo_dir
+    git clone $github_base_url.git $dotfiles_repo_dir
 }
 
 copy-dotfiles-to-repos-directory ()
