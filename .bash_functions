@@ -33,7 +33,7 @@ copy-dotfiles-to-repos-directory ()
         mkdir $dotfiles_repo_dir
     fi
 
-    local dotfiles_to_copy="$HOME/.bashrc $HOME/.bash_aliases $HOME/.bash_functions $HOME/.dotfiles* $HOME/bin/upgrade-all.sh"
+    local dotfiles_to_copy="$HOME/.bashrc $HOME/.bash_aliases $HOME/.bash_functions $HOME/.dotfiles*"
     cp $dotfiles_to_copy $dotfiles_repo_dir
 
     local bin_files_to_copy=$HOME/bin/upgrade-all.sh
