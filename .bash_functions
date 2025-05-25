@@ -57,23 +57,15 @@ edit-repos ()
 
 get-new-dotfiles ()
 {
+    # Download and unzip archive containing dotfiles and scripts.
     local dotfiles_dir=dotfiles-$os_target
-
     wget $github_base_url/archive/refs/heads/$os_target.zip
     unzip $os_target.zip -x $dotfiles_dir/README.md
 
-    mv $dotfiles_dir/.* .
+    # Boostrap the script that upgrades dotfiles.
+    $dotfiles_dir/build/upgrade_dotfiles.sh
 
-    local bin_dir=$HOME/bin
-
-    if [ ! -d $bin_dir ]; then
-        mkdir $bin_dir
-    fi
-
-    mv $dotfiles_dir/bin/* $bin_dir
-
-    # Cleanup
-    rmdir --parents $dotfiles_dir/bin
+    # Remove the archive.
     rm $os_target.zip
 }
 
@@ -104,7 +96,7 @@ git-push ()
 
 upgrade-all ()
 {
-    sudo bin/upgrade-all.sh
+    sudo $HOME/bin/upgrade-all.sh
 }
 
 wiki ()
