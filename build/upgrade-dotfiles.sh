@@ -7,7 +7,7 @@ os_target=$(cat $root_dir/.dotfiles_os_target)
 
 mv $root_dir/.* .
 
-local bin_dir=./bin
+bin_dir=./bin
 
 if [ ! -d $bin_dir ]; then
     mkdir $bin_dir
