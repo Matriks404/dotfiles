@@ -63,7 +63,7 @@ get-new-dotfiles ()
     unzip $os_target.zip -x $dotfiles_dir/README.md
 
     # Boostrap the script that upgrades dotfiles.
-    $dotfiles_dir/build/upgrade_dotfiles.sh
+    bash $dotfiles_dir/build/upgrade_dotfiles.sh
 
     # Cleanup.
     rm $dotfiles_dir/build/upgrade-dotfiles.sh
