@@ -47,6 +47,3 @@ alias psx='ps aux'
 # Aliases for git commands (you need to have git installed)
 alias gitd='git diff'
 alias gits='git status'
-
-# More advanced aliases for system management
-alias sysupd='sudo upgrade-system && flatpak update'

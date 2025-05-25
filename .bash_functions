@@ -33,7 +33,17 @@ copy-dotfiles-to-repos-directory ()
         mkdir $dotfiles_repo_dir
     fi
 
-    cp $HOME/.bashrc $HOME/.bash_aliases $HOME/.bash_functions $HOME/.dotfiles* $dotfiles_repo_dir
+    local dotfiles_to_copy="$HOME/.bashrc $HOME/.bash_aliases $HOME/.bash_functions $HOME/.dotfiles* $HOME/bin/upgrade-all.sh"
+    cp $dotfiles_to_copy $dotfiles_repo_dir
+
+    local bin_files_to_copy=$HOME/bin/upgrade-all.sh
+    local bin_files_dir=$dotfiles_repo_dir/bin
+
+    if [ ! -d $bin_files_dir ]; then
+        mkdir $bin_files_dir
+    fi
+
+    cp $bin_files_to_copy $bin_files_dir
 }
 
 edit-repos ()
@@ -75,6 +85,11 @@ git-push ()
 
     git-commit "$comment"
     git push
+}
+
+upgrade-all ()
+{
+    sudo bin/upgrade-all.sh
 }
 
 wiki ()
