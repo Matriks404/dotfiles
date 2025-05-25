@@ -21,7 +21,10 @@ If getting dotfiles for the first time, run following commands in some safe dire
 
 ```bash
 wget https://github.com/Matriks404/dotfiles/archive/refs/heads/debian.zip
-unzip -j debian.zip dotfiles-debian/.*
+unzip debian.zip -x dotfiles-debian/README.md
+
+debian-dotfiles/build/upgrade_dotfiles.sh
+
 rm debian.zip
 ```
 
