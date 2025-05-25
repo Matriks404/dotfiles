@@ -15,9 +15,5 @@ fi
 
 mv $root_dir/bin/* $bin_dir
 
-# Remove itself.
-rm "$0"
-
 # Cleanup
-rmdir $root_dir/build
 rmdir $root_dir/bin
