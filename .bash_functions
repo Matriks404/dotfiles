@@ -26,12 +26,15 @@ copy-dotfiles-to-repos-directory ()
 
     # Clone dotfiles repository if it doesn't exist.
     if [ ! -d $dotfiles_repo_dir ]; then
+    	echo -e "=== Cloning the dotfiles repository, because it doesn't exist yet... ==="
         clone-dotfiles-repository
     fi
 
+    echo -e "=== Copying dotfiles... ==="
     local dotfiles_to_copy="$HOME/.bashrc $HOME/.bash_aliases $HOME/.bash_functions $HOME/.dotfiles*"
     cp $dotfiles_to_copy $dotfiles_repo_dir
 
+    echo -e "=== Copying Bash scripts... ==="
     local bin_files_to_copy=$HOME/bin/upgrade-all.sh
     local bin_files_dir=$dotfiles_repo_dir/bin
 
