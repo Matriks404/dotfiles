@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
 
-root_dir=$PWD/..
+current_dir=$(basename "$0")
+root_dir=$current_dir/..
+
 os_target=$(cat $root_dir/.dotfiles_os_target)
 
-mv $root_dir/.* $HOME
+mv $root_dir/.* .
 
-local bin_dir=$HOME/bin
+local bin_dir=./bin
 
 if [ ! -d $bin_dir ]; then
     mkdir $bin_dir
