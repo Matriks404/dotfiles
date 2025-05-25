@@ -57,8 +57,23 @@ edit-repos ()
 
 get-new-dotfiles ()
 {
+    local dotfiles_dir=dotfiles-$os_target
+
     wget $github_base_url/archive/refs/heads/$os_target.zip
-    unzip -j $os_target.zip dotfiles-$os_target/.*
+    unzip $os_target.zip -x $dotfiles_dir/README.md
+
+    mv $dotfiles_dir/.* .
+
+    local bin_dir=$HOME/bin
+
+    if [ ! -d $bin_dir ]; then
+        mkdir $bin_dir
+    fi
+
+    mv $dotfiles_dir/bin/* $bin_dir
+
+    # Cleanup
+    rmdir -p $dotfiles_dir/bin
     rm $os_target.zip
 }
 
