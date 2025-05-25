@@ -7,7 +7,7 @@ clone-dotfiles-repository ()
     local dotfiles_repo_dir=$HOME/repos/dotfiles
 
     # Return prematurely if dotfiles repository already exists.
-    if [ -d $repos_dir ]; then
+    if [ -d $dotfiles_repo_dir ]; then
         return 1
     fi
 
