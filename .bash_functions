@@ -73,7 +73,7 @@ get-new-dotfiles ()
     mv $dotfiles_dir/bin/* $bin_dir
 
     # Cleanup
-    rmdir -p $dotfiles_dir/bin
+    rmdir --parents $dotfiles_dir/bin
     rm $os_target.zip
 }
 
