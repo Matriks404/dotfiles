@@ -5,9 +5,9 @@ root_dir=$current_dir/..
 
 os_target=$(cat $root_dir/.dotfiles_os_target)
 
-mv $root_dir/.* .
+mv $root_dir/.* $HOME
 
-bin_dir=./bin
+bin_dir=$HOME/bin
 
 if [ ! -d $bin_dir ]; then
     mkdir $bin_dir
