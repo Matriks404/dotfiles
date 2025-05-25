@@ -20,6 +20,10 @@ elif [ "$OS_NAME" == "openBSD" ]; then
 fi
 
 # ls aliases
+# Important note: On Debian GNU/Linux these aliases don't display group names,
+# but on OpenBSD these don't show user names instead
+# since OpenBSD implementation of `ls` doesn't support that option. 
+
 if [ "$OS_NAME" == "Linux" ]; then
     alias ls_g='ls --group-directories-first'
 
@@ -35,23 +39,34 @@ fi
 
 alias wf='tail -f'
 
-# Aliases for Debian commands (might not be available if your're running non-Debian-based Linux distribution or they are not installed on your system)
-alias a='aptitude'
+# Aliases for Debian commands
+if [ -f /etc/debian_version ]; then
+    alias a='aptitude'
 
-alias aptff='apt-file find'
-alias aptfl='apt-file list'
+    alias aptff='apt-file find'
+    alias aptfl='apt-file list'
 
-alias apts='apt-cache search'
+    alias apts='apt-cache search'
+fi
 
-# Aliases for other commands (might not be available on your system)
-alias e='editor'
-alias se='sudo editor'
+# Aliases for editor commands
 
-alias ebaliases='editor ~/.bash_aliases'
-alias ebfunctions='editor ~/.bash_functions'
+if [ "$OS_NAME" == "Linux" ]; then
+    superuser_cmd='sudo'
+    editor='editor'
+elif [ "OS_NAME" == "OpenBSD" ]; then
+    superuser_command='su root -c '
+    editor='nano'
+fi
 
-alias eblaliases='editor ~/.bash_local_aliases'
-alias eblfunctions='editor ~/.bash_local_functions'
+alias e="$editor"
+alias se="$superuser_cmd $editor"
+
+alias ebaliases="$editor ~/.bash_aliases"
+alias ebfunctions="$editor ~/.bash_functions"
+
+alias eblaliases="$editor ~/.bash_local_aliases"
+alias eblfunctions="$editor ~/.bash_local_functions"
 
 # NOTE: Comment-out man command alias if you want to have man pages in your system language.
 alias man='LANG=en_US.UTF-8 man'
