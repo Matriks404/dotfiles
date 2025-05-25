@@ -31,8 +31,8 @@ if [ "$OS_NAME" == "Linux" ]; then
     alias la='LC_COLLATE="C" ls -Aho --time-style long-iso'
     alias la_g='la --group-directories-first'
 elif [ "$OS_NAME" == "OpenBSD" ]; then
-    alias l='ls -hl'
-    alias la='LC_COLLATE="C" ls -AhgT'
+    alias l='ls -ghT'
+    alias la='LC_COLLATE="C" ls -AghT'
 fi
 
 alias wf='tail -f'
