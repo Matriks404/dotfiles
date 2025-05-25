@@ -54,7 +54,7 @@ fi
 if [ "$OS_NAME" == "Linux" ]; then
     superuser_cmd='sudo'
     editor='editor'
-elif [ "OS_NAME" == "OpenBSD" ]; then
+elif [ "$OS_NAME" == "OpenBSD" ]; then
     superuser_command='su root -c '
     editor='nano'
 fi
