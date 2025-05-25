@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-os_target=$(cat $HOME/.dotfiles_os_target)
+os_target=$(cat ../.dotfiles_os_target)
 dotfiles_dir=..
 
 mv $dotfiles_dir/.* $HOME
