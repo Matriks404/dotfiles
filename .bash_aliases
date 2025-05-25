@@ -20,19 +20,17 @@ elif [ "$OS_NAME" == "openBSD" ]; then
 fi
 
 # ls aliases
-alias ls='ls -F'
-
 if [ "$OS_NAME" == "Linux" ]; then
     alias ls_g='ls --group-directories-first'
 
-    alias l='ls -ho --time-style long-iso'
+    alias l='ls -Fho --time-style long-iso'
     alias l_g='l --group-directories-first'
 
-    alias la='LC_COLLATE="C" ls -Aho --time-style long-iso'
+    alias la='LC_COLLATE="C" ls -AFho --time-style long-iso'
     alias la_g='la --group-directories-first'
 elif [ "$OS_NAME" == "OpenBSD" ]; then
-    alias l='ls -ghT'
-    alias la='LC_COLLATE="C" ls -AghT'
+    alias l='ls -FghT'
+    alias la='LC_COLLATE="C" ls -AFghT'
 fi
 
 alias wf='tail -f'
