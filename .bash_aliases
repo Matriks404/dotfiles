@@ -22,7 +22,7 @@ fi
 # ls aliases
 alias ls='ls -F'
 
-if [ "OS_NAME" == "Linux" ]; then
+if [ "$OS_NAME" == "Linux" ]; then
     alias ls_g='ls --group-directories-first'
 
     alias l='ls -ho --time-style long-iso'
@@ -30,7 +30,7 @@ if [ "OS_NAME" == "Linux" ]; then
 
     alias la='LC_COLLATE="C" ls -Aho --time-style long-iso'
     alias la_g='la --group-directories-first'
-elif [ "OS_NAME" == "OpenBSD" ]; then
+elif [ "$OS_NAME" == "OpenBSD" ]; then
     alias l='ls -hl'
     alias la='LC_COLLATE="C" ls -AhgT'
 fi
