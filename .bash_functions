@@ -24,13 +24,9 @@ copy-dotfiles-to-repos-directory ()
     local repos_dir=$HOME/repos
     local dotfiles_repo_dir=$HOME/repos/dotfiles
 
-    # Check if neccessary directories exist.
+    # Clone dotfiles repository if it doesn't exist.
     if [ ! -d $dotfiles_repo_dir ]; then
-        if [ ! -d $repos_dir ]; then
-            mkdir $repos_dir
-        fi
-
-        mkdir $dotfiles_repo_dir
+        clone-dotfiles-repository
     fi
 
     local dotfiles_to_copy="$HOME/.bashrc $HOME/.bash_aliases $HOME/.bash_functions $HOME/.dotfiles*"
