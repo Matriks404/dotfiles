@@ -1,3 +1,6 @@
+#Getting operating system name
+OS_NAME=$(uname -s)
+
 github_base_url=https://github.com/Matriks404/dotfiles
 #os_target=$(cat $HOME/.dotfiles_os_target)
 
@@ -48,10 +51,14 @@ copy-dotfiles-to-repos-directory ()
 
 edit-repos ()
 {
-    if [ -f /etc/apt/sources.list ]; then
-        sudo editor /etc/apt/sources.list
-    else
-        sudo editor /etc/apt/sources.list.d/debian.sources
+    if [ -f /etc/debian_version ]; then
+        if [ -f /etc/apt/sources.list ]; then
+            sudo editor /etc/apt/sources.list
+        else
+            sudo editor /etc/apt/sources.list.d/debian.sources
+        fi
+    elif [ "$OS_NAME" == "OpenBSD" ]; then
+        doas nano /etc/installurl
     fi
 }
 
