@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Getting operating system name
+OS_NAME=$(uname -s)
+
 if [ "$EUID" -ne 0 ]; then
     echo -e "ERROR: This script must be run with root privileges!"
 
@@ -7,7 +10,13 @@ if [ "$EUID" -ne 0 ]; then
 fi
 
 echo -e "=== Doing a system upgrade... ==="
-sudo upgrade-system
+
+if [ -f /etc/debian_version ]; then
+    sudo upgrade-system
+elif [ "$OS_NAME" == "OpenBSD" ]; then
+    pkg_add -u
+fi
+
 echo -e "=== System upgrade complete! ==="
 
 if [ -x /usr/bin/flatpak ]; then

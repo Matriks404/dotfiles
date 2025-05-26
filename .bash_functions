@@ -114,7 +114,11 @@ git-push ()
 
 upgrade-all ()
 {
-    sudo $HOME/bin/upgrade-all.sh
+    if [ "$OS_NAME" == "Linux" ]; then
+        sudo $HOME/bin/upgrade-all.sh
+    elif [ "$OS_NAME" == "OpenBSD" ]; then
+        doas $HOME/bin/upgrade-all.sh
+    fi
 }
 
 # Linux-specific functions
