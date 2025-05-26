@@ -85,10 +85,14 @@ get-new-dotfiles ()
 
 get-repos ()
 {
-    if [ -f /etc/apt/sources.list ]; then
-        cat /etc/apt/sources.list
-    else
-        cat /etc/apt/sources.list.d/debian.sources
+    if [ -f /etc/debian_version ]; then
+        if [ -f /etc/apt/sources.list ]; then
+            cat /etc/apt/sources.list
+        else
+            cat /etc/apt/sources.list.d/debian.sources
+        fi
+    elif [ "$OS_NAME" == "OpenBSD" ]; then
+        cat /etc/installurl
     fi
 }
 
@@ -113,9 +117,12 @@ upgrade-all ()
     sudo $HOME/bin/upgrade-all.sh
 }
 
-wiki ()
-{
-    local article=$1
+# Linux-specific functions
+if [ "$OS_NAME" == "Linux" ]; then
+    wiki ()
+    {
+        local article=$1
 
-    wikipedia2text "$article" | less
-}
+        wikipedia2text "$article" | less
+    }
+fi
