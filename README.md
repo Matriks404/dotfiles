@@ -1,4 +1,4 @@
-These are my personal dotfiles that should work on **Debian GNU/Linux** and **OpenBSD 7.6**+.
+These are my personal dotfiles that should work on **Debian GNU/Linux** 11+ (bullseye) and **OpenBSD** 7.6+.
 
 Dotfiles for other operating systems:
 
