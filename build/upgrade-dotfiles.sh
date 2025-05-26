@@ -3,8 +3,6 @@
 current_dir=$(dirname "$0")
 root_dir=$current_dir/..
 
-os_target=$(cat $root_dir/.dotfiles_os_target)
-
 mv $root_dir/.* .
 
 bin_dir=./bin
