@@ -39,7 +39,7 @@ copy-dotfiles-to-repos-directory ()
     cp $dotfiles_to_copy $dotfiles_repo_dir
 
     echo -e "=== Copying Bash scripts... ==="
-    local bin_files_to_copy=$HOME/bin/upgrade-all.sh
+    local bin_files_to_copy="$HOME/bin/upgrade-all.sh $HOME/bin/upgrade-dotfiles-bootstrap.sh"
     local bin_files_dir=$dotfiles_repo_dir/bin
 
     if [ ! -d $bin_files_dir ]; then
@@ -64,23 +64,7 @@ edit-repos ()
 
 get-new-dotfiles ()
 {
-    # Download and unzip archive containing dotfiles and scripts.
-    #local dotfiles_dir=dotfiles-$os_target
-    #wget $github_base_url/archive/refs/heads/$os_target.zip
-    #unzip $os_target.zip -x $dotfiles_dir/README.md
-
-    local dotfiles_dir=dotfiles-master
-    wget $github_base_url/archive/refs/heads/master.zip
-    unzip master.zip -x $dotfiles_dir/README.md
-
-    # Boostrap the script that upgrades dotfiles.
-    $dotfiles_dir/build/upgrade-dotfiles.sh
-
-    # Cleanup.
-    rm $dotfiles_dir/build/upgrade-dotfiles.sh
-    rmdir -p $dotfiles_dir/build
-    #rm $os_target.zip
-    rm master.zip
+    $HOME/bin/upgrade-dotfiles-bootstrap.sh
 }
 
 get-repos ()
