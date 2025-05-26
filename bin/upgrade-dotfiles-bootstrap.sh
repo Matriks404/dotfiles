@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
+github_base_url=https://github.com/Matriks404/dotfiles
+
 # Download and unzip archive containing dotfiles and scripts.
-local dotfiles_dir=dotfiles-master
+dotfiles_dir=dotfiles-master
 wget $github_base_url/archive/refs/heads/master.zip
 unzip master.zip -x $dotfiles_dir/README.md
 
