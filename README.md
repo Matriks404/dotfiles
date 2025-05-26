@@ -17,7 +17,11 @@ For getting full potential of these dotfiles you need to install following packa
 
 # Getting latest version
 
-If getting dotfiles for the first time, run following command in some safe directory (probably not home if you don't want to replace your already configured setup): `curl https://raw.githubusercontent.com/Matriks404/dotfiles/refs/heads/master/bin/upgrade-dotfiles-bootstrap.sh | sh`
+If getting dotfiles for the first time, run following command in some safe directory (probably not home if you don't want to replace your already configured setup):
+
+```bash
+curl https://raw.githubusercontent.com/Matriks404/dotfiles/refs/heads/master/bin/upgrade-dotfiles-bootstrap.sh | sh
+```
 
 Otherwise, execute: `get-new-dotfiles` in your bash session (it will execute `bin/upgrade-dotfiles-bootstrap.sh` shell script).
 
