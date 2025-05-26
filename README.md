@@ -17,20 +17,9 @@ For getting full potential of these dotfiles you need to install following packa
 
 # Getting latest version
 
-If getting dotfiles for the first time, run following commands in some safe directory (probably not home if you don't want to replace your already configured setup):
+If getting dotfiles for the first time, run following command in some safe directory (probably not home if you don't want to replace your already configured setup): `curl https://raw.githubusercontent.com/Matriks404/dotfiles/refs/heads/master/bin/upgrade-dotfiles-bootstrap.sh | sh`
 
-```bash
-wget https://github.com/Matriks404/dotfiles/archive/refs/heads/master.zip
-unzip master.zip -x dotfiles-master/README.md
-
-dotfiles-master/build/upgrade-dotfiles.sh
-
-rm dotfiles-master/build/upgrade-dotfiles.sh
-rmdir -p dotfiles-master/build
-rm master.zip
-```
-
-Otherwise, execute: `get-new-dotfiles` in your bash session (it will execute same commands as described above).
+Otherwise, execute: `get-new-dotfiles` in your bash session (it will execute `bin/upgrade-dotfiles-bootstrap.sh` shell script).
 
 # Files
 
