@@ -61,6 +61,7 @@ if [ -f /etc/debian_version ]; then
     alias aptff='apt-file find'
     alias aptfl='apt-file list'
 
+    alias aptl='apt list'
     alias apts='apt-cache search'
 fi
 
