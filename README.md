@@ -1,9 +1,7 @@
-These are my personal dotfiles.
+These are my personal dotfiles that should work on **Debian GNU/Linux** and **OpenBSD 7.6**+.
 
-Dotfiles for specific operating systems are there:
+Dotfiles for other operating systems:
 
-* **Debian GNU/Linux** (bullseye) 11+ are in `debian` branch [right here](https://github.com/Matriks404/dotfiles/tree/debian).
-* **openBSD** 7.6+ dotfiles are in `openbsd` branch [right here](https://github.com/Matriks404/dotfiles/tree/openbsd).
 * **openSUSE Tumbleweed** dotfiles are in `opensuse` branch [right here](https://github.com/Matriks404/dotfiles/tree/opensuse).
 
 # Essential software
