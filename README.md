@@ -8,10 +8,11 @@ Dotfiles for other operating systems:
 
 For getting full potential of these dotfiles you need to install following packages (using your favourite package manaager such as `apt`, `zypper`, `pkg_add` etc.):
 
-* `aptitude` (Debian GNU/Linux only, for `a` Bash alias);
-* `flatpak` (Linux only, for `sysupd` Bash alias);
-* `git` (for `gitd` and `gits` Bash aliases and `git-commit` and `git-push` Bash functions);
-* `upgrade-system` (Debian GNU/Linux only, for `upgrade-all` Bash function);
+* `aptitude` (**Debian GNU/Linux** only, for `a` Bash alias);
+* `flatpak` (**Linux** only, for `upgrade-all` Bash function);
+* `git` (for `gitd` and `gits` Bash aliases and `clone-dotfiles-repository`, `copy-dotfiles-to-repos-directory`, `git-commit` and `git-push` Bash functions);
+* `sudo` (**Linux** only, for `se` Bash alias and `edit-repos` and `upgrade-all` Bash functions);
+* `upgrade-system` (**Debian GNU/Linux** only, for `upgrade-all` Bash function);
 * `wikipedia2text` (for `wiki` Bash alias).
 
 # Getting latest version
