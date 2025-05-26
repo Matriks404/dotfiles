@@ -13,7 +13,7 @@ For getting full potential of these dotfiles you need to install following packa
 * `git` (for `gitd` and `gits` Bash aliases and `clone-dotfiles-repository`, `copy-dotfiles-to-repos-directory`, `git-commit` and `git-push` Bash functions);
 * `sudo` (**Linux** only, for `se` Bash alias and `edit-repos` and `upgrade-all` Bash functions);
 * `upgrade-system` (**Debian GNU/Linux** only, for `upgrade-all` Bash function);
-* `wikipedia2text` (for `wiki` Bash alias).
+* `wikipedia2text` (**Linux** only, for `wiki` Bash alias).
 
 # Getting latest version
 
