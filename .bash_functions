@@ -30,7 +30,7 @@ copy-dotfiles-to-repos-directory ()
 
     # Clone dotfiles repository if it doesn't exist.
     if [ ! -d $dotfiles_repo_dir ]; then
-    	echo -e "=== Cloning the dotfiles repository, because it doesn't exist yet... ==="
+        echo -e "=== Cloning the dotfiles repository, because it doesn't exist yet... ==="
         clone-dotfiles-repository
     fi
 
@@ -65,9 +65,13 @@ edit-repos ()
 get-new-dotfiles ()
 {
     # Download and unzip archive containing dotfiles and scripts.
-    local dotfiles_dir=dotfiles-$os_target
-    wget $github_base_url/archive/refs/heads/$os_target.zip
-    unzip $os_target.zip -x $dotfiles_dir/README.md
+    #local dotfiles_dir=dotfiles-$os_target
+    #wget $github_base_url/archive/refs/heads/$os_target.zip
+    #unzip $os_target.zip -x $dotfiles_dir/README.md
+
+    local dotfiles_dir=dotfiles-master
+    wget $github_base_url/archive/refs/heads/master.zip
+    unzip master.zip -x $dotfiles_dir/README.md
 
     # Boostrap the script that upgrades dotfiles.
     $dotfiles_dir/build/upgrade-dotfiles.sh
@@ -75,7 +79,8 @@ get-new-dotfiles ()
     # Cleanup.
     rm $dotfiles_dir/build/upgrade-dotfiles.sh
     rmdir -p $dotfiles_dir/build
-    rm $os_target.zip
+    #rm $os_target.zip
+    rm master.zip
 }
 
 get-repos ()
