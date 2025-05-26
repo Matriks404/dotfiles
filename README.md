@@ -33,7 +33,7 @@ Otherwise, execute: `get-new-dotfiles` in your bash session (it will execute sam
 
 # Files
 
-# `bin/upgrade-all.sh` - both system upgrade and other applications (e.g. flatpak) update script.
+* `bin/upgrade-all.sh` - both system upgrade and other applications (e.g. flatpak) update script.
 * `.bashrc` - generic bash profile configuration file.
 * `.bash_aliases` - various useful bash aliases.
 * `.bash_functions` - various useful bash functions.
