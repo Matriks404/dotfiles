@@ -12,7 +12,7 @@ fi
 echo -e "=== Doing a system upgrade... ==="
 
 if [ -f /etc/debian_version ]; then
-    sudo upgrade-system
+    upgrade-system
 elif [ "$OS_NAME" == "OpenBSD" ]; then
     pkg_add -u
 fi
