@@ -6,7 +6,7 @@ Dotfiles for other operating systems:
 
 # Essential software
 
-For getting full potential of these dotfiles you need to install following packages (using your favourite package manaager such as `apt`, `zypper`, `pkg_add` etc.):
+For getting full potential of these dotfiles you need to install following packages (using your favourite package manager such as `apt`, `zypper`, `pkg_add` etc.):
 
 * `aptitude` (**Debian GNU/Linux** only, for `a` Bash alias);
 * `flatpak` (**Linux** only, for `upgrade-all` Bash function);
