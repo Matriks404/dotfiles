@@ -23,11 +23,13 @@ If getting dotfiles for the first time, run following command in some safe direc
 curl https://raw.githubusercontent.com/Matriks404/dotfiles/refs/heads/master/bin/upgrade-dotfiles-bootstrap.sh | sh
 ```
 
-Otherwise, execute: `get-new-dotfiles` in your bash session (it will execute `bin/upgrade-dotfiles-bootstrap.sh` shell script).
+Otherwise, execute: `get-new-dotfiles` in your bash session (it will execute `bin/upgrade-dotfiles-bootstrap.sh` shell script, which itself executes `build/upgrade-dotfiles.sh` **WHICH SHOULD NOT BE EXECUTED MANUALLY**).
 
 # Files
 
 * `bin/upgrade-all.sh` - both system upgrade and other applications (e.g. flatpak) update script.
+* `bin/upgrade-dotfiles-bootstrap.sh` - does some initial work (like downloading and extracting the upgraded version of dotfiles) and then executes temporarily available (for building process) `build/upgrade-dotfiles.sh`, and finishes up cleanup afterwards.
+* `build/upgrade-dotfiles.sh` - upgrades all dotfiles and Bash scripts, and then does some cleanup.
 * `.bashrc` - generic bash profile configuration file.
 * `.bash_aliases` - various useful bash aliases.
 * `.bash_functions` - various useful bash functions.
