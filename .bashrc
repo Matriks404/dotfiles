@@ -1,14 +1,14 @@
 # IMPORTANT!
 # .bashrc is originally taken from Debian GNU/Linux bookworm (12)
 # and appropriate license applies.
-# 
-# The only real change is removing bash completion stuff
-# and added calls to custom aliases and functions at the bottom.
 
 
 # NOTE: On Debian GNU/Linux edit the file /etc/bash.bashrc and uncomment
 # the code fragment which enables bash completion in interactive shells.
 
+
+# Set console language to English. See locale(7) for more info.
+export LANG=en_US.UTF-8
 
 # If not running interactively, don't do anything
 case $- in
@@ -23,7 +23,6 @@ HISTCONTROL=ignoreboth
 # append to the history file, don't overwrite it
 shopt -s histappend
 
-# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=1000
 HISTFILESIZE=2000
 
@@ -83,9 +82,6 @@ esac
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
 
     #alias grep='grep --color=auto'
     #alias fgrep='fgrep --color=auto'
@@ -95,7 +91,9 @@ fi
 # colored GCC warnings and errors
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
-# Custom bash aliases
+
+
+# CUSTOM BASH ALIASES AND FUNCTIONS
 
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
