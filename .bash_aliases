@@ -22,7 +22,7 @@ alias wf='tail -f'
 
 if [ "$OS_NAME" == "Linux" ]; then
     alias diskfree='df -hT -x efivarfs -x tmpfs -x devtmpfs'
-elif [ "$OS_NAME" == "openBSD" ]; then
+elif [ "$OS_NAME" == "OpenBSD" ]; then
     alias diskfree='df -t ffs'
 fi
 
