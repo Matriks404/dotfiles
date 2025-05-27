@@ -7,25 +7,26 @@
 # the code fragment which enables bash completion in interactive shells.
 
 
-# Set console language to English. See locale(7) for more info.
-export LANG=en_US.UTF-8
-export LANGUAGE=en_US:pl_PL
-
-# If not running interactively, don't do anything
+# If not running interactively, don't do anything.
 case $- in
     *i*) ;;
       *) return;;
 esac
 
-# don't put duplicate lines or lines starting with space in the history.
-# See bash(1) for more options
-HISTCONTROL=ignoreboth
 
-# append to the history file, don't overwrite it
+# Set console language to English. See locale(7) for more info.
+export LANG=en_US.UTF-8
+export LANGUAGE=en_US:pl_PL
+
+# Ignore duplicate lines in history.
+HISTCONTROL=ignoredups
+
+# Append to the history file, don't overwrite it.
 shopt -s histappend
 
-HISTSIZE=1000
-HISTFILESIZE=2000
+# Set history sizes.
+HISTSIZE=10000
+HISTFILESIZE=10000
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -96,23 +97,25 @@ fi
 
 # CUSTOM BASH ALIASES AND FUNCTIONS
 
+# Custom Bash aliases
+
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
-# Custom bash functions
+# Custom Bash functions
 
 if [ -f ~/.bash_functions ]; then
     . ~/.bash_functions
 fi
 
-# Custom LOCAL bash aliases
+# Custom LOCAL Bash aliases
 
 if [ -f ~/.bash_local_aliases ]; then
     . ~/.bash_local_aliases
 fi
 
-# Custom LOCAL bash functions
+# Custom LOCAL Bash functions
 
 if [ -f ~/.bash_local_functions ]; then
     . ~/.bash_local_functions
