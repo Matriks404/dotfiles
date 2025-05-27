@@ -10,7 +10,7 @@ if [ "$USER" == "marcin" ]; then
     full_username=$(getent passwd "marcin" | cut -d ':' -f 5)
 
     if [[ "$full_username" =~ ^Marcin\ Kralka ]]; then
-        dotfiles_to_copy="$dotfiles_to_copy $root_dir/.gitconfig"
+        dotfiles_to_copy="$dotfiles_to_copy $root_dir/.gitconfig $root_dir/.reportbugrc"
     fi
 fi
 
@@ -29,6 +29,10 @@ mv $root_dir/bin/* $bin_dir
 
 if [ -f $root_dir/.gitconfig ]; then
     rm $root_dir/.gitconfig
+fi
+
+if [ -f $root_dir/.reportbugrc ]; then
+    rm $root_dir/.reportbugrc
 fi
 
 rmdir $root_dir/bin

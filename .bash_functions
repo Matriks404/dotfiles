@@ -35,13 +35,13 @@ copy-dotfiles-to-repos-directory ()
     fi
 
     echo -e "=== Copying dotfiles... ==="
-    local dotfiles_to_copy="$HOME/.bashrc $HOME/.bash_aliases $HOME/.bash_functions $HOME/.dotfiles*"
+    local dotfiles_to_copy="$HOME/.bashrc $HOME/.bash_aliases $HOME/.bash_functions $HOME/.bash_logout $HOME/.dotfiles*"
 
     if [ "$USER" == "marcin" ]; then
         full_username=$(getent passwd "marcin" | cut -d ':' -f 5)
 
         if [[ "$full_username" =~ ^Marcin\ Kralka ]]; then
-            dotfiles_to_copy="$dotfiles_to_copy $HOME/.gitconfig"
+            dotfiles_to_copy="$dotfiles_to_copy $HOME/.gitconfig $HOME/.reportbugrc"
         fi
     fi
 
