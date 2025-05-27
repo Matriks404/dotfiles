@@ -3,7 +3,18 @@
 current_dir=$(dirname "$0")
 root_dir=$current_dir/..
 
-mv $root_dir/.* .
+dotfiles_to_copy="$root_dir/.bash* $root_dir/.dotfiles*"
+
+echo -e "=== Moving dotfiles... ==="
+if [ "$USER" == "marcin" ]; then
+    full_username=$(getent passwd "marcin" | cut -d ':' -f 5)
+
+    if [[ "$full_username" =~ ^Marcin\ Kralka ]]; then
+        dotfiles_to_copy="$dotfiles_to_copy $root_dir/.gitconfig"
+    fi
+fi
+
+mv $root_dir/$dotfiles_to_copy .
 
 bin_dir=./bin
 
@@ -11,7 +22,13 @@ if [ ! -d $bin_dir ]; then
     mkdir $bin_dir
 fi
 
+echo -e "=== Moving Bash scripts... ==="
 mv $root_dir/bin/* $bin_dir
 
 # Cleanup
+
+if [ -f $root_dir/.gitconfig ]; then
+    rm $root_dir/.gitconfig
+fi
+
 rmdir $root_dir/bin
