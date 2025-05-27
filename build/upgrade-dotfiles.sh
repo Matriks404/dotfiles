@@ -10,7 +10,11 @@ if [ "$USER" == "marcin" ]; then
     full_username=$(getent passwd "marcin" | cut -d ':' -f 5)
 
     if [[ "$full_username" =~ ^Marcin\ Kralka ]]; then
-        dotfiles_to_copy="$dotfiles_to_copy $root_dir/.gitconfig $root_dir/.reportbugrc"
+        dotfiles_to_copy="$dotfiles_to_copy $root_dir/.gitconfig"
+
+        if [ -f /etc/debian_version ]; then
+            dotfiles_to_copy="$dotfiles_to_copy $root_dir/.reportbugrc"
+        fi
     fi
 fi
 
