@@ -19,6 +19,8 @@ For getting full potential of these dotfiles you need to install following packa
 
 If getting dotfiles for the first time, run following command in some safe directory (probably not home if you don't want to replace your already configured setup):
 
+**NOTE:** You need to have `curl` installed first!
+
 ```bash
 curl https://raw.githubusercontent.com/Matriks404/dotfiles/refs/heads/master/bin/upgrade-dotfiles-bootstrap.sh | sh
 ```
