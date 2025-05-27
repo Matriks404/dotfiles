@@ -14,7 +14,7 @@ if [ "$USER" == "marcin" ]; then
     fi
 fi
 
-mv $root_dir/$dotfiles_to_copy .
+mv $dotfiles_to_copy .
 
 bin_dir=./bin
 
