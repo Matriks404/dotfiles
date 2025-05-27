@@ -1,0 +1,25 @@
+reportbug_version "13.1.0"
+
+# default operating mode: one of: novice, standard, advanced, expert
+mode novice
+
+# default user interface
+ui text
+
+# name and email setting (if non-default)
+# realname "Marcin Kralka"
+email "marcink96@gmail.com"
+
+# Send all outgoing mail via the following host
+smtphost "smtp.gmail.com:587"
+smtpuser "marcink96@gmail.com"
+#smtppasswd "my password here"
+
+# Require STARTTLS for the SMTP host connection
+smtptls
+
+# If nothing else works, remove the # at the beginning
+# of the following three lines:
+#no-cc
+#list-cc-me
+#smtphost reportbug.debian.org
