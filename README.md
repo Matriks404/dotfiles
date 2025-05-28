@@ -27,6 +27,16 @@ curl https://raw.githubusercontent.com/Matriks404/dotfiles/refs/heads/master/.lo
 
 Otherwise, execute: `get-new-dotfiles` in your bash session (it will execute `.local/bin/upgrade-dotfiles-bootstrap.sh` shell script, which itself executes `build/upgrade-dotfiles.sh` **WHICH SHOULD NOT BE EXECUTED MANUALLY**).
 
+# Cloning and setting up repository
+
+In your usual directory where you put clone repositories enter following commands:
+
+```bash
+git clone https://github.com/Matriks404/dotfiles.git
+cd dotfiles
+tools/initial_repository_setup.sh
+```
+
 # Files
 
 * `bin/upgrade-all.sh` - both system upgrade and other applications (e.g. flatpak) update script.
