@@ -18,6 +18,7 @@ esac
 export LANG=en_US.UTF-8
 export LANGUAGE=en_US:pl_PL
 
+
 # Ignore duplicate lines in history.
 HISTCONTROL=ignoredups
 
@@ -87,11 +88,9 @@ fi
 
 # CUSTOM BASH ALIASES AND FUNCTIONS
 
-# Custom Bash aliases
+# Dotfiles version alias
+alias dotver='cat .dotfiles_version'
 
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
 
 # Custom Bash functions
 
@@ -99,14 +98,21 @@ if [ -f ~/.bash_functions ]; then
     . ~/.bash_functions
 fi
 
-# Custom LOCAL Bash aliases
+# Custom Bash aliases
 
-if [ -f ~/.bash_local_aliases ]; then
-    . ~/.bash_local_aliases
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
 fi
+
 
 # Custom LOCAL Bash functions
 
 if [ -f ~/.bash_local_functions ]; then
     . ~/.bash_local_functions
+fi
+
+# Custom LOCAL Bash aliases
+
+if [ -f ~/.bash_local_aliases ]; then
+    . ~/.bash_local_aliases
 fi

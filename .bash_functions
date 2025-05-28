@@ -1,8 +1,23 @@
 #Getting operating system name
 OS_NAME=$(uname -s)
 
-github_base_url=https://github.com/Matriks404/dotfiles
+github_repo=Matriks404/dotfiles
+github_base_url=https://github.com/$github_repo
 #os_target=$(cat $HOME/.dotfiles_os_target)
+
+check-dotfiles-update ()
+{
+    url="https://raw.githubusercontent.com/$github_repo/refs/heads/master/.dotfiles_version"
+
+    current_version="$(dotver | cut -d ' ' -f 1)"
+    latest_version="$(curl -s $url | cut -d ' ' -f 1)"
+
+    if [ "$current_version" = "$latest_version" ]; then
+        echo "You have the latest version of dotfiles! ($current_version)"
+    else
+        echo "There is a dotfiles update available! ($current_version --> $latest_version)"
+    fi
+}
 
 clone-dotfiles-repository ()
 {

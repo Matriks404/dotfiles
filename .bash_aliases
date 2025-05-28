@@ -14,7 +14,6 @@ alias q='exit'
 # Aliases for core utilities
 
 alias copy='cp'
-alias dotver='cat .dotfiles_version'
 alias wf='tail -f'
 
 
@@ -104,3 +103,8 @@ if [ $(command -v git) ]; then
     alias gitd='git diff'
     alias gits='git status'
 fi
+
+
+# Aliases for .bash_functions
+
+alias dotverc='check-dotfiles-update'
