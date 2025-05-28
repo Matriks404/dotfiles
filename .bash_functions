@@ -38,7 +38,11 @@ copy-dotfiles-to-repos-directory ()
         full_username=$(getent passwd "marcin" | cut -d ':' -f 5)
 
         if [[ "$full_username" =~ ^Marcin\ Kralka ]]; then
-            dotfiles_to_copy="$dotfiles_to_copy $HOME/.gitconfig $HOME/.reportbugrc"
+            dotfiles_to_copy="$dotfiles_to_copy $HOME/.gitconfig"
+
+            if [ -f /etc/debian_version ]; then
+                dotfiles_to_copy="$dotfiles_to_copy $HOME/.reportbugrc"
+            fi
         fi
     fi
 
