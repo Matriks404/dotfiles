@@ -45,7 +45,9 @@ copy-dotfiles-to-repos-directory ()
     cp $dotfiles_to_copy $dotfiles_repo_dir
 
     echo -e "=== Copying Bash scripts... ==="
-    local bin_files_to_copy="$HOME/.local/bin/upgrade-all.sh $HOME/.local/bin/upgrade-dotfiles-bootstrap.sh"
+    # Files and directories that begin with symbols such as _ won't be copied.
+    # As an example you can use "_LOCAL_<rest of the name>" for local-only files and directories.
+    local bin_files_to_copy="$HOME/.local/bin/[0-9a-zA-Z]*.sh"
     local bin_files_repo_dir=$dotfiles_repo_dir/.local/bin
 
     mkdir -p $bin_files_repo_dir
