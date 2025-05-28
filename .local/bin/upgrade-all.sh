@@ -19,7 +19,7 @@ fi
 
 echo -e "=== System upgrade complete! ==="
 
-if [ -x /usr/bin/flatpak ]; then
+if [ $(command -v flatpak)  ]; then
     echo -e "\n=== Updating flatpak applicaitons... ==="
     flatpak update
     echo -e "=== Flatpak applications update complete! ==="

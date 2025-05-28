@@ -33,7 +33,7 @@ fi
 # but on OpenBSD these don't show user names instead
 # since OpenBSD implementation of `ls` doesn't support that option. 
 
-if [ -x /usr/bin/dircolors ]; then
+if [ $(command -v dircolors) ]; then
     alias ls='LC_COLLATE=C ls -F --color=auto'
 else
     alias ls='LC_COLLATE=C ls -F'
@@ -100,7 +100,7 @@ alias psx='ps aux'
 
 # Aliases for git commands
 
-if [ -x /usr/bin/git ]; then
+if [ $(command -v git) ]; then
     alias gitd='git diff'
     alias gits='git status'
 fi

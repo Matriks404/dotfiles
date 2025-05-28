@@ -37,7 +37,7 @@ shopt -s checkwinsize
 shopt -s globstar
 
 # Make less more friendly for non-text input files, see lesspipe(1)
-[ -x /usr/bin/lesspipe ] && eval "$(lesspipe)"
+[ $(command -v lesspipe) ] && eval "$(lesspipe)"
 
 # Set variable identifying the chroot you work in.
 if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
@@ -45,7 +45,7 @@ if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
 fi
 
 # Enable terminal color output.
-if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+if [ $(command -v tput) ] && tput setaf 1 >&/dev/null; then
     # We have color support; assume it's compliant with Ecma-48
     # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
     # a case would tend to support setf rather than setaf.)
@@ -72,7 +72,7 @@ xterm*|rxvt*)
 esac
 
 # Enable color support of ls and also add handy aliases.
-if [ -x /usr/bin/dircolors ]; then
+if [ $(command -v dircolors) ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
 
     alias grep='grep --color=auto'
