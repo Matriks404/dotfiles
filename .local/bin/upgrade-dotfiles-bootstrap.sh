@@ -16,7 +16,7 @@ echo "=== Bootstrapping 'build/update-dotfiles.sh Bash script... ==="
 $dotfiles_dir/build/upgrade-dotfiles.sh
 
 # Cleanup.
-echo "=== Doing some final cleanup... ===
+echo "=== Doing some final cleanup... ==="
 rm "$dotfiles_dir/build/upgrade-dotfiles.sh"
 rmdir -p "$dotfiles_dir/build"
 
