@@ -22,10 +22,10 @@ If getting dotfiles for the first time, run following command in some safe direc
 **NOTE:** You need to have `curl` installed first!
 
 ```bash
-curl https://raw.githubusercontent.com/Matriks404/dotfiles/refs/heads/master/bin/upgrade-dotfiles-bootstrap.sh | sh
+curl https://raw.githubusercontent.com/Matriks404/dotfiles/refs/heads/master/.local/bin/upgrade-dotfiles-bootstrap.sh | sh
 ```
 
-Otherwise, execute: `get-new-dotfiles` in your bash session (it will execute `bin/upgrade-dotfiles-bootstrap.sh` shell script, which itself executes `build/upgrade-dotfiles.sh` **WHICH SHOULD NOT BE EXECUTED MANUALLY**).
+Otherwise, execute: `get-new-dotfiles` in your bash session (it will execute `.local/bin/upgrade-dotfiles-bootstrap.sh` shell script, which itself executes `build/upgrade-dotfiles.sh` **WHICH SHOULD NOT BE EXECUTED MANUALLY**).
 
 # Files
 
