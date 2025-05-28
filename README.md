@@ -39,11 +39,27 @@ tools/initial_repository_setup.sh
 
 # Files
 
-* `bin/upgrade-all.sh` - both system upgrade and other applications (e.g. flatpak) update script.
-* `bin/upgrade-dotfiles-bootstrap.sh` - does some initial work (like downloading and extracting the upgraded version of dotfiles) and then executes temporarily available (for building process) `build/upgrade-dotfiles.sh`, and finishes up cleanup afterwards.
-* `build/upgrade-dotfiles.sh` - upgrades all dotfiles and Bash scripts, and then does some cleanup.
+## Final dotfiles
+* `.local/bin/upgrade-all.sh` - both system upgrade and other applications (e.g. flatpak) update script.
+* `.local/bin/upgrade-dotfiles-bootstrap.sh` - does some initial work (like downloading and extracting the upgraded version of dotfiles) and then executes temporarily available (for building process) `build/upgrade-dotfiles.sh`, and finishes up cleanup afterwards.
 * `.bashrc` - generic bash profile configuration file.
 * `.bash_aliases` - various useful bash aliases.
 * `.bash_functions` - various useful bash functions.
+* `.bash_logout` - set of commands which are executed when you exit **Bash**.
+* `.dotfiles_os_target` - unused OS target file, which might be used in the future.
+* `.dotfiles_version` - version of dotfiles (you can check it by using included Bash `dotver` function.
+* `.gitconfig` - git configuration file, only included if the user is the creator of this repo.
+* `.reportbugrc` - configuration file for `reportbug` command, only included if the user is the creataor of this repo and on **Debian GNU/Linux** system.
+
+## Local dotfiles
 * `.bash_local_aliases` - **LOCAL** bash aliases (not included in the repo, but you can create this file and it will be respected).
 * `.bash_local_functions` - **LOCAL** bash functions (see above).
+
+## Temporary files during dotfiles upgrade
+* `build/upgrade-dotfiles.sh` - upgrades all dotfiles and Bash scripts, and then does some cleanup.
+
+## Other files not normally available
+* `tools/hooks/pre-commit` - pre-commit hook, that updates.dotfiles_version before doing a `git commit` command.
+* `tools/initial_repository_setup.sh` - a setup script that should be executed only once before doing any kind of changes inside a repository.
+* `.gitignore` - a list with files which git ignores.
+* `README.md` - this file.
