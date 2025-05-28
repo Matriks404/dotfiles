@@ -37,4 +37,5 @@ if [ -f $root_dir/.reportbugrc ]; then
     rm $root_dir/.reportbugrc
 fi
 
-rmdir -p $root_dir/.local/bin
+rmdir $root_dir/.local/bin
+rmdir $root_dir/.local
