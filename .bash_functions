@@ -14,10 +14,7 @@ clone-dotfiles-repository ()
         return 1
     fi
 
-    # Check if neccesary repostitories directory exists.
-    if [ ! -d $repos_dir ]; then
-        mkdir $repos_dir
-    fi
+    mkdir -p $repos_dir
 
     #git clone --branch $os_target $github_base_url.git $dotfiles_repo_dir
     git clone $github_base_url.git $dotfiles_repo_dir
@@ -48,14 +45,11 @@ copy-dotfiles-to-repos-directory ()
     cp $dotfiles_to_copy $dotfiles_repo_dir
 
     echo -e "=== Copying Bash scripts... ==="
-    local bin_files_to_copy="$HOME/bin/upgrade-all.sh $HOME/bin/upgrade-dotfiles-bootstrap.sh"
-    local bin_files_dir=$dotfiles_repo_dir/bin
+    local bin_files_to_copy="$HOME/.local/bin/upgrade-all.sh $HOME/.local/bin/upgrade-dotfiles-bootstrap.sh"
+    local bin_files_repo_dir=$dotfiles_repo_dir/.local/bin
 
-    if [ ! -d $bin_files_dir ]; then
-        mkdir $bin_files_dir
-    fi
-
-    cp $bin_files_to_copy $bin_files_dir
+    mkdir -p $bin_files_repo_dir
+    cp $bin_files_to_copy $bin_files_repo_dir
 }
 
 edit-repos ()
@@ -73,7 +67,7 @@ edit-repos ()
 
 get-new-dotfiles ()
 {
-    $HOME/bin/upgrade-dotfiles-bootstrap.sh
+    $HOME/.local/bin/upgrade-dotfiles-bootstrap.sh
 }
 
 get-repos ()
@@ -108,9 +102,9 @@ git-push ()
 upgrade-all ()
 {
     if [ "$OS_NAME" == "Linux" ]; then
-        sudo $HOME/bin/upgrade-all.sh
+        sudo $HOME/.local/bin/upgrade-all.sh
     elif [ "$OS_NAME" == "OpenBSD" ]; then
-        doas $HOME/bin/upgrade-all.sh
+        doas $HOME/.local/bin/upgrade-all.sh
     fi
 }
 

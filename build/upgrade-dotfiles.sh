@@ -20,14 +20,12 @@ fi
 
 mv $dotfiles_to_copy .
 
-bin_dir=./bin
+bin_dir=./.local/bin
 
-if [ ! -d $bin_dir ]; then
-    mkdir $bin_dir
-fi
+mkdir -p $bin_dir
 
 echo -e "=== Moving Bash scripts... ==="
-mv $root_dir/bin/* $bin_dir
+mv $root_dir/.local/bin/* $bin_dir
 
 # Cleanup
 
@@ -39,4 +37,4 @@ if [ -f $root_dir/.reportbugrc ]; then
     rm $root_dir/.reportbugrc
 fi
 
-rmdir $root_dir/bin
+rmdir -p $root_dir/.local/bin
