@@ -77,12 +77,12 @@ edit-repos ()
 {
     if [ -f /etc/debian_version ]; then
         if [ -f /etc/apt/sources.list ]; then
-            sudo editor /etc/apt/sources.list
+            sudo $EDITOR /etc/apt/sources.list
         else
-            sudo editor /etc/apt/sources.list.d/debian.sources
+            sudo $EDITOR /etc/apt/sources.list.d/debian.sources
         fi
     elif [ "$OS_NAME" == "OpenBSD" ]; then
-        doas nano /etc/installurl
+        doas $EDITOR /etc/installurl
     fi
 }
 
