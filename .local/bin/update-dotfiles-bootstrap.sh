@@ -13,11 +13,11 @@ unzip master.zip -x "$dotfiles_dir/README.md" "$dotfiles_dir/.gitignore" "$dotfi
 
 # Boostrap the script that upgrades dotfiles.
 echo "=== Bootstrapping 'build/update-dotfiles.sh Bash script... ==="
-$dotfiles_dir/build/upgrade-dotfiles.sh
+$dotfiles_dir/build/update-dotfiles.sh
 
 # Cleanup.
 echo "=== Doing some final cleanup... ==="
-rm "$dotfiles_dir/build/upgrade-dotfiles.sh"
+rm "$dotfiles_dir/build/update-dotfiles.sh"
 rmdir -p "$dotfiles_dir/build"
 
 rm "master.zip"

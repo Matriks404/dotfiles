@@ -88,7 +88,7 @@ edit-repos ()
 
 get-new-dotfiles ()
 {
-    $HOME/.local/bin/upgrade-dotfiles-bootstrap.sh
+    $HOME/.local/bin/update-dotfiles-bootstrap.sh
 }
 
 get-repos ()
@@ -120,14 +120,36 @@ git-push ()
     git push
 }
 
-upgrade-all ()
-{
-    if [ "$OS_NAME" == "Linux" ]; then
-        sudo $HOME/.local/bin/upgrade-all.sh
-    elif [ "$OS_NAME" == "OpenBSD" ]; then
-        doas $HOME/.local/bin/upgrade-all.sh
-    fi
-}
+# Package updates / System upgrades
+
+if [ "$OS_NAME" == "Linux" -o "$OS_NAME" == "OpenBSD" ]; then
+    su-update-all ()
+    {
+        if [ "$OS_NAME" == "Linux" ]; then
+            sudo $HOME/.local/bin/update-all.sh
+        elif [ "$OS_NAME" == "OpenBSD" ]; then
+            doas $HOME/.local/bin/update-all.sh
+        fi
+    }
+
+    update-all ()
+    {
+        if [ "$OS_NAME" == "Linux" ]; then
+            $HOME/.local/bin/update-all.sh
+        elif [ "$OS_NAME" == "OpenBSD" ]; then
+            su-update-all
+        fi
+    }
+
+    su-upgrade-system ()
+    {
+        if [ "$OS_NAME" == "Linux" ]; then
+            sudo $HOME/.local/bin/upgrade-system.sh
+        elif [ "$OS_NAME" == "OpenBSD" ]; then
+            doas $HOME/.local/bin/upgrade-system.sh
+        fi
+    }
+fi
 
 # Linux-specific functions
 if [ "$OS_NAME" == "Linux" ]; then

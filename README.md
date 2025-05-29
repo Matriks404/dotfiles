@@ -23,10 +23,10 @@ If getting dotfiles for the first time, run following command in some safe direc
 **NOTE:** You need to have `curl` installed first!
 
 ```bash
-curl -s https://raw.githubusercontent.com/Matriks404/dotfiles/refs/heads/master/.local/bin/upgrade-dotfiles-bootstrap.sh | sh
+curl -s https://raw.githubusercontent.com/Matriks404/dotfiles/refs/heads/master/.local/bin/update-dotfiles-bootstrap.sh | sh
 ```
 
-Otherwise, execute: `get-new-dotfiles` in your bash session (it will execute `.local/bin/upgrade-dotfiles-bootstrap.sh` shell script, which itself executes `build/upgrade-dotfiles.sh` **WHICH SHOULD NOT BE EXECUTED MANUALLY**).
+Otherwise, execute: `get-new-dotfiles` in your bash session (it will execute `.local/bin/update-dotfiles-bootstrap.sh` shell script, which itself executes `build/update-dotfiles.sh` **WHICH SHOULD NOT BE EXECUTED MANUALLY**).
 
 # Cloning and setting up repository
 
@@ -41,7 +41,8 @@ tools/initial_repository_setup.sh
 # Files
 
 ## Final dotfiles
-* `.local/bin/upgrade-all.sh` - both system upgrade and other applications (e.g. flatpak) update script.
+* `.local/bin/update-all.sh` - script that updates all packages (including flatpak ones).
+* `.local/bin/upgrade-system.sh` - system upgrade script.
 * `.local/bin/upgrade-dotfiles-bootstrap.sh` - does some initial work (like downloading and extracting the upgraded version of dotfiles) and then executes temporarily available (for building process) `build/upgrade-dotfiles.sh`, and finishes up cleanup afterwards.
 * `.bashrc` - generic bash profile configuration file.
 * `.bash_aliases` - various useful bash aliases.
@@ -57,7 +58,7 @@ tools/initial_repository_setup.sh
 * `.bash_local_functions` - **LOCAL** bash functions (see above).
 
 ## Temporary files during dotfiles upgrade
-* `build/upgrade-dotfiles.sh` - upgrades all dotfiles and Bash scripts, and then does some cleanup.
+* `build/update-dotfiles.sh` - upgrades all dotfiles and Bash scripts, and then does some cleanup.
 
 ## Other files not normally available
 * `tools/hooks/pre-commit` - pre-commit hook, that updates.dotfiles_version before doing a `git commit` command.
