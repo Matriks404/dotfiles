@@ -69,20 +69,18 @@ fi
 
 if [ "$OS_NAME" == "Linux" ]; then
     superuser_cmd='sudo'
-    editor='editor'
 elif [ "$OS_NAME" == "OpenBSD" ]; then
     superuser_cmd='doas'
-    editor='nano'
 fi
 
-alias e="$editor"
-alias se="$superuser_cmd $editor"
+alias e="$EDITOR"
+alias se="$superuser_cmd $EDITOR"
 
-alias ebaliases="$editor ~/.bash_aliases"
-alias ebfunctions="$editor ~/.bash_functions"
+alias ebaliases="$EDITOR ~/.bash_aliases"
+alias ebfunctions="$EDITOR ~/.bash_functions"
 
-alias eblaliases="$editor ~/.bash_local_aliases"
-alias eblfunctions="$editor ~/.bash_local_functions"
+alias eblaliases="$EDITOR ~/.bash_local_aliases"
+alias eblfunctions="$EDITOR ~/.bash_local_functions"
 
 
 # Aliases for system commands

@@ -16,7 +16,15 @@ esac
 
 # Set console language to English. See locale(7) for more info.
 export LANG=en_US.UTF-8
-export LANGUAGE=en_US
+export LANGUAGE=en_US:pl_PL
+
+if [ $(command -v editor) ]; then
+    # Detect (if possible) text editor and use it
+    export EDITOR=$(command -v editor)
+else
+    # Otheriwse, manually set your favourite editor.
+    export EDITOR=nano
+fi
 
 
 # Ignore duplicate lines in history.
