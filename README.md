@@ -43,7 +43,7 @@ tools/initial_repository_setup.sh
 ## Final dotfiles
 * `.local/bin/update-all.sh` - script that updates all packages (including flatpak ones).
 * `.local/bin/upgrade-system.sh` - system upgrade script.
-* `.local/bin/upgrade-dotfiles-bootstrap.sh` - does some initial work (like downloading and extracting the upgraded version of dotfiles) and then executes temporarily available (for building process) `build/upgrade-dotfiles.sh`, and finishes up cleanup afterwards.
+* `.local/bin/update-dotfiles-bootstrap.sh` - does some initial work (like downloading and extracting the updated version of dotfiles) and then executes temporarily available (for building process) `build/update-dotfiles.sh`, and finishes up cleanup afterwards.
 * `.bashrc` - generic bash profile configuration file.
 * `.bash_aliases` - various useful bash aliases.
 * `.bash_functions` - various useful bash functions.
@@ -58,7 +58,7 @@ tools/initial_repository_setup.sh
 * `.bash_local_functions` - **LOCAL** bash functions (see above).
 
 ## Temporary files during dotfiles upgrade
-* `build/update-dotfiles.sh` - upgrades all dotfiles and Bash scripts, and then does some cleanup.
+* `build/update-dotfiles.sh` - upgdates all dotfiles and Bash scripts, and then does some cleanup.
 
 ## Other files not normally available
 * `tools/hooks/pre-commit` - pre-commit hook, that updates.dotfiles_version before doing a `git commit` command.
