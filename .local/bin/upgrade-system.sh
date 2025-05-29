@@ -59,5 +59,5 @@ if [ -f /etc/debian_version ]; then
         apt autoclean
     fi
 elif [ "$OS_NAME" == "OpenBSD" ]; then
-    doas sysupgrade
+    sysupgrade
 fi
