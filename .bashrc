@@ -16,7 +16,7 @@ esac
 
 # Set console language to English. See locale(7) for more info.
 export LANG=en_US.UTF-8
-export LANGUAGE=en_US:pl_PL
+export LANGUAGE=en_US
 
 if [ $(command -v editor) ]; then
     # Detect (if possible) text editor and use it
