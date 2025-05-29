@@ -3,7 +3,7 @@
 # Getting operating system name
 OS_NAME=$(uname -s)
 
-if [ "$EUID" -ne 0 -a ! "$OS_NAME" == "OpenBSD" ]; then
+if [ "$EUID" -ne 0 ]; then
     echo -e "ERROR: This script must be run with root privileges!"
 
     exit 1
