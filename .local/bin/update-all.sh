@@ -3,7 +3,7 @@
 # Getting operating system name
 OS_NAME=$(uname -s)
 
-if [ "$EUID" -ne 0 -a ! $(command -v flatpak) ]; then
+if [ "$EUID" -ne 0 -a -z $(command -v flatpak) ]; then
     echo -e "ERROR: This script must be run with root privileges!"
 
     exit 1
