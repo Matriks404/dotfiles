@@ -9,7 +9,7 @@ echo "=== Getting dotfiles zip file... ==="
 wget --quiet "$github_base_url/archive/refs/heads/master.zip"
 
 echo "=== Unzipping dotfiles... ==="
-unzip master.zip -qqx "$dotfiles_dir/README.md" "$dotfiles_dir/.gitignore" "$dotfiles_dir/build/*" "$dotfiles_dir/tools/hooks/*" "$dotfiles_dir/tools/*"
+unzip -qq master.zip -x "$dotfiles_dir/README.md" "$dotfiles_dir/.gitignore" "$dotfiles_dir/build/*" "$dotfiles_dir/tools/hooks/*" "$dotfiles_dir/tools/*"
 
 echo "=== Moving dotfiles... ==="
 dotfiles_to_move_list="$(cat $dotfiles_dir/.dotfiles_lists/common.txt)"
