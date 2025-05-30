@@ -5,6 +5,11 @@ github_repo=Matriks404/dotfiles
 github_base_url=https://github.com/$github_repo
 #os_target=$(cat $HOME/.dotfiles_os_target)
 
+backup-file ()
+{
+    cp $1 $1.bak
+}
+
 check-dotfiles-update ()
 {
     url="https://raw.githubusercontent.com/$github_repo/refs/heads/master/.dotfiles_version"

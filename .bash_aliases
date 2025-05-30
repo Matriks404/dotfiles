@@ -14,6 +14,7 @@ alias q='exit'
 # Aliases for core utilities
 
 alias copy='cp'
+alias rmbaks='rm *.bak*'
 alias wf='tail -f'
 
 
