@@ -92,7 +92,13 @@ edit-repos ()
 
 get-new-dotfiles ()
 {
-    if check-dotfiles-update; then
+    FORCE_UPDATE=false
+
+    if [ "$1" == "-f" -o "$1" == "--force" ]; then
+        FORCE_UPDATE=true
+    fi
+
+    if $FORCE_UPDATE || check-dotfiles-update; then
         echo -e "\nGetting new dotfiles..."
 
         repo_name='Matriks404/dotfiles'
