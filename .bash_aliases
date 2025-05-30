@@ -14,7 +14,7 @@ alias q='exit'
 # Aliases for core utilities
 
 alias copy='cp'
-alias rmbaks='rm *.bak*'
+alias rmbaks='rm -f .*.bak* *.bak*'
 alias wf='tail -f'
 
 
@@ -77,8 +77,8 @@ fi
 alias e="$EDITOR"
 alias se="$superuser_cmd $EDITOR"
 
-alias ebaliases="$EDITOR ~/.bash_aliases"
-alias ebfunctions="$EDITOR ~/.bash_functions"
+alias ebaliases="$EDITOR ~/.bash_aliases && backup-file ~/.bash_aliases"
+alias ebfunctions="$EDITOR ~/.bash_functions && backup-file ~/.bash_functions"
 
 alias eblaliases="$EDITOR ~/.bash_local_aliases"
 alias eblfunctions="$EDITOR ~/.bash_local_functions"
