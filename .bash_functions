@@ -55,22 +55,30 @@ copy-dotfiles-to-repos-directory ()
         clone-dotfiles-repository
     fi
 
+    echo -e "=== Copying dotfiles lists... ==="
+    local txtfiles_to_copy="$HOME/.dotfiles_list_*"
+
+    cp -v $txtfiles_to_copy $dotfiles_repo_dir
+
     echo -e "=== Copying dotfiles... ==="
-    local dotfiles_to_copy="$HOME/.bashrc $HOME/.bash_aliases $HOME/.bash_functions $HOME/.bash_logout $HOME/.dotfiles*"
+    #local dotfiles_to_copy="$HOME/.bashrc $HOME/.bash_aliases $HOME/.bash_functions $HOME/.bash_logout $HOME/.dotfiles*"
+    local dotfiles_to_copy="$(cat $HOME/.dotfiles_list_common.txt)"
 
     if [ "$USER" == "marcin" ]; then
         full_username=$(getent passwd "marcin" | cut -d ':' -f 5)
 
         if [[ "$full_username" =~ ^Marcin\ Kralka ]]; then
-            dotfiles_to_copy="$dotfiles_to_copy $HOME/.gitconfig"
+            #dotfiles_to_copy="$dotfiles_to_copy $HOME/.gitconfig"
+            dotfiles_to_copy="$dotfiles_to_copy $(cat $HOME/.dotfiles_list_private.txt)"
 
             if [ -f /etc/debian_version ]; then
-                dotfiles_to_copy="$dotfiles_to_copy $HOME/.reportbugrc"
+                #dotfiles_to_copy="$dotfiles_to_copy $HOME/.reportbugrc"
+                dotfiles_to_copy="$dotfiles_to_copy $(cat $HOME/.dotfiles_list_private_debian.txt)"
             fi
         fi
     fi
 
-    cp $dotfiles_to_copy $dotfiles_repo_dir
+    cp -v $dotfiles_to_copy $dotfiles_repo_dir
 
     echo -e "=== Copying Bash scripts... ==="
     # Files and directories that begin with symbols such as _ won't be copied.
@@ -79,7 +87,7 @@ copy-dotfiles-to-repos-directory ()
     local bin_files_repo_dir=$dotfiles_repo_dir/.local/bin
 
     mkdir -p $bin_files_repo_dir
-    cp $bin_files_to_copy $bin_files_repo_dir
+    cp -v $bin_files_to_copy $bin_files_repo_dir
 }
 
 edit-repos ()
