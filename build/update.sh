@@ -11,13 +11,13 @@ wget "$github_base_url/archive/refs/heads/master.zip"
 echo "=== Unzipping dotfiles... ==="
 unzip master.zip -x "$dotfiles_dir/README.md" "$dotfiles_dir/.gitignore" "$dotfiles_dir/build/*" "$dotfiles_dir/tools/hooks/*" "$dotfiles_dir/tools/*"
 
-#dotfiles_to_copy="$dotfiles_dir/.bash* $dotfiles_dir/.dotfiles*"
-dotfiles_to_move="$(cat $dotfiles_dir/.dotfiles_list_common.txt)"
-
 echo "=== Moving dotfiles lists... ==="
 txtfiles_to_move="$dotfiles_dir/.dotfiles_list_*"
 
 mv -v $txtfiles_to_move .
+
+#dotfiles_to_copy="$dotfiles_dir/.bash* $dotfiles_dir/.dotfiles*"
+dotfiles_to_move="$(cat $dotfiles_dir/.dotfiles_list_common.txt)"
 
 echo "=== Moving dotfiles... ==="
 if [ "$USER" = "marcin" ]; then
@@ -29,7 +29,7 @@ if [ "$USER" = "marcin" ]; then
 
         if [ -f /etc/debian_version ]; then
             #dotfiles_to_copy="$dotfiles_to_copy $dotfiles_dir/.reportbugrc"
-            dotfiles_to_move="$dotfiles_to_move $(cat $dotfiles_dir/.dotfiles_list_private_debian.txt")
+            dotfiles_to_move="$dotfiles_to_move $(cat $dotfiles_dir/.dotfiles_list_private_debian.txt)"
         fi
     fi
 fi
