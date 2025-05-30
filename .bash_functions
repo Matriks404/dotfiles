@@ -60,7 +60,7 @@ copy-dotfiles-to-repos-directory ()
     local txtfiles_repo_dir="$dotfiles_repo_dir/.dotfiles_lists/"
 
     mkdir -p $txtfiles_repo_dir
-    cp -v $txtfiles_to_copy $dotfiles_repo_dir
+    cp -v $txtfiles_to_copy $txtfiles_repo_dir
 
     echo -e "=== Copying dotfiles... ==="
     local dotfiles_to_copy="$(cat $HOME/.dotfiles_lists/common.txt)"
