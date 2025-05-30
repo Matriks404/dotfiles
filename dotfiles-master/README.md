@@ -23,7 +23,7 @@ If getting dotfiles for the first time, run following command in some safe direc
 **NOTE:** You need to have `curl` installed first!
 
 ```bash
-curl --silent https://raw.githubusercontent.com/Matriks404/dotfiles/refs/heads/master/build/update.sh | sh
+curl -s https://raw.githubusercontent.com/Matriks404/dotfiles/refs/heads/master/build/update.sh | sh
 ```
 
 Otherwise, execute: `get-new-dotfiles` in your bash session (it will actually execute the same `curl` script as noted above).

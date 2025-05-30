@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+
+# Updates version information inside '.dotfiles_version' file.
+# Format is: `r74.COMMIT_NO (built on YYYY-MM-DD HH:MM).
+# Where 'COMMIT_NO' is a number of commit since the first commit on master branch.
+
+# Script below is generated using Gemini 2.5 Flash, with some modifications.
+# If you have problems with that, remove or replace it.
+
+# Define the target file
+DOTFILES_VERSION_FILE=".dotfiles_version"
+
+# Get the first commit hash on the master branch.
+if git show-ref --verify --quiet refs/heads/master; then
+    FIRST_COMMIT_HASH=$(git rev-list --max-parents=0 HEAD)
+else
+    echo "Error: 'master' branch not found."
+
+    exit 1
+fi
+
+if [ -z "$FIRST_COMMIT_HASH" ]; then
+    echo "Error: Could not determine the first commit hash on the default branch."
+
+    exit 1
+fi
+
+
+# Get the number of commits since the first commit on the master branch.
+# This counts all commits reachable from HEAD that are also reachable from the first commit.
+NUM_COMMITS=$(git rev-list --count ${FIRST_COMMIT_HASH}..HEAD)
+
+# Get the current date and time in the specified format.
+BUILD_DATE=$(date +"%Y-%m-%d %H:%M")
+
+# Construct the version string.
+VERSION_STRING="r74.${NUM_COMMITS} (built on ${BUILD_DATE})"
+
+# Update the '.dotfiles_version' file.
+echo "${VERSION_STRING}" > "${DOTFILES_VERSION_FILE}"
+
+# Add the updated file to the staging area so it's commited.
+git add "${DOTFILES_VERSION_FILE}"
+
+echo "Updated ${DOTFILES_VERSION_FILE} to: ${VERSION_STRING}"
+
+exit 0
