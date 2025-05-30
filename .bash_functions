@@ -12,7 +12,7 @@ check-dotfiles-update ()
     current_version="$(dotver | cut -d ' ' -f 1)"
     latest_version="$(curl -s $url | cut -d ' ' -f 1)"
 
-    if [ "$current_version" = "$latest_version" -o "$current_version" > "$latest_version" ]; then
+    if [[ "$current_version" = "$latest_version" || "$current_version" > "$latest_version" ]]; then
         echo "You have the latest version of dotfiles! ($current_version)"
 
         return 1
