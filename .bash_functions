@@ -14,8 +14,12 @@ check-dotfiles-update ()
 
     if [ "$current_version" = "$latest_version" ]; then
         echo "You have the latest version of dotfiles! ($current_version)"
+
+        return 1
     else
         echo "There is a dotfiles update available! ($current_version --> $latest_version)"
+
+        return 0
     fi
 }
 
@@ -88,9 +92,15 @@ edit-repos ()
 
 get-new-dotfiles ()
 {
-    repo_name='Matriks404/dotfiles'
+    if check-dotfiles-update; then
+        echo -e "\nGetting new dotfiles..."
 
-    curl -s "https://raw.githubusercontent.com/$repo_name/refs/heads/master/build/update.sh" | sh
+        repo_name='Matriks404/dotfiles'
+
+        curl -s "https://raw.githubusercontent.com/$repo_name/refs/heads/master/build/update.sh" | sh
+    else
+        echo -e "\nThere is no need to update dotfiles."
+    fi
 }
 
 get-repos ()
