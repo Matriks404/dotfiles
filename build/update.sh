@@ -11,14 +11,9 @@ wget "$github_base_url/archive/refs/heads/master.zip"
 echo "=== Unzipping dotfiles... ==="
 unzip master.zip -x "$dotfiles_dir/README.md" "$dotfiles_dir/.gitignore" "$dotfiles_dir/build/*" "$dotfiles_dir/tools/hooks/*" "$dotfiles_dir/tools/*"
 
-echo "=== Moving dotfiles lists... ==="
-txtfiles_to_move="$dotfiles_dir/.dotfiles_lists/*"
-
-mv -v $txtfiles_to_move .
-
+echo "=== Moving dotfiles... ==="
 dotfiles_to_move="$(cat $dotfiles_dir/.dotfiles_lists/common.txt)"
 
-echo "=== Moving dotfiles... ==="
 if [ "$USER" = "marcin" ]; then
     full_username=$(getent passwd marcin | cut -d ':' -f 5)
 
@@ -40,6 +35,11 @@ echo "=== Moving Bash scripts... ==="
 bin_dir="./.local/bin"
 mkdir -p $bin_dir
 mv -v $dotfiles_dir/.local/bin/* $bin_dir
+
+echo "=== Moving dotfiles lists... ==="
+txtfiles_to_move="$dotfiles_dir/.dotfiles_lists/*"
+
+mv -v $txtfiles_to_move .
 
 # Cleanup
 
