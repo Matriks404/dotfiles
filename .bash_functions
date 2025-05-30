@@ -92,6 +92,12 @@ edit-repos ()
 
 get-new-dotfiles ()
 {
+    if [ -d "./.git" ]; then
+        echo -e "ERROR: You are in the git repository directory! Quitting..."
+
+        return 1
+    fi
+
     FORCE_UPDATE=false
 
     if [ "$1" == "-f" -o "$1" == "--force" ]; then
