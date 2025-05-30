@@ -88,7 +88,9 @@ edit-repos ()
 
 get-new-dotfiles ()
 {
-    $HOME/.local/bin/update-dotfiles-bootstrap.sh
+    repo_name='Matriks404/dotfiles'
+
+    curl -s "https://raw.githubusercontent.com/$repo_name/refs/heads/master/build/update.sh" | sh
 }
 
 get-repos ()
