@@ -28,7 +28,7 @@ if [ "$USER" = "marcin" ]; then
     fi
 fi
 
-mv -v $dotfiles_to_copy .
+mv -v $dotfiles_to_move .
 
 echo "=== Moving Bash scripts... ==="
 
