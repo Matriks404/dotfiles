@@ -106,6 +106,7 @@ get-new-dotfiles ()
         curl -s "https://raw.githubusercontent.com/$repo_name/refs/heads/master/build/update.sh" | sh
     else
         echo -e "\nThere is no need to update dotfiles."
+        echo -e "Use -f or --force option to force update them."
     fi
 }
 
