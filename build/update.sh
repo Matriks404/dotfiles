@@ -16,7 +16,6 @@ dotfiles_to_copy="$dotfiles_dir/.bash* $dotfiles_dir/.dotfiles*"
 echo "=== Moving dotfiles... ==="
 if [ "$USER" = "marcin" ]; then
     full_username=$(getent passwd marcin | cut -d ':' -f 5)
-    echo $full_username
 
     if echo "$full_username" | grep -q "^Marcin Kralka"; then
         dotfiles_to_copy="$dotfiles_to_copy $dotfiles_dir/.gitconfig"
@@ -53,4 +52,4 @@ rmdir $dotfiles_dir
 
 rm master.zip
 
-echo "\n\n\nEverything is done! Make sure to restart your Bash instance to get all new features and improvements!"
+echo "\nEverything is done! Make sure to restart your Bash instance to get all new features and improvements!"
