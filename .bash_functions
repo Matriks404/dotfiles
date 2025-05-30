@@ -56,24 +56,23 @@ copy-dotfiles-to-repos-directory ()
     fi
 
     echo -e "=== Copying dotfiles lists... ==="
-    local txtfiles_to_copy="$HOME/.dotfiles_list_*"
+    local txtfiles_to_copy="$HOME/.dotfiles_lists/*"
+    local txtfiles_repo_dir="$dotfiles_repo_dir/.dotfiles_lists/"
 
+    mkdir -p $txtfiles_repo_dir
     cp -v $txtfiles_to_copy $dotfiles_repo_dir
 
     echo -e "=== Copying dotfiles... ==="
-    #local dotfiles_to_copy="$HOME/.bashrc $HOME/.bash_aliases $HOME/.bash_functions $HOME/.bash_logout $HOME/.dotfiles*"
-    local dotfiles_to_copy="$(cat $HOME/.dotfiles_list_common.txt)"
+    local dotfiles_to_copy="$(cat $HOME/.dotfiles_lists/common.txt)"
 
     if [ "$USER" == "marcin" ]; then
         full_username=$(getent passwd "marcin" | cut -d ':' -f 5)
 
         if [[ "$full_username" =~ ^Marcin\ Kralka ]]; then
-            #dotfiles_to_copy="$dotfiles_to_copy $HOME/.gitconfig"
-            dotfiles_to_copy="$dotfiles_to_copy $(cat $HOME/.dotfiles_list_private.txt)"
+            dotfiles_to_copy="$dotfiles_to_copy $(cat $HOME/.dotfiles_lists/private.txt)"
 
             if [ -f /etc/debian_version ]; then
-                #dotfiles_to_copy="$dotfiles_to_copy $HOME/.reportbugrc"
-                dotfiles_to_copy="$dotfiles_to_copy $(cat $HOME/.dotfiles_list_private_debian.txt)"
+                dotfiles_to_copy="$dotfiles_to_copy $(cat $HOME/.dotfiles_lists/private_debian.txt)"
             fi
         fi
     fi
@@ -84,7 +83,7 @@ copy-dotfiles-to-repos-directory ()
     # Files and directories that begin with symbols such as _ won't be copied.
     # As an example you can use "_LOCAL_<rest of the name>" for local-only files and directories.
     local bin_files_to_copy="$HOME/.local/bin/[0-9a-zA-Z]*.sh"
-    local bin_files_repo_dir=$dotfiles_repo_dir/.local/bin
+    local bin_files_repo_dir="$dotfiles_repo_dir/.local/bin"
 
     mkdir -p $bin_files_repo_dir
     cp -v $bin_files_to_copy $bin_files_repo_dir
