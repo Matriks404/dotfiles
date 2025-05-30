@@ -52,3 +52,5 @@ rmdir $dotfiles_dir/.local
 rmdir $dotfiles_dir
 
 rm master.zip
+
+echo "\n\n\nEverything is done! Make sure to restart your Bash instance to get all new features and improvements!"
