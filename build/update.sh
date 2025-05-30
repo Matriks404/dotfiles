@@ -52,22 +52,7 @@ mv -v $txtfiles_to_move $txtfiles_dir
 
 echo "=== Cleaning up... ==="
 
-if [ -f $dotfiles_dir/.gitconfig ]; then
-    rm -v $dotfiles_dir/.gitconfig
-fi
-
-if [ -f $dotfiles_dir/.reportbugrc ]; then
-    rm -v $dotfiles_dir/.reportbugrc
-fi
-
-rm -v $dotfiles_dir/.dotfiles_os_target
-
-rmdir -v $dotfiles_dir/.dotfiles_lists
-
-rmdir -v $dotfiles_dir/.local/bin
-rmdir -v $dotfiles_dir/.local
-rmdir -v $dotfiles_dir
-
+rm -rv $dotfiles_dir
 rm -v master.zip
 
 echo "\nEverything is done! Make sure to restart your Bash instance to get all new features and improvements!"
