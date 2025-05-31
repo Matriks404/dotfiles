@@ -65,6 +65,10 @@ copy-dotfiles-to-repos-directory ()
     echo -e "=== Copying dotfiles... ==="
     local dotfiles_to_copy="$(cat $HOME/.dotfiles_lists/common.txt)"
 
+    if [ -f /etc/debian_version ]; then
+        dotfiles_to_copy="$dotfiles_to_copy $(cat $HOME/.dotfiles_lists/debian.txt)"
+    fi
+
     if [ "$USER" == "marcin" ]; then
         full_username=$(getent passwd "marcin" | cut -d ':' -f 5)
 

@@ -1,0 +1,6 @@
+Xcursor.theme: breeze_cursors
+Xcursor.size: 22
+
+XTerm*termName: xterm-256color
+XTerm*background: black
+XTerm*foreground: white

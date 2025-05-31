@@ -16,6 +16,10 @@ unzip -qq master.zip -x $files_to_exclude
 echo "=== Moving dotfiles... ==="
 dotfiles_to_move_list="$(cat $dotfiles_dir/.dotfiles_lists/common.txt)"
 
+if [ -f /etc/debian_version ]; then
+    dotfiles_to_move_list="$dotfiles_to_move_list $(cat $dotfiles_dir/.dotfiles_lists/debian.txt"
+fi
+
 if [ "$USER" = "marcin" ]; then
     full_username=$(getent passwd marcin | cut -d ':' -f 5)
 
