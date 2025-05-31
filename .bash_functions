@@ -46,6 +46,12 @@ clone-dotfiles-repository ()
 
 copy-dotfiles-to-repos-directory ()
 {
+    if [ "$OS_NAME" == "Linux" ]; then
+        short_name='linux'
+    elif [ "$OS_NAME" == "OpenBSD" ]; then
+        short_name='openbsd'
+    fi
+
     local repos_dir=$HOME/repos
     local dotfiles_repo_dir=$HOME/repos/dotfiles
 
@@ -63,13 +69,7 @@ copy-dotfiles-to-repos-directory ()
     cp -v $txtfiles_to_copy $txtfiles_repo_dir
 
     echo -e "=== Copying dotfiles... ==="
-    local dotfiles_to_copy="$(cat $HOME/.dotfiles_lists/common.txt)"
-
-    if [ "$OS_NAME" == "OpenBSD" ]; then
-        dotfiles_to_copy="$dotfiles_to_copy $(cat $HOME/.dotfiles_lists/openbsd.txt)"
-    elif [ -f /etc/debian_version ]; then
-        dotfiles_to_copy="$dotfiles_to_copy $(cat $HOME/.dotfiles_lists/debian.txt)"
-    fi
+    local dotfiles_to_copy="$(cat $HOME/.dotfiles_lists/common.txt) $(cat $HOME/.dotfiles_lists/$short_name.txt)"
 
     if [ "$USER" == "marcin" ]; then
         full_username=$(getent passwd "marcin" | cut -d ':' -f 5)

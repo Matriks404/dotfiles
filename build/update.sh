@@ -3,13 +3,11 @@
 # Getting operating system name
 OS_NAME=$(uname -s)
 
-if [ "$OS_NAME" == "Linux" ]; then
-    short_name = 'linux'
-elif [ "$OS_NAME" == "OpenBSD" ]; then
-    short_name = 'openbsd'
+if [ "$OS_NAME" = "Linux" ]; then
+    short_name='linux'
+elif [ "$OS_NAME" = "OpenBSD" ]; then
+    short_name='openbsd'
 fi
-
-
 
 github_base_url='https://github.com/Matriks404/dotfiles'
 
@@ -26,7 +24,7 @@ unzip -qq master.zip -x $files_to_exclude
 
 echo "=== Modifying X files... ==="
 sed -i "1i#include \".Xdefaults.$short_name\"" "$dotfiles_dir/.Xdefaults"
-sed -i "1i#include \".Xresources.$short_name\"" "dotfiles_dir/.Xresources"
+sed -i "1i#include \".Xresources.$short_name\"" "$dotfiles_dir/.Xresources"
 
 echo "=== Moving dotfiles... ==="
 
