@@ -3,3 +3,5 @@
 .bash_logout
 .bashrc
 .dotfiles_version
+.Xdefaults
+.Xresources

@@ -1,0 +1,2 @@
+.Xdefaults.openbsd
+.Xresources.openbsd
