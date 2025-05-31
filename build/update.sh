@@ -23,8 +23,8 @@ files_to_exclude="$dotfiles_dir/README.md $dotfiles_dir/FILE_LIST.md $dotfiles_d
 unzip -qq master.zip -x $files_to_exclude
 
 echo "=== Modifying X files... ==="
-    printf "%s\n" "#include \"Xdefaults.$short_name\"" > "$dotfiles_dir/.Xdefaults.tmp"
-    printf "%s\n" "#include \"Xresources.$short_name\"" > "$dotfiles_dir/.Xresources.tmp"
+    printf "%s\n" "#include \".Xdefaults.$short_name\"" > "$dotfiles_dir/.Xdefaults.tmp"
+    printf "%s\n" "#include \".Xresources.$short_name\"" > "$dotfiles_dir/.Xresources.tmp"
 
     cat $dotfiles_dir/.Xdefaults >> $dotfiles_dir/.Xdefaults.tmp
     cat $dotfiles_dir/.Xresources >> $dotfiles_dir/.Xresources.tmp
