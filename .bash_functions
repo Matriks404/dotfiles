@@ -101,7 +101,44 @@ edit-repos ()
         if [ -f /etc/apt/sources.list ]; then
             sudo $EDITOR /etc/apt/sources.list
         else
-            sudo $EDITOR /etc/apt/sources.list.d/debian.sources
+            local files=()
+
+            for file in /etc/apt/sources.list.d/*.sources; do
+                if [[ -e "$file" ]]; then
+                    files+=("$file")
+                fi
+            done
+
+            local num_files=${#files[@]}
+
+            if [[ "$num_files" -eq 0 ]]; then
+                echo -e "Error: No .sources files found in /etc/apt/sources.list.d/"
+
+                return 0
+            fi
+
+            local i=1
+
+            echo "Files in /etc/apt/sources.list.d:"
+            for file in "${files[@]}"; do
+                echo "  $i) $(basename $file)"
+                ((i++))
+            done
+
+            echo ""
+
+            read -rp "Select file you want to edit (1-$num_files): " selection
+
+            if ! [[ "$selection" =~ ^[0-9]+$ ]] || [[ "$selection" -lt 1 ]] || [[ "$selection" -gt "$num_files" ]]; then
+                echo -e "\nError: Invalid selection. Next time enter a number between 1 and $num_files."
+
+                return 1
+            fi
+
+            local selected_file="${files[$((selection - 1))]}"
+
+            echo "Editing: $selected_file"
+            sudo $EDITOR "$selected_file"
         fi
     elif [ "$OS_NAME" == "OpenBSD" ]; then
         doas $EDITOR /etc/installurl
@@ -145,7 +182,7 @@ get-repos ()
             local sources_list_dir=/etc/apt/sources.list.d/
             local temp_file=$(mktemp)
 
-            for file in "$sources_list_dir"/*; do
+            for file in $sources_list_dir/*; do
                 if [ -f "$file" ]; then
                     echo "=== File: $(basename "$file") ===" >> $temp_file
                     cat "$file" >> $temp_file
