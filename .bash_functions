@@ -142,7 +142,19 @@ get-repos ()
         if [ -f /etc/apt/sources.list ]; then
             cat /etc/apt/sources.list
         else
-            cat /etc/apt/sources.list.d/debian.sources
+            local sources_list_dir=/etc/apt/sources.list.d/
+            local temp_file=$(mktemp)
+
+            for file in "$sources_list_dir"/*; do
+                if [ -f "$file" ]; then
+                    echo "=== File: $(basename "$file") ===" >> $temp_file
+                    cat "$file" >> $temp_file
+                    echo "" >> $temp_file
+                fi
+            done
+
+            less $temp_file
+            rm $temp_file
         fi
     elif [ "$OS_NAME" == "OpenBSD" ]; then
         cat /etc/installurl
