@@ -1,2 +1,2 @@
-.Xdefaults.debian
-.Xresources.debian
+.Xdefaults.linux
+.Xresources.linux
