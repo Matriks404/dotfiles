@@ -124,7 +124,7 @@ edit-repos ()
 
         if [ -f /etc/apt/sources.list ]; then
             sudo $EDITOR /etc/apt/sources.list
-        else
+        elif [ -d /etc/apt/sources.list.d ]; then
             local files=()
 
             for file in /etc/apt/sources.list.d/*.{list,sources}; do
@@ -163,6 +163,10 @@ edit-repos ()
 
             local selected_file="${sorted_files[$((selection - 1))]}"
             sudo $EDITOR "$selected_file"
+        else
+            echo -e "Error: You don't have valid sources.list available!"
+
+            return 1
         fi
     elif [ "$OS_NAME" == "OpenBSD" ]; then
         doas $EDITOR /etc/installurl
@@ -202,7 +206,7 @@ get-repos ()
     if [ -f /etc/debian_version ]; then
         if [ -f /etc/apt/sources.list ]; then
             cat /etc/apt/sources.list
-        else
+        elif [ -d /etc/apt/sources.list.d ]; then
             local sources_list_dir=/etc/apt/sources.list.d/
             local temp_file=$(mktemp)
 
@@ -216,6 +220,10 @@ get-repos ()
 
             less $temp_file
             rm $temp_file
+        else
+            echo -e "Error: You don't have valid sources.list available!"
+
+            return 1
         fi
     elif [ "$OS_NAME" == "OpenBSD" ]; then
         cat /etc/installurl

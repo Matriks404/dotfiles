@@ -4,7 +4,7 @@
 OS_NAME=$(uname -s)
 
 if [ "$EUID" -ne 0 ]; then
-    echo -e "ERROR: This script must be run with root privileges!"
+    echo -e "Error: This script must be run with root privileges!"
 
     exit 1
 fi
@@ -15,19 +15,19 @@ if [ -f /etc/debian_version ]; then
     elif [ -f /etc/apt/sources.list.d/debian.sources ]; then
         SOURCES_LIST_LOCATION=/etc/apt/sources.list.d/debian.sources
     else
-        echo -e "You don't have valid sources.list available! Quitting..."
+        echo -e "Error: You don't have valid sources.list available! Quitting..."
 
         exit 1
     fi
 
-    echo -e "INFO: This script won't upgrade your system, unless you have edited appropriate entries in $SOURCES_LIST_LOCATION!"
+    echo -e "Info: This script won't upgrade your system, unless you have edited appropriate entries in $SOURCES_LIST_LOCATION!"
     echo -en "Do you want to edit them now? If so, enter \"Yes.\" (without quotes): "
     read answer
 
     if [ "$answer" == "Yes." ]; then
         editor "$SOURCES_LIST_LOCATION"
 
-        echo -e "INFO: Editing done.\n"
+        echo -e "Info: Editing done.\n"
     fi
 fi
 
