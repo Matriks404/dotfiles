@@ -65,7 +65,9 @@ copy-dotfiles-to-repos-directory ()
     echo -e "=== Copying dotfiles... ==="
     local dotfiles_to_copy="$(cat $HOME/.dotfiles_lists/common.txt)"
 
-    if [ -f /etc/debian_version ]; then
+    if [ "$OS_NAME" == "OpenBSD" ]; then
+        dotfiles_to_copy="$dotfiles_to_copy $(cat $HOME/.dotfiles_lists/openbsd.txt)"
+    elif [ -f /etc/debian_version ]; then
         dotfiles_to_copy="$dotfiles_to_copy $(cat $HOME/.dotfiles_lists/debian.txt)"
     fi
 
