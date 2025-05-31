@@ -1,5 +1,16 @@
 #!/bin/sh
 
+# Getting operating system name
+OS_NAME=$(uname -s)
+
+if [ "$OS_NAME" == "Linux" ]; then
+    short_name = 'linux'
+elif [ "$OS_NAME" == "OpenBSD" ]; then
+    short_name = 'openbsd'
+fi
+
+
+
 github_base_url='https://github.com/Matriks404/dotfiles'
 
 # Download and unzip archive containing dotfiles and scripts.
@@ -13,14 +24,13 @@ files_to_exclude="$dotfiles_dir/README.md $dotfiles_dir/FILE_LIST.md $dotfiles_d
 
 unzip -qq master.zip -x $files_to_exclude
 
-echo "=== Moving dotfiles... ==="
-dotfiles_to_move_list="$(cat $dotfiles_dir/.dotfiles_lists/common.txt)"
+echo "=== Modifying X files... ==="
+sed -i "1i#include \".Xdefaults.$short_name\"" "$dotfiles_dir/.Xdefaults"
+sed -i "1i#include \".Xresources.$short_name\"" "dotfiles_dir/.Xresources"
 
-if [ "$OS_NAME" == "OpenBSD" ]; then
-    dotfiles_to_move_list="$dotfiles_to_move_list $(cat $dotfiles_dir/.dotfiles_lists/openbsd.txt)"
-elif [ -f /etc/debian_version ]; then
-    dotfiles_to_move_list="$dotfiles_to_move_list $(cat $dotfiles_dir/.dotfiles_lists/debian.txt)"
-fi
+echo "=== Moving dotfiles... ==="
+
+dotfiles_to_move_list="$(cat $dotfiles_dir/.dotfiles_lists/common.txt) $(cat $dotfiles_dir/.dotfiles_lists/$short_name.txt)"
 
 if [ "$USER" = "marcin" ]; then
     full_username=$(getent passwd marcin | cut -d ':' -f 5)
@@ -39,6 +49,8 @@ dotfiles_to_move=""
 for filename in $dotfiles_to_move_list; do
     dotfiles_to_move="$dotfiles_to_move $dotfiles_dir/$filename"
 done
+
+
 
 mv -v $dotfiles_to_move .
 
