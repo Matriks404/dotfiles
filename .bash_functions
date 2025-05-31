@@ -98,20 +98,44 @@ copy-dotfiles-to-repos-directory ()
 edit-repos ()
 {
     if [ -f /etc/debian_version ]; then
+        if [[ "$1" == "-f" || "$1" == "-fl" || "$1" == "-fs" || "$1" == "--file" ]]; then
+            if [ -z "$2" ]; then
+                echo -e "Error: You need to provide a filename!"
+
+                return 1
+            fi
+
+            if [ "$1" == "-fl" ]; then
+                local file="/etc/apt/sources.list.d/$2.list"
+            elif [ "$1" == "-fs" ]; then
+                local file="/etc/apt/sources.list.d/$2.sources"
+            else
+                local file="/etc/apt/sources.list.d/$2"
+            fi
+
+            if [ -f "$file" ]; then
+                sudo $EDITOR "$file"
+            else
+                echo -e "Error: $file doesn't exist!"
+            fi
+
+            return 1
+        fi
+
         if [ -f /etc/apt/sources.list ]; then
             sudo $EDITOR /etc/apt/sources.list
         else
             local files=()
 
             for file in /etc/apt/sources.list.d/*.{list,sources}; do
-                if [[ -e "$file" ]]; then
+                if [ -f "$file" ]; then
                     files+=("$file")
                 fi
             done
 
             local num_files=${#files[@]}
 
-            if [[ "$num_files" -eq 0 ]]; then
+            if [ "$num_files" -eq 0 ]; then
                 echo -e "Error: No .list or .sources files found in /etc/apt/sources.list.d/"
 
                 return 0
@@ -138,8 +162,6 @@ edit-repos ()
             fi
 
             local selected_file="${sorted_files[$((selection - 1))]}"
-
-            echo "Editing: $selected_file"
             sudo $EDITOR "$selected_file"
         fi
     elif [ "$OS_NAME" == "OpenBSD" ]; then
@@ -249,6 +271,11 @@ su-upgrade-system ()
 
 # Linux-specific functions
 if [ "$OS_NAME" == "Linux" ]; then
+    edit-debian-sources ()
+    {
+        edit-repos --file debian.sources
+    }
+
     wiki ()
     {
         local article=$1
