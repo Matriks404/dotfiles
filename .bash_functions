@@ -105,6 +105,8 @@ edit-repos ()
         fi
     elif [ "$OS_NAME" == "OpenBSD" ]; then
         doas $EDITOR /etc/installurl
+    else
+        echo -e "Error: Unsupported operating system/Linux distribution."
     fi
 }
 
@@ -144,6 +146,8 @@ get-repos ()
         fi
     elif [ "$OS_NAME" == "OpenBSD" ]; then
         cat /etc/installurl
+    else
+        echo -e "Error: Unsupported operating system/Linux distribution."
     fi
 }
 
@@ -165,34 +169,32 @@ git-push ()
 
 # Package updates / System upgrades
 
-if [ "$OS_NAME" == "Linux" -o "$OS_NAME" == "OpenBSD" ]; then
-    su-update-all ()
-    {
-        if [ "$OS_NAME" == "Linux" ]; then
-            sudo $HOME/.local/bin/update-all.sh
-        elif [ "$OS_NAME" == "OpenBSD" ]; then
-            doas $HOME/.local/bin/update-all.sh
-        fi
-    }
+su-update-all ()
+{
+    if [ "$OS_NAME" == "Linux" ]; then
+        sudo $HOME/.local/bin/update-all.sh
+    elif [ "$OS_NAME" == "OpenBSD" ]; then
+        doas $HOME/.local/bin/update-all.sh
+    fi
+}
 
-    update-all ()
-    {
-        if [ "$OS_NAME" == "Linux" ]; then
-            $HOME/.local/bin/update-all.sh
-        elif [ "$OS_NAME" == "OpenBSD" ]; then
-            su-update-all
-        fi
-    }
+update-all ()
+{
+    if [ "$OS_NAME" == "Linux" ]; then
+        $HOME/.local/bin/update-all.sh
+    elif [ "$OS_NAME" == "OpenBSD" ]; then
+        su-update-all
+    fi
+}
 
-    su-upgrade-system ()
-    {
-        if [ "$OS_NAME" == "Linux" ]; then
-            sudo $HOME/.local/bin/upgrade-system.sh
-        elif [ "$OS_NAME" == "OpenBSD" ]; then
-            doas $HOME/.local/bin/upgrade-system.sh
-        fi
-    }
-fi
+su-upgrade-system ()
+{
+    if [ "$OS_NAME" == "Linux" ]; then
+        sudo $HOME/.local/bin/upgrade-system.sh
+    elif [ "$OS_NAME" == "OpenBSD" ]; then
+        doas $HOME/.local/bin/upgrade-system.sh
+    fi
+}
 
 # Linux-specific functions
 if [ "$OS_NAME" == "Linux" ]; then
