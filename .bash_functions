@@ -103,7 +103,7 @@ edit-repos ()
         else
             local files=()
 
-            for file in /etc/apt/sources.list.d/*.sources; do
+            for file in /etc/apt/sources.list.d/*.{list,sources}; do
                 if [[ -e "$file" ]]; then
                     files+=("$file")
                 fi
@@ -112,15 +112,17 @@ edit-repos ()
             local num_files=${#files[@]}
 
             if [[ "$num_files" -eq 0 ]]; then
-                echo -e "Error: No .sources files found in /etc/apt/sources.list.d/"
+                echo -e "Error: No .list or .sources files found in /etc/apt/sources.list.d/"
 
                 return 0
             fi
 
+            mapfile -t sorted_files < <(printf "%s\n" "${files[@]}" | sort)
+
             local i=1
 
             echo "Files in /etc/apt/sources.list.d:"
-            for file in "${files[@]}"; do
+            for file in "${sorted_files[@]}"; do
                 echo "  $i) $(basename $file)"
                 ((i++))
             done
@@ -135,7 +137,7 @@ edit-repos ()
                 return 1
             fi
 
-            local selected_file="${files[$((selection - 1))]}"
+            local selected_file="${sorted_files[$((selection - 1))]}"
 
             echo "Editing: $selected_file"
             sudo $EDITOR "$selected_file"
