@@ -281,7 +281,15 @@ su-upgrade-system ()
 if [ "$OS_NAME" == "Linux" ]; then
     edit-debian-sources ()
     {
-        edit-repos --file debian.sources
+        if [ -f /etc/apt/sources.list ]; then
+            edit-repos
+        elif [ -f /etc/apt/sources.list.d/debian.sources ]; then
+            edit-repos --file debian.sources
+        else
+            echo -e "Error: No valid Debian GNU/Linux repository sources.list found!"
+
+            return 1
+        fi
     }
 
     wiki ()
