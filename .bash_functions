@@ -122,52 +122,54 @@ edit-repos ()
             return 1
         fi
 
-        if [ -f /etc/apt/sources.list ]; then
-            sudo $EDITOR /etc/apt/sources.list
-        elif [ -d /etc/apt/sources.list.d ]; then
-            local files=()
+        local files=()
 
-            for file in /etc/apt/sources.list.d/*.{list,sources}; do
+        if [ -f /etc/apt/sources.list ]; then
+            files+=("/etc/apt/sources.list")
+        fi
+
+        sources_list_dir="/etc/apt/sources.list.d"
+
+        if [ -d $sources_list_dir ]; then
+            for file in $sources_list_dir/*.{list,sources}; do
                 if [ -f "$file" ]; then
                     files+=("$file")
                 fi
             done
+        fi
 
-            local num_files=${#files[@]}
+        local num_files=${#files[@]}
 
-            if [ "$num_files" -eq 0 ]; then
-                echo -e "Error: No .list or .sources files found in /etc/apt/sources.list.d/"
-
-                return 0
-            fi
-
-            mapfile -t sorted_files < <(printf "%s\n" "${files[@]}" | sort)
-
-            local i=1
-
-            echo "Files in /etc/apt/sources.list.d:"
-            for file in "${sorted_files[@]}"; do
-                echo "  $i) $(basename $file)"
-                ((i++))
-            done
-
-            echo ""
-
-            read -rp "Select file you want to edit (1-$num_files): " selection
-
-            if ! [[ "$selection" =~ ^[0-9]+$ ]] || [[ "$selection" -lt 1 ]] || [[ "$selection" -gt "$num_files" ]]; then
-                echo -e "\nError: Invalid selection. Next time enter a number between 1 and $num_files."
-
-                return 1
-            fi
-
-            local selected_file="${sorted_files[$((selection - 1))]}"
-            sudo $EDITOR "$selected_file"
-        else
+        if [ "$num_files" -eq 0 ]; then
             echo -e "Error: You don't have valid sources.list available!"
+
+            return 0
+        fi
+
+        mapfile -t sorted_files < <(printf "%s\n" "${files[@]}" | sort)
+
+        local i=1
+
+        echo "Files available:"
+
+        for file in "${sorted_files[@]}"; do
+            echo "  $i) $file"
+            ((i++))
+        done
+
+        echo ""
+
+        read -rp "Select file you want to edit (1-$num_files): " selection
+
+        if ! [[ "$selection" =~ ^[0-9]+$ ]] || [[ "$selection" -lt 1 ]] || [[ "$selection" -gt "$num_files" ]]; then
+            echo -e "\nError: Invalid selection. Next time enter a number between 1 and $num_files."
 
             return 1
         fi
+
+        local selected_file="${sorted_files[$((selection - 1))]}"
+        sudo $EDITOR "$selected_file"
+
     elif [ "$OS_NAME" == "OpenBSD" ]; then
         doas $EDITOR /etc/installurl
     else
@@ -204,27 +206,43 @@ get-new-dotfiles ()
 get-repos ()
 {
     if [ -f /etc/debian_version ]; then
-        if [ -f /etc/apt/sources.list ]; then
-            cat /etc/apt/sources.list
-        elif [ -d /etc/apt/sources.list.d ]; then
-            local sources_list_dir=/etc/apt/sources.list.d/
-            local temp_file=$(mktemp)
+        local files=()
 
-            for file in $sources_list_dir/*; do
+        sources_list_dir="/etc/apt/sources.list.d"
+
+        if [ -f /etc/apt/sources.list ]; then
+            files+=("/etc/apt/sources.list")
+        fi
+
+        if [ -d $sources_list_dir ]; then
+            for file in $sources_list_dir/*.{list,sources}; do
                 if [ -f "$file" ]; then
-                    echo "=== File: $(basename "$file") ===" >> $temp_file
-                    cat "$file" >> $temp_file
-                    echo "" >> $temp_file
+                    files+=("$file")
                 fi
             done
+        fi
 
-            less $temp_file
-            rm $temp_file
-        else
+        local num_files=${#files[@]}
+
+        if [ "$num_files" -eq 0 ]; then
             echo -e "Error: You don't have valid sources.list available!"
 
-            return 1
+            return 0
         fi
+
+        mapfile -t sorted_files < <(printf "%s\n" "${files[@]}" | sort)
+
+        local temp_file=$(mktemp)
+
+        for file in "${sorted_files[@]}"; do
+            echo -e "=== File: $file ===" >> $temp_file
+            cat "$file" >> $temp_file
+            echo "" >> $temp_file
+        done
+
+        less $temp_file
+        rm $temp_file
+
     elif [ "$OS_NAME" == "OpenBSD" ]; then
         cat /etc/installurl
     else
