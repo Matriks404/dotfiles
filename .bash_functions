@@ -143,6 +143,10 @@ edit-repos ()
         if [ "$num_files" -eq 0 ]; then
             echo -e "Error: You don't have valid sources.list available!"
 
+            return 1
+        elif [ "$num_files" -eq 1 ]; then
+            sudo $EDITOR "${files[0]}"
+
             return 0
         fi
 
@@ -227,7 +231,7 @@ get-repos ()
         if [ "$num_files" -eq 0 ]; then
             echo -e "Error: You don't have valid sources.list available!"
 
-            return 0
+            return 1
         fi
 
         mapfile -t sorted_files < <(printf "%s\n" "${files[@]}" | sort)
