@@ -1,2 +1,0 @@
-.Xdefaults.debian
-.Xresources.debian

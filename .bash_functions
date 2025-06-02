@@ -87,9 +87,8 @@ copy-dotfiles-to-repos-directory ()
 
     echo -e "=== Copying OS-specific dotfiles... ==="
     local os_specific_dotfiles_list="$(cat $HOME/.dotfiles_lists/os_specific.txt)"
-    local os_specific_dotfiles_to_copy=""
+    local os_specific_repo_dir="$dotfiles_repo_dir/os_specific"
 
-    os_specific_repo_dir="$dotfiles_repo_dir/os_specific"
     mkdir -p $os_specific_repo_dir
 
     for entry in $os_specific_dotfiles_list; do
