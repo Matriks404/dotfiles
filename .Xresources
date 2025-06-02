@@ -1,9 +1,16 @@
 #include ".Xresources.os_specific"
 
+! XTerm settings
 XTerm*background: black
 XTerm*foreground: white
-
 XTerm*font: 8x13bold
 XTerm*geometry: 80x32
-
 XTerm*termName: xterm-256color
+
+! UXTerm settings (should be the same as for XTerm)
+!TODO: Change fotnt to something that supports Unicode characters.
+UXTerm*background: black
+UXTerm*foreground: white
+UXTerm*font: 8x13bold
+UXTerm*geometry: 80x32
+UXTerm*termName: xterm-256color
