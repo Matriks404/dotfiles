@@ -69,7 +69,7 @@ copy-dotfiles-to-repos-directory ()
     cp -v $txtfiles_to_copy $txtfiles_repo_dir
 
     echo -e "=== Copying dotfiles... ==="
-    local dotfiles_to_copy="$(cat $HOME/.dotfiles_lists/common.txt) $(cat $HOME/.dotfiles_lists/$short_name.txt)"
+    local dotfiles_to_copy="$(cat $HOME/.dotfiles_lists/common.txt)"
 
     if [ "$USER" == "marcin" ]; then
         full_username=$(getent passwd "marcin" | cut -d ':' -f 5)
@@ -84,6 +84,23 @@ copy-dotfiles-to-repos-directory ()
     fi
 
     cp -v $dotfiles_to_copy $dotfiles_repo_dir
+
+    echo -e "=== Copying OS-specific dotfiles... ==="
+    local os_specific_dotfiles_list="$(cat $HOME/.dotfiles_lists/os_specific.txt)"
+    local os_specific_dotfiles_to_copy=""
+
+    os_specific_repo_dir="$dotfiles_repo_dir/os_specific"
+    mkdir -p $os_specific_repo_dir
+
+    for entry in $os_specific_dotfiles_list; do
+        filename="${entry}os_specific"
+
+        if [ -f "$filename" ]; then
+            final_name=$entry$short_name
+
+            cp -v $filename $os_specific_repo_dir/$final_name
+        fi
+    done
 
     echo -e "=== Copying Bash scripts... ==="
     # Files and directories that begin with symbols such as _ won't be copied.
