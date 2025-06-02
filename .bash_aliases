@@ -88,8 +88,10 @@ alias eblfunctions="$EDITOR ~/.bash_local_functions"
 
 if [ "$OS_NAME" == "Linux" ]; then
     alias ii='ip addr'
+    alias shut='sudo shutdown now'
 elif [ "$OS_NAME" == "OpenBSD" ]; then
     alias ii='ifconfig'
+    alias shut='doas shutdown -p now'
 fi
 
 alias pi='ping 8.8.8.8'
