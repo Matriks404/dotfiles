@@ -60,6 +60,10 @@ while IFS= read -r entry; do
     fi
 done < "$os_specific_dotfiles_list"
 
+echo "=== Merging .Xresources... ==="
+
+xrdb $HOME/.Xresources
+
 echo "=== Moving Bash scripts... ==="
 
 bin_dir="./.local/bin"
