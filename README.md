@@ -13,6 +13,7 @@ For getting full potential of these dotfiles you need to install following packa
 * `aptitude` (**Debian GNU/Linux** only, for `a` Bash alias);
 * `curl` (for `check-dotfiles-update` Bash function and `dotverc` Bash alias);
 * `flatpak` (**Linux** only, for `upgrade-all` Bash function);
+* `fonts-hack` or `hack-fonts` (for `uxterm` Bash alias);
 * `git` (for `gitd` and `gits` Bash aliases and `clone-dotfiles-repository`, `copy-dotfiles-to-repos-directory`, `git-commit` and `git-push` Bash functions);
 * `sudo` (**Linux** only, for `se` Bash alias and `edit-repos` and `upgrade-all` Bash functions);
 * `upgrade-system` (**Debian GNU/Linux** only, for `upgrade-all` Bash function);
