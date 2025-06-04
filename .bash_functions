@@ -92,10 +92,10 @@ copy-dotfiles-to-repos-directory ()
     mkdir -p $os_specific_repo_dir
 
     for entry in $os_specific_dotfiles_list; do
-        filename="${entry}os_specific"
+        filename="${entry}.1"
 
         if [ -f "$filename" ]; then
-            final_name=$entry$short_name
+            final_name=$entry.$short_name
 
             cp -v $filename $os_specific_repo_dir/$final_name
         fi

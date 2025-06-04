@@ -57,10 +57,10 @@ os_specific_dotfiles_list="$dotfiles_dir/.dotfiles_lists/os_specific.txt"
 os_specific_repo_dir="$dotfiles_dir/os_specific"
 
 while IFS= read -r entry; do
-    filename="${entry}$short_name"
+    filename="${entry}.$short_name"
 
     if [ -f "$os_specific_repo_dir/$filename" ]; then
-        final_name="${entry}os_specific"
+        final_name="${entry}.1"
 
         mv -v $os_specific_repo_dir/$filename ./$final_name
     fi

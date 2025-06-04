@@ -1,2 +1,2 @@
-.Xdefaults.
-.Xresources.
+.Xdefaults
+.Xresources

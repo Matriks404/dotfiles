@@ -1,4 +1,4 @@
-#include ".Xresources.os_specific"
+#include ".Xresources.1"
 
 ! XTerm settings
 XTerm*background: black
