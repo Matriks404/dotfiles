@@ -7,12 +7,12 @@ XTerm*font: 8x13bold
 XTerm*geometry: 80x32
 XTerm*termName: xterm-256color
 
-! UXTerm settings (should be the same as for XTerm)
-!TODO: Change fotnt to something that supports Unicode characters.
+! UXTerm settings
 UXTerm*background: black
 UXTerm*foreground: white
-UXTerm*font: 8x13bold
-UXTerm*geometry: 80x32
+UXTerm*faceName: Hack
+UXTerm*faceSize: 10
+UXTerm*geometry: 80x24
 UXTerm*termName: xterm-256color
 
 ! Fix behaviour where on some operating systems (e.g. OpenBSD) delete key works
