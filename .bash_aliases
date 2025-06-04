@@ -84,6 +84,10 @@ alias eblaliases="$EDITOR ~/.bash_local_aliases"
 alias eblfunctions="$EDITOR ~/.bash_local_functions"
 
 
+# Aliases for X11 applications
+
+alias uxterm='xterm -class UXTerm'
+
 # Aliases for system commands
 
 if [ "$OS_NAME" == "Linux" ]; then
