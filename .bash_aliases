@@ -92,9 +92,13 @@ alias uxterm='xterm -class UXTerm'
 
 if [ "$OS_NAME" == "Linux" ]; then
     alias ii='ip addr'
-    alias shut='sudo shutdown now'
+
+    alias reb='systemctl reboot'
+    alias shut='systemctl poweroff'
 elif [ "$OS_NAME" == "OpenBSD" ]; then
     alias ii='ifconfig'
+
+    alias reb='doas shutdown -r now'
     alias shut='doas shutdown -p now'
 fi
 
