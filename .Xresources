@@ -14,3 +14,8 @@ UXTerm*foreground: white
 UXTerm*font: 8x13bold
 UXTerm*geometry: 80x32
 UXTerm*termName: xterm-256color
+
+! Fix behaviour where on some operating systems (e.g. OpenBSD) delete key works
+! like backspace key (it deletes characters backwards instead of forwards).
+XTerm*deleteIsDEL: false
+UXTerm*deleteIsDEL: false
