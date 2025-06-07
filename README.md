@@ -15,19 +15,21 @@ For getting full potential of these dotfiles you need to install following packa
 * `flatpak` (**Linux** only, for `upgrade-all` Bash function);
 * `fonts-hack` or `hack-fonts` (for `uxterm` Bash alias);
 * `git` (for `gitd` and `gits` Bash aliases and `clone-dotfiles-repository`, `copy-dotfiles-to-repos-directory`, `git-commit` and `git-push` Bash functions);
-* `rsync` (for `copy-dotofiles-to-repos-directory` and `get-new-dotfiles` Bash aliases);
+* `rsync` (for `copy-dotofiles-to-repos-directory` and `get-new-dotfiles` Bash functions);
 * `sudo` (**Linux** only, for `se` Bash alias and `edit-repos` and `upgrade-all` Bash functions);
+* `unzip` (for `get-new-dotfiles` Bash function);
 * `upgrade-system` (**Debian GNU/Linux** only, for `upgrade-all` Bash function);
-* `wikipedia2text` (**Linux** only, for `wiki` Bash alias).
+* `wikipedia2text` (**Linux** only, for `wiki` Bash alias);
+* `wget` (for `get-new-dotfiles` Bash function).
 
 # Getting latest version
 
 If getting dotfiles for the first time, run following command in some safe directory (probably not home if you don't want to replace your already configured setup):
 
-**NOTE:** You need to have `curl` and `rsync` installed first!
+**NOTE:** You need to have `curl`, `rsync`, `unzip` and `wget` installed first!
 
 ```bash
-curl --silent https://raw.githubusercontent.com/Matriks404/dotfiles/refs/heads/master/build/update.sh | sh
+curl https://raw.githubusercontent.com/Matriks404/dotfiles/refs/heads/master/build/update.sh | sh
 ```
 
 Otherwise, execute: `get-new-dotfiles` in your bash session (it will actually execute the same `curl` script as noted above).
