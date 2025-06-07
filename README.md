@@ -11,6 +11,7 @@ For the list of files in the repository [go here](FILE_LIST.md).
 For getting full potential of these dotfiles you need to install following packages (using your favourite package manager such as `apt`, `zypper`, `pkg_add` etc.):
 
 * `aptitude` (**Debian GNU/Linux** only, for `a` Bash alias);
+* `bash` (for everything Bash-related);
 * `curl` (for `check-dotfiles-update` Bash function and `dotverc` Bash alias);
 * `flatpak` (**Linux** only, for `upgrade-all` Bash function);
 * `fonts-hack` or `hack-fonts` (for `uxterm` Bash alias);
