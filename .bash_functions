@@ -66,7 +66,7 @@ copy-dotfiles-to-repos-directory ()
     local txtfiles_repo_dir="$dotfiles_repo_dir/.dotfiles_lists/"
 
     mkdir -p $txtfiles_repo_dir
-    rsync -itv $txtfiles_to_copy $txtfiles_repo_dir
+    rsync -civ $txtfiles_to_copy $txtfiles_repo_dir
 
     echo -e "=== Copying dotfiles... ==="
     local dotfiles_to_copy="$(cat $HOME/.dotfiles_lists/common.txt)"
@@ -87,7 +87,7 @@ copy-dotfiles-to-repos-directory ()
         fi
     fi
 
-    rsync -iRtv $dotfiles_to_copy $dotfiles_repo_dir
+    rsync -ciRv $dotfiles_to_copy $dotfiles_repo_dir
 
     echo -e "=== Copying OS-specific dotfiles... ==="
     local os_specific_dotfiles_list="$(cat $HOME/.dotfiles_lists/os_specific.txt)"
@@ -101,7 +101,7 @@ copy-dotfiles-to-repos-directory ()
         if [ -f "$filename" ]; then
             final_name=$entry.$short_name
 
-            rsync -iRtv $filename $os_specific_repo_dir/$final_name
+            rsync -ciRv $filename $os_specific_repo_dir/$final_name
         fi
     done
 
@@ -112,7 +112,7 @@ copy-dotfiles-to-repos-directory ()
     local bin_files_repo_dir="$dotfiles_repo_dir/.local/bin"
 
     mkdir -p $bin_files_repo_dir
-    rsync -itv $bin_files_to_copy $bin_files_repo_dir
+    rsync -civ $bin_files_to_copy $bin_files_repo_dir
 }
 
 edit-repos ()

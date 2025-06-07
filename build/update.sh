@@ -14,6 +14,7 @@ github_base_url='https://github.com/Matriks404/dotfiles'
 # Download and unzip archive containing dotfiles and scripts.
 dotfiles_dir='dotfiles-master'
 
+
 echo "=== Getting dotfiles zip file... ==="
 wget --quiet "$github_base_url/archive/refs/heads/master.zip"
 
@@ -28,7 +29,17 @@ files_to_exclude="$dotfiles_dir/README.md $dotfiles_dir/FILE_LIST.md $dotfiles_d
 
 unzip -qq master.zip -x $files_to_exclude
 
-echo "=== Moving dotfiles... ==="
+
+echo "=== Updating dotfiles lists... ==="
+
+txtfiles_dir="./.dotfiles_lists"
+txtfiles_to_move="$dotfiles_dir/.dotfiles_lists/*"
+
+mkdir -p $txtfiles_dir
+rsync -civ $txtfiles_to_move $txtfiles_dir
+
+echo ""
+echo "=== Updating dotfiles... ==="
 
 dotfiles_to_move_list="$(cat $dotfiles_dir/.dotfiles_lists/common.txt)"
 
@@ -54,9 +65,11 @@ for filename in $dotfiles_to_move_list; do
     dotfiles_to_move="$dotfiles_to_move $dotfiles_dir/$filename"
 done
 
-rsync -iRtv $dotfiles_to_move .
+rsync -ciRv $dotfiles_to_move .
 
-echo "=== Moving OS-specific dotfiles... ==="
+
+echo ""
+echo "=== Updating OS-specific dotfiles... ==="
 os_specific_dotfiles_list="$dotfiles_dir/.dotfiles_lists/os_specific.txt"
 os_specific_repo_dir="$dotfiles_dir/os_specific"
 
@@ -66,33 +79,33 @@ while IFS= read -r entry; do
     if [ -f "$os_specific_repo_dir/$filename" ]; then
         final_name="${entry}.1"
 
-        rsync -iRtV $os_specific_repo_dir/$filename ./$final_name
+        # Rename the file so we can rsync it.
+        #mv ./$final_name ./$filename
+
+        rsync -itv $os_specific_repo_dir/$filename ./$final_name
+
+        # Rename the file again, to the final name.
+        #mv ./$filename ./$final_name
     fi
 done < "$os_specific_dotfiles_list"
 
-echo "=== Merging .Xresources... ==="
 
-xrdb $HOME/.Xresources
-
-echo "=== Moving Bash scripts... ==="
+echo ""
+echo "=== Updating Bash scripts... ==="
 
 bin_dir="./.local/bin"
 mkdir -p $bin_dir
-rsync -itv $dotfiles_dir/.local/bin/* $bin_dir
+rsync -civ $dotfiles_dir/.local/bin/* $bin_dir
 
-echo "=== Moving dotfiles lists... ==="
 
-txtfiles_dir="./.dotfiles_lists"
-txtfiles_to_move="$dotfiles_dir/.dotfiles_lists/*"
+echo ""
+echo "=== Merging .Xresources... ==="
+xrdb $HOME/.Xresources
 
-mkdir -p $txtfiles_dir
-rsync -itv $txtfiles_to_move $txtfiles_dir
-
-# Cleanup
 
 echo "=== Cleaning up... ==="
 
-rm -rv $dotfiles_dir
-rm -v master.zip
+rm -r $dotfiles_dir
+rm master.zip
 
 echo "\nEverything is done! Make sure to restart your Bash instance to get all new features and improvements!"
