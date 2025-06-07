@@ -13,6 +13,7 @@ github_base_url='https://github.com/Matriks404/dotfiles'
 
 # Download and unzip archive containing dotfiles and scripts.
 dotfiles_dir='dotfiles-master'
+dotfiles_target=$PWD
 
 
 echo "=== Getting dotfiles zip file... ==="
@@ -32,7 +33,7 @@ unzip -qq master.zip -x $files_to_exclude
 
 echo "=== Updating dotfiles lists... ==="
 
-txtfiles_dir="./.dotfiles_lists"
+txtfiles_dir="$dotfiles_target/.dotfiles_lists"
 txtfiles_to_move="$dotfiles_dir/.dotfiles_lists/*"
 
 mkdir -p $txtfiles_dir
@@ -41,31 +42,27 @@ rsync -civ $txtfiles_to_move $txtfiles_dir
 echo ""
 echo "=== Updating dotfiles... ==="
 
-dotfiles_to_move_list="$(cat $dotfiles_dir/.dotfiles_lists/common.txt)"
+dotfiles_to_move="$(cat $dotfiles_dir/.dotfiles_lists/common.txt)"
 
 if [ -f /etc/debian_version ]; then
-    dotfiles_to_move_list="$dotfiles_to_move_list $(cat $dotfiles_dir/.dotfiles_lists/debian.txt)"
+    dotfiles_to_move="$dotfiles_to_move $(cat $dotfiles_dir/.dotfiles_lists/debian.txt)"
 fi
 
 if [ "$USER" = "marcin" ]; then
     full_username=$(getent passwd marcin | cut -d ':' -f 5)
 
     if echo "$full_username" | grep -q "^Marcin Kralka"; then
-        dotfiles_to_move_list="$dotfiles_to_move_list $(cat $dotfiles_dir/.dotfiles_lists/private.txt)"
+        dotfiles_to_move="$dotfiles_to_move $(cat $dotfiles_dir/.dotfiles_lists/private.txt)"
 
         if [ -f /etc/debian_version ]; then
-            dotfiles_to_move_list="$dotfiles_to_move_list $(cat $dotfiles_dir/.dotfiles_lists/private_debian.txt)"
+            dotfiles_to_move="$dotfiles_to_move $(cat $dotfiles_dir/.dotfiles_lists/private_debian.txt)"
         fi
     fi
 fi
 
-dotfiles_to_move=""
-
-for filename in $dotfiles_to_move_list; do
-    dotfiles_to_move="$dotfiles_to_move $dotfiles_dir/$filename"
-done
-
-rsync -ciRv $dotfiles_to_move .
+cd $dotfiles_dir
+rsync -ciRv $dotfiles_to_move $dotfiles_target
+cd $dotfiles_target
 
 
 echo ""
@@ -79,13 +76,7 @@ while IFS= read -r entry; do
     if [ -f "$os_specific_repo_dir/$filename" ]; then
         final_name="${entry}.1"
 
-        # Rename the file so we can rsync it.
-        #mv ./$final_name ./$filename
-
-        rsync -itv $os_specific_repo_dir/$filename ./$final_name
-
-        # Rename the file again, to the final name.
-        #mv ./$filename ./$final_name
+        rsync -civ $os_specific_repo_dir/$filename $dotfiles_target/$final_name
     fi
 done < "$os_specific_dotfiles_list"
 
@@ -93,7 +84,7 @@ done < "$os_specific_dotfiles_list"
 echo ""
 echo "=== Updating Bash scripts... ==="
 
-bin_dir="./.local/bin"
+bin_dir="$dotfiles_target/.local/bin"
 mkdir -p $bin_dir
 rsync -civ $dotfiles_dir/.local/bin/* $bin_dir
 
