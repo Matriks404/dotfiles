@@ -15,6 +15,7 @@ For getting full potential of these dotfiles you need to install following packa
 * `flatpak` (**Linux** only, for `upgrade-all` Bash function);
 * `fonts-hack` or `hack-fonts` (for `uxterm` Bash alias);
 * `git` (for `gitd` and `gits` Bash aliases and `clone-dotfiles-repository`, `copy-dotfiles-to-repos-directory`, `git-commit` and `git-push` Bash functions);
+* `rsync` (for `copy-dotofiles-to-repos-directory` and `get-new-dotfiles` Bash aliases);
 * `sudo` (**Linux** only, for `se` Bash alias and `edit-repos` and `upgrade-all` Bash functions);
 * `upgrade-system` (**Debian GNU/Linux** only, for `upgrade-all` Bash function);
 * `wikipedia2text` (**Linux** only, for `wiki` Bash alias).
@@ -23,7 +24,7 @@ For getting full potential of these dotfiles you need to install following packa
 
 If getting dotfiles for the first time, run following command in some safe directory (probably not home if you don't want to replace your already configured setup):
 
-**NOTE:** You need to have `curl` installed first!
+**NOTE:** You need to have `curl` and `rsync` installed first!
 
 ```bash
 curl --silent https://raw.githubusercontent.com/Matriks404/dotfiles/refs/heads/master/build/update.sh | sh

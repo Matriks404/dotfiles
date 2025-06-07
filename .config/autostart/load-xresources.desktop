@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Load Xresources
+Exec=xrdb -load ~/.Xresources
+Terminal=false
+Hidden=false
+Comment=Loads user X resources for XWayland applications
+X-Autostart-Enabled=true

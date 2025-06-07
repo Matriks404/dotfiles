@@ -66,10 +66,14 @@ copy-dotfiles-to-repos-directory ()
     local txtfiles_repo_dir="$dotfiles_repo_dir/.dotfiles_lists/"
 
     mkdir -p $txtfiles_repo_dir
-    cp -v $txtfiles_to_copy $txtfiles_repo_dir
+    rsync -itv $txtfiles_to_copy $txtfiles_repo_dir
 
     echo -e "=== Copying dotfiles... ==="
     local dotfiles_to_copy="$(cat $HOME/.dotfiles_lists/common.txt)"
+
+    if [ -f /etc/debian_version ]; then
+        dotfiles_to_copy="$dotfiles_to_copy $(cat $HOME/.dotfiles_lists/debian.txt)"
+    fi
 
     if [ "$USER" == "marcin" ]; then
         full_username=$(getent passwd "marcin" | cut -d ':' -f 5)
@@ -83,7 +87,7 @@ copy-dotfiles-to-repos-directory ()
         fi
     fi
 
-    cp -v $dotfiles_to_copy $dotfiles_repo_dir
+    rsync -iRtv $dotfiles_to_copy $dotfiles_repo_dir
 
     echo -e "=== Copying OS-specific dotfiles... ==="
     local os_specific_dotfiles_list="$(cat $HOME/.dotfiles_lists/os_specific.txt)"
@@ -97,7 +101,7 @@ copy-dotfiles-to-repos-directory ()
         if [ -f "$filename" ]; then
             final_name=$entry.$short_name
 
-            cp -v $filename $os_specific_repo_dir/$final_name
+            rsync -iRtv $filename $os_specific_repo_dir/$final_name
         fi
     done
 
@@ -108,7 +112,7 @@ copy-dotfiles-to-repos-directory ()
     local bin_files_repo_dir="$dotfiles_repo_dir/.local/bin"
 
     mkdir -p $bin_files_repo_dir
-    cp -v $bin_files_to_copy $bin_files_repo_dir
+    rsync -itv $bin_files_to_copy $bin_files_repo_dir
 }
 
 edit-repos ()

@@ -32,6 +32,10 @@ echo "=== Moving dotfiles... ==="
 
 dotfiles_to_move_list="$(cat $dotfiles_dir/.dotfiles_lists/common.txt)"
 
+if [ -f /etc/debian_version ]; then
+    dotfiles_to_move_list="$dotfiles_to_move_list $(cat $dotfiles_dir/.dotfiles_lists/debian.txt)"
+fi
+
 if [ "$USER" = "marcin" ]; then
     full_username=$(getent passwd marcin | cut -d ':' -f 5)
 
@@ -50,7 +54,7 @@ for filename in $dotfiles_to_move_list; do
     dotfiles_to_move="$dotfiles_to_move $dotfiles_dir/$filename"
 done
 
-mv -v $dotfiles_to_move .
+rsync -iRtv --remove-source-files $dotfiles_to_move .
 
 echo "=== Moving OS-specific dotfiles... ==="
 os_specific_dotfiles_list="$dotfiles_dir/.dotfiles_lists/os_specific.txt"
@@ -62,7 +66,7 @@ while IFS= read -r entry; do
     if [ -f "$os_specific_repo_dir/$filename" ]; then
         final_name="${entry}.1"
 
-        mv -v $os_specific_repo_dir/$filename ./$final_name
+        rsync -iRtV --remove-source-files $os_specific_repo_dir/$filename ./$final_name
     fi
 done < "$os_specific_dotfiles_list"
 
@@ -74,7 +78,7 @@ echo "=== Moving Bash scripts... ==="
 
 bin_dir="./.local/bin"
 mkdir -p $bin_dir
-mv -v $dotfiles_dir/.local/bin/* $bin_dir
+rsync -itv --remove-source-files $dotfiles_dir/.local/bin/* $bin_dir
 
 echo "=== Moving dotfiles lists... ==="
 
@@ -82,7 +86,7 @@ txtfiles_dir="./.dotfiles_lists"
 txtfiles_to_move="$dotfiles_dir/.dotfiles_lists/*"
 
 mkdir -p $txtfiles_dir
-mv -v $txtfiles_to_move $txtfiles_dir
+rsync -itv --remove-source-files $txtfiles_to_move $txtfiles_dir
 
 # Cleanup
 
