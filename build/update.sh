@@ -88,15 +88,19 @@ bin_dir="$dotfiles_target/.local/bin"
 mkdir -p $bin_dir
 rsync -civ $dotfiles_dir/.local/bin/* $bin_dir
 
-
 echo ""
-echo "=== Merging .Xresources... ==="
-xrdb $HOME/.Xresources
+
+
+if [ $(command -v xrdb) ]; then
+    echo "=== Merging .Xresources... ==="
+    xrdb $HOME/.Xresources
+fi
 
 
 echo "=== Cleaning up... ==="
 
 rm -r $dotfiles_dir
 rm master.zip
+
 
 echo "\nEverything is done! Make sure to restart your Bash instance to get all new features and improvements!"
