@@ -342,12 +342,12 @@ if [ "$OS_NAME" == "Linux" ]; then
     }
 fi
 
-# Open-BSD specific functions
+# OpenBSD specific functions
 if [ "$OS_NAME" == "OpenBSD" ]; then
     get-manual ()
     {
         parent_pid=$(ps -p $$ -o ppid=)
-    
+
         current_pid=$parent_pid
         is_uxterm="false"
 
