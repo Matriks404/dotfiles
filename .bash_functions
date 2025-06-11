@@ -341,3 +341,35 @@ if [ "$OS_NAME" == "Linux" ]; then
         wikipedia2text "$article" | less
     }
 fi
+
+# Open-BSD specific functions
+if [ "$OS_NAME" == "OpenBSD" ]; then
+    get-manual ()
+    {
+        parent_pid=$(ps -p $$ -o ppid=)
+    
+        current_pid=$parent_pid
+        is_uxterm="false"
+
+        while [ -n "$current_pid" ] && [ "$current_pid" -ne "1" ]; do
+            cmd=$(ps -p $current_pid -o command=)
+
+            if [ "$cmd" = "/usr/X11R6/bin/xterm -class UXTerm" ]; then
+                is_uxterm="true"
+                break
+            fi
+
+            current_pid=$(ps -p "$current_pid" -o ppid=)
+        done
+
+        if [ -z "$1" ]; then
+            man
+        elif [ "$is_uxterm" = "false" ]; then
+            echo -e "Running external UXTerm, since current terminal dosen't support UTF-8..."
+
+            xterm -class UXTerm -e sh -c "man $* && echo Press RETURN to continue. && sleep 1 && read"
+        else
+            man "$*"
+        fi
+    }
+fi
