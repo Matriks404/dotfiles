@@ -367,7 +367,7 @@ if [ "$OS_NAME" == "OpenBSD" ]; then
         elif [ "$is_uxterm" = "false" ]; then
             echo -e "Running external UXTerm, since current terminal dosen't support UTF-8..."
 
-            xterm -class UXTerm -e sh -c "man $* && echo Press RETURN to continue. && sleep 1 && read"
+            (xterm -class UXTerm -e sh -c "man $* && echo Press RETURN to continue. && read" &)
         else
             man "$*"
         fi
