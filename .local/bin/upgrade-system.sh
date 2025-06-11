@@ -43,7 +43,7 @@ fi
 
 
 
-echo -e "\n\n\n"
+echo -e "\n"
 
 if [ -f /etc/debian_version ]; then
     if [ $(command -v upgrade-system) ]; then
@@ -52,12 +52,19 @@ if [ -f /etc/debian_version ]; then
         echo -e "=== Updating APT package list... ==="
         apt update
 
-        echo -e "=== Uprading your system... ==="
+        echo -e "\n=== Uprading your system... ==="
         apt dist-upgrade
 
-        echo -e "=== Cleaning up stuff... ==="
+        echo -e "\n=== Cleaning up stuff... ==="
         apt autoclean
     fi
 elif [ "$OS_NAME" == "OpenBSD" ]; then
+    echo -e "=== Patching operating system... ==="
+    syspatch
+    echo -e "\n=== Operating system patching process complete! ==="
+
+    echo -e "\n=== Upgrading your system... ==="
     sysupgrade
 fi
+
+echo -e "\n=== System upgrade complete! ==="

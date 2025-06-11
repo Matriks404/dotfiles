@@ -31,6 +31,14 @@ if [ "$EUID" -eq 0 ]; then
     fi
 
     echo -e "=== Full package update complete! ==="
+
+    if [ "$OS_NAME" == "OpenBSD" ]; then
+        echo -e "\n=== Patching operating system... ==="
+
+        syspatch
+
+        echo -e "=== Operating system patching process complete! ==="
+    fi
 fi
 
 if [ $(command -v flatpak) ]; then
