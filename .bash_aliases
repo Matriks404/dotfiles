@@ -8,7 +8,6 @@ alias cd...='cd ../..'
 alias cd....='cd ../../..'
 alias cls='clear'
 alias h='history'
-alias q='exit'
 
 
 # Aliases for core utilities
