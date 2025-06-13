@@ -201,6 +201,44 @@ edit-repos ()
     fi
 }
 
+get-manual ()
+{
+    parent_pid=$(ps -p $$ -o ppid= | xargs)
+
+    current_pid=$parent_pid
+    is_unicode_term="true"
+
+    while [ -n "$current_pid" ] && [ "$current_pid" -ne "1" ]; do
+        cmd=$(ps -p $current_pid -o command= | xargs)
+
+        term="${cmd%% *}"
+
+        if [ $term = "/usr/X11R6/bin/xterm" ] || [ $term = "/usr/bin/X11/xterm" ] || [ $term = "xterm" ]; then
+            if [ "$cmd" = "$term -class UXTerm" ]; then
+                is_unicode_term="true"
+
+                break
+            else
+                is_unicode_term="false"
+
+                break
+            fi
+        fi
+
+        current_pid=$(ps -p "$current_pid" -o ppid= | xargs)
+    done
+
+    if [ -z "$1" ]; then
+        man
+    elif [ "$is_unicode_term" = "false" ]; then
+        echo -e "Running external UXTerm, since current terminal dosen't support UTF-8..."
+
+        (xterm -class UXTerm -e sh -c "man $* && echo Press RETURN to continue. && read" &)
+    else
+        man "$*"
+    fi
+}
+
 get-new-dotfiles ()
 {
     if [ -d "./.git" ]; then
@@ -339,37 +377,5 @@ if [ "$OS_NAME" == "Linux" ]; then
         local article=$1
 
         wikipedia2text "$article" | less
-    }
-fi
-
-# OpenBSD specific functions
-if [ "$OS_NAME" == "OpenBSD" ]; then
-    get-manual ()
-    {
-        parent_pid=$(ps -p $$ -o ppid=)
-
-        current_pid=$parent_pid
-        is_uxterm="false"
-
-        while [ -n "$current_pid" ] && [ "$current_pid" -ne "1" ]; do
-            cmd=$(ps -p $current_pid -o command=)
-
-            if [ "$cmd" = "/usr/X11R6/bin/xterm -class UXTerm" ]; then
-                is_uxterm="true"
-                break
-            fi
-
-            current_pid=$(ps -p "$current_pid" -o ppid=)
-        done
-
-        if [ -z "$1" ]; then
-            man
-        elif [ "$is_uxterm" = "false" ]; then
-            echo -e "Running external UXTerm, since current terminal dosen't support UTF-8..."
-
-            (xterm -class UXTerm -e sh -c "man $* && echo Press RETURN to continue. && read" &)
-        else
-            man "$*"
-        fi
     }
 fi

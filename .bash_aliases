@@ -117,7 +117,4 @@ fi
 # Aliases for .bash_functions
 
 alias dotverc='check-dotfiles-update'
-
-if [ "$OS_NAME" == "OpenBSD" ]; then
-    alias man='get-manual'
-fi
+alias man='get-manual'
