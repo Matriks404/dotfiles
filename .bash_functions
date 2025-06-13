@@ -213,8 +213,8 @@ get-manual ()
 
         term="${cmd%% *}"
 
-        if [ $term = "/usr/X11R6/bin/xterm" ] || [ $term = "/usr/bin/X11/xterm" ] || [ $term = "xterm" ]; then
-            if [ "$cmd" = "$term -class UXTerm" ]; then
+        if [ $term = "xterm" ] || [ $term = "/usr/X11R6/bin/xterm" ] || [ $term = "/usr/bin/X11/xterm" ] || [ $term = "/usr/bin/xterm" ]; then
+            if [ "$cmd" = "$term -class UXTerm" ] || [ "$cmd" = "$term -class UXTerm -u8" ]; then
                 is_unicode_term="true"
 
                 break
