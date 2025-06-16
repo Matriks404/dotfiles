@@ -94,7 +94,7 @@ fi
 
 
 
-# CUSTOM BASH ALIASES AND FUNCTIONS
+# CUSTOM BASH FUNCTIONS, ALIASES AND BINDINGS
 
 # Dotfiles version alias
 alias dotver='cat .dotfiles_version'
@@ -112,6 +112,12 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
+# Custom Bash bindings
+
+if [ -f ~/.bash_bindings ]; then
+    . ~/.bash_bindings
+fi
+
 
 # Custom LOCAL Bash functions
 
@@ -123,4 +129,10 @@ fi
 
 if [ -f ~/.bash_local_aliases ]; then
     . ~/.bash_local_aliases
+fi
+
+# Custom LOCAL Bash bindings
+
+if [ -f ~/.bash_local_bindings ]; then
+    . ~/.bash_local_bindings
 fi

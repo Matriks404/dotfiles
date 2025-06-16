@@ -1,4 +1,5 @@
 .bash_aliases
+.bash_bindings
 .bash_functions
 .bash_logout
 .bashrc

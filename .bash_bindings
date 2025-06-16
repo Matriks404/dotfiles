@@ -1,0 +1,2 @@
+# Bind Ctrl+L to clear the screen using the built-in `clear` Bash command.
+bind -x '"\C-l":clear'
