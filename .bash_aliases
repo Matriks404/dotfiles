@@ -33,20 +33,17 @@ fi
 # since OpenBSD implementation of `ls` doesn't support that option. 
 
 if [ $(command -v dircolors) ]; then
-    alias ls='LC_COLLATE=C ls -F --color=auto'
+    ls_base='LC_COLLATE=C ls -F --color=auto'
 else
-    alias ls='LC_COLLATE=C ls -F'
+    ls_base='LC_COLLATE=C ls -F'
 fi
 
 if [ "$OS_NAME" == "Linux" ]; then
-    alias ls_g='ls --group-directories-first'
-
-    alias l='ls -ho --time-style long-iso'
-    alias l_g='l --group-directories-first'
-
-    alias la='ls -Aho --time-style long-iso'
-    alias la_g='la --group-directories-first'
+    alias ls="$ls_base --group-directories-first --time-style=long-iso"
+    alias l='ls -ho'
+    alias la='ls -Aho'
 elif [ "$OS_NAME" == "OpenBSD" ]; then
+    alias ls="$ls_base"
     alias l='ls -ghT'
     alias la='ls -AghT'
 fi
