@@ -233,7 +233,7 @@ get-manual ()
     elif [ "$is_unicode_term" = "false" ]; then
         echo -e "Running external UXTerm, since current terminal dosen't support UTF-8..."
 
-        (xterm -class UXTerm -e sh -c "man $* && echo Press RETURN to continue. && read" &)
+        (xterm -class UXTerm -e sh -c "man $* && echo Press RETURN to continue. && read DUMMY" &)
     else
         man "$*"
     fi
