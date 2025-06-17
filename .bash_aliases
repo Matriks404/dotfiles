@@ -114,3 +114,9 @@ fi
 
 alias dotverc='check-dotfiles-update'
 alias man='get-manual'
+alias sus='su-update-software'
+alias susg='su-upgrade-system'
+
+if [ "$OS_NAME" = "Linux" ]; then
+    alias us='update-software'
+fi

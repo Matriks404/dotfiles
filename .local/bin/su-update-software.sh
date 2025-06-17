@@ -3,7 +3,7 @@
 # Getting operating system name
 OS_NAME=$(uname -s)
 
-if [ "$EUID" -ne 0 -a -z $(command -v flatpak) ]; then
+if [ "$EUID" -ne 0 ]; then
     echo -e "ERROR: This script must be run with root privileges!"
 
     exit 1
@@ -39,10 +39,6 @@ if [ "$EUID" -eq 0 ]; then
 
         echo -e "=== Operating system patching process complete! ==="
     fi
-fi
 
-if [ $(command -v flatpak) ]; then
-    echo -e "\n=== Updating flatpak applicaitons... ==="
-    flatpak update
-    echo -e "=== Flatpak applications update complete! ==="
+    echo -e ""
 fi

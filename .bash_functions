@@ -330,21 +330,16 @@ git-push ()
 
 # Package updates / System upgrades
 
-su-update-all ()
+su-update-software ()
 {
     if [ "$OS_NAME" == "Linux" ]; then
-        sudo $HOME/.local/bin/update-all.sh
+        sudo $HOME/.local/bin/su-update-software.sh
     elif [ "$OS_NAME" == "OpenBSD" ]; then
-        doas $HOME/.local/bin/update-all.sh
+        doas $HOME/.local/bin/su-update-software.sh
     fi
-}
 
-update-all ()
-{
     if [ "$OS_NAME" == "Linux" ]; then
-        $HOME/.local/bin/update-all.sh
-    elif [ "$OS_NAME" == "OpenBSD" ]; then
-        su-update-all
+        update-software
     fi
 }
 
@@ -377,5 +372,10 @@ if [ "$OS_NAME" == "Linux" ]; then
         local article=$1
 
         wikipedia2text "$article" | less
+    }
+
+    update-software ()
+    {
+        $HOME/.local/bin/user-update-software.sh
     }
 fi

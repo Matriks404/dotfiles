@@ -36,7 +36,7 @@ echo -en "Do you want to continue? If so, enter \"Yes, continue!\" (without quot
 read answer
 
 if [ ! "$answer" == "Yes, continue!" ]; then
-    echo "Qutting..."
+    echo "Quitting..."
 
     exit 1
 fi
