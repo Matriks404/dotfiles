@@ -21,7 +21,8 @@ if [ -f /etc/debian_version ]; then
     fi
 
     echo -e "Info: This script won't upgrade your system, unless you have edited appropriate entries in $SOURCES_LIST_LOCATION!"
-    echo -en "Do you want to edit them now? If so, enter \"Yes.\" (without quotes): "
+    echo -e "Do you want to edit them now? If so, enter \"Yes.\" (without quotes): "
+    echo -en "? "
     read answer
 
     if [ "$answer" == "Yes." ]; then
@@ -31,7 +32,8 @@ if [ -f /etc/debian_version ]; then
     fi
 fi
 
-echo -en "Do you want to continue? If so, enter \"Yes, continue!\" (without quotes): "
+echo -e "Do you want to continue? If so, enter \"Yes, continue!\" (without quotes): "
+echo -en "? "
 
 read answer
 
