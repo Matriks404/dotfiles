@@ -65,7 +65,6 @@ copy-dotfiles-to-repos-directory ()
     local txtfiles_to_copy="$HOME/.dotfiles_lists/*"
     local txtfiles_repo_dir="$dotfiles_repo_dir/.dotfiles_lists/"
 
-    mkdir -p $txtfiles_repo_dir
     rsync -civ $txtfiles_to_copy $txtfiles_repo_dir
 
     echo -e "=== Copying dotfiles... ==="
@@ -104,15 +103,6 @@ copy-dotfiles-to-repos-directory ()
             rsync -ciRv $filename $os_specific_repo_dir/$final_name
         fi
     done
-
-    echo -e "=== Copying Bash scripts... ==="
-    # Files and directories that begin with symbols such as _ won't be copied.
-    # As an example you can use "_LOCAL_<rest of the name>" for local-only files and directories.
-    local bin_files_to_copy="$HOME/.local/bin/[0-9a-zA-Z]*.sh"
-    local bin_files_repo_dir="$dotfiles_repo_dir/.local/bin"
-
-    mkdir -p $bin_files_repo_dir
-    rsync -civ $bin_files_to_copy $bin_files_repo_dir
 }
 
 edit-repos ()

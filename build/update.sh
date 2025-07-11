@@ -82,13 +82,6 @@ done < "$os_specific_dotfiles_list"
 
 
 echo ""
-echo "=== Updating Bash scripts... ==="
-
-bin_dir="$dotfiles_target/.local/bin"
-mkdir -p $bin_dir
-rsync -civ $dotfiles_dir/.local/bin/* $bin_dir
-
-echo ""
 
 
 if [ $(command -v xrdb) ]; then
