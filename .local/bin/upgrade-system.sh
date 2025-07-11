@@ -59,12 +59,19 @@ if [ -f /etc/debian_version ]; then
         apt autoclean
     fi
 elif [ "$OS_NAME" == "OpenBSD" ]; then
-    echo -e "=== Patching operating system... ==="
-    syspatch
-    echo -e "\n=== Operating system patching process complete! ==="
+    kern_version=$(sysctl -n kern.version 2>/dev/null)
 
-    echo -e "\n=== Upgrading your system... ==="
-    sysupgrade
+    if echo "$kern_version" | grep -q "OpenBSD [0-9].[0-9]-current"; then
+        echo -e "=== Upgrading your system... ==="
+        sysupgrade -s
+    else
+        echo -e "=== Patching operating system... ==="
+        syspatch
+        echo -e "\n=== Operating system patching process complete! ==="
+
+        echo -e "\n=== Upgrading your system... ==="
+        sysupgrade
+    fi
 fi
 
 echo -e "\n=== System upgrade complete! ==="
