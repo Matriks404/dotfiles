@@ -1,5 +1,5 @@
 .local/bin/su-update-software.sh
-.local/bin/upgrade-system.sh
+.local/bin/su-upgrade-system.sh
 .local/bin/user-update-software.sh
 .bash_aliases
 .bash_bindings

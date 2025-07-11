@@ -336,9 +336,9 @@ su-update-software ()
 su-upgrade-system ()
 {
     if [ "$OS_NAME" == "Linux" ]; then
-        sudo $HOME/.local/bin/upgrade-system.sh
+        sudo $HOME/.local/bin/su-upgrade-system.sh
     elif [ "$OS_NAME" == "OpenBSD" ]; then
-        doas $HOME/.local/bin/upgrade-system.sh
+        doas $HOME/.local/bin/su-upgrade-system.sh
     fi
 }
 
