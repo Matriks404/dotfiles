@@ -8,6 +8,7 @@ set jumpyscrolling
 set linenumbers
 set regexp
 set softwrap
+set stateflags
 
 # Setting tab size to 3
 set tabsize 3
