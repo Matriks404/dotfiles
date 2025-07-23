@@ -7,5 +7,6 @@
 .bash_logout
 .bashrc
 .dotfiles_version
+.nanorc
 .Xdefaults
 .Xresources

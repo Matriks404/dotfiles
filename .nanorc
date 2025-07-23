@@ -1,0 +1,32 @@
+# Setting useful stuff
+set atblanks
+set autoindent
+set casesensitive
+set constantshow
+set emptyline
+set jumpyscrolling
+set linenumbers
+set regexp
+set softwrap
+
+# Setting tab size to 3
+set tabsize 3
+
+# Settings bunch of colors
+set functioncolor bold,green
+set keycolor bold,rosy
+set numbercolor bold,rosy
+set scrollercolor gray
+set statuscolor bold,normal,blue
+set titlecolor bold,normal,sea
+
+# Unsetting not really useful stuff
+unset historylog
+
+
+# I might want to turn these on or off
+set nohelp
+
+#set indicator
+#set minibar
+#set zero
