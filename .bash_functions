@@ -344,19 +344,6 @@ su-upgrade-system ()
 
 # Linux-specific functions
 if [ "$OS_NAME" == "Linux" ]; then
-    edit-debian-sources ()
-    {
-        if [ -f /etc/apt/sources.list ]; then
-            edit-repos
-        elif [ -f /etc/apt/sources.list.d/debian.sources ]; then
-            edit-repos --file debian.sources
-        else
-            echo -e "Error: No valid Debian GNU/Linux repository sources.list found!"
-
-            return 1
-        fi
-    }
-
     wiki ()
     {
         local article=$1
@@ -368,4 +355,21 @@ if [ "$OS_NAME" == "Linux" ]; then
     {
         $HOME/.local/bin/user-update-software.sh
     }
+
+    # Debian-specific functions
+    if [ -f /etc/debian_version ]; then
+        edit-debian-sources ()
+        {
+            if [ -f /etc/apt/sources.list ]; then
+                edit-repos
+            elif [ -f /etc/apt/sources.list.d/debian.sources ]; then
+                edit-repos --file debian.sources
+            else
+                echo -e "Error: No valid sources.list found!"
+
+                return 1
+            fi
+        }
+    fi
+
 fi
