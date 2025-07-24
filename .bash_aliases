@@ -25,6 +25,12 @@ elif [ "$OS_NAME" == "OpenBSD" ]; then
     alias diskfree='df -t ffs'
 fi
 
+# free alias
+if [ "$OS_NAME" == "Linux" ]; then
+    alias free='free -mtw'
+elif [ "$OS_NAME" == "OpenBSD" ]; then
+    alias free='free -m'
+fi
 
 # ls aliases
 
