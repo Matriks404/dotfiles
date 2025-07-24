@@ -382,7 +382,7 @@ if [ "$OS_NAME" == "Linux" ]; then
             OUTPUT=""
             PACKAGE_EXISTS=false
 
-            if [ "$(dpkg-L $1 2> /dev/null)" ]; then
+            if [ "$(dpkg -L $1 2> /dev/null)" ]; then
                 echo -e "Info: Found local package '$1'."
                 PACKAGE_EXISTS=true
 
