@@ -370,6 +370,52 @@ if [ "$OS_NAME" == "Linux" ]; then
                 return 1
             fi
         }
-    fi
 
+        show-binaries ()
+        {
+            if [ -z "$1" ]; then
+                echo -e "Error: You need to provide a package name!"
+
+                return 1
+            fi
+
+            OUTPUT=""
+            PACKAGE_EXISTS=false
+
+            if [ "$(dpkg-query --show $1 2> /dev/null)" ]; then
+                echo -e "Info: Found local package '$1'."
+                PACKAGE_EXISTS=true
+
+                OUTPUT="$(dpkg -L "$1" | grep -E '/(s?bin|games|libexec)/' | sort)"
+            elif [ "$(apt-cache show $1 2> /dev/null)" ]; then
+                echo -e "Info: Found remote package '$1'."
+                PACKAGE_EXISTS=true
+
+                # Check if apt-file exists.
+
+                if [ ! "$(command -v apt-file 2> /dev/null)" ]; then
+                    echo -e "\nError: 'apt-file' not found."
+                    echo -e "To list binaries for remote package you might want to run: 'sudo apt update && sudo apt install apt-file'"
+                    echo -e "After installation, remember to run: 'sudo apt-file update' to update list of files for remote packages.\n"
+
+                    return 1
+                fi
+
+                OUTPUT="$(apt-file list "$1" | grep -E '/(s?bin|games|libexec)/' | sort)"
+            fi
+
+            if [ "$PACKAGE_EXISTS" = false ]; then
+                echo -e "Error: Package '$1' does not exist or could not be found!"
+
+                return 1
+            fi
+
+            if [ -n "$OUTPUT" ]; then
+                echo -e "\nBinary files:"
+                echo "$OUTPUT"
+            else
+                echo -e "Info: No binary files found for package '$1'."
+            fi
+        }
+    fi
 fi
