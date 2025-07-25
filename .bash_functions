@@ -318,6 +318,52 @@ git-push ()
     git push
 }
 
+toggle-disabled ()
+{
+    file_path=$1
+
+    if [ -z "$file_path" ]; then
+        echo -e "Error: No file path provided."
+
+        return 1
+    fi
+
+    if [ ! -e "$file_path" ]; then
+        echo -e "Error: File '$file_path' does not exist!"
+
+        return 1
+    fi
+
+    if [[ "$file_path" == *".disabled" ]]; then
+        # If it ends with .disabled, remove it.
+
+        local new_file_path="${file_path%.disabled}"
+
+        mv "$file_path" "$new_file_path"
+
+        if [ $? -eq 0 ]; then
+            echo "Successfully renamed to '$new_file_path'."
+        else
+            echo "Error: Failed to rename '$file_path' to '$new_file_path'."
+
+            return 1
+        fi
+    else
+        # If it doesn't end with .disabled, add it.
+        local new_file_path="${file_path}.disabled"
+
+        mv "$file_path" "$new_file_path"
+
+        if [ $? -eq 0 ]; then
+            echo "Successfully renamed to '$new_file_path'."
+        else
+            echo "Error: Failed to rename '$file_path' to '$new_file_path'."
+
+            return 1
+        fi
+    fi
+}
+
 # Package updates / System upgrades
 
 su-update-software ()
