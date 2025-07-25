@@ -397,6 +397,12 @@ if [ "$OS_NAME" == "Linux" ]; then
         wikipedia2text "$article" | less
     }
 
+    restart-network ()
+    {
+        sudo systemctl restart NetworkManager
+        sudo systemctl restart tailscaled
+    }
+
     update-software ()
     {
         $HOME/.local/bin/user-update-software.sh
