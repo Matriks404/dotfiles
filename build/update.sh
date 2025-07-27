@@ -44,6 +44,10 @@ echo "=== Updating dotfiles... ==="
 
 dotfiles_to_move="$(cat $dotfiles_dir/.dotfiles_lists/common.txt)"
 
+if [ -f "$dotfiles_dir/.dotfiles_lists/$short_name.txt" ]; then
+    dotfiles_to_move="$dotfiles_to_move $(cat $dotfiles_dir/.dotfiles_lists/$short_name.txt)"
+fi
+
 if [ -f /etc/debian_version ]; then
     dotfiles_to_move="$dotfiles_to_move $(cat $dotfiles_dir/.dotfiles_lists/debian.txt)"
 fi
