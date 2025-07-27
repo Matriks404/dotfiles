@@ -397,10 +397,20 @@ if [ "$OS_NAME" == "Linux" ]; then
         wikipedia2text "$article" | less
     }
 
-    restart-network ()
+    restart-networkmanager-service ()
     {
         sudo systemctl restart NetworkManager
+    }
+
+    restart-tailscaled-service ()
+    {
         sudo systemctl restart tailscaled
+    }
+
+    restart-all-networks ()
+    {
+        restart-networkmanager-service
+        restart-tailscaled-service
     }
 
     update-software ()
