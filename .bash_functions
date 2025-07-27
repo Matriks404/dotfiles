@@ -329,8 +329,8 @@ show-binaries ()
     cmdline_local=""
 
     if [ "$OS_NAME" == "Linux" ]; then
-        if [ -f /etc/debian/version ]; then
-            cmdline_local_list="dpkg -L"
+        if [ -f /etc/debian_version ]; then
+            cmdline_local="dpkg -L"
         else
             echo -e "Error: Unsupported Linux distribution!"
 
@@ -338,7 +338,7 @@ show-binaries ()
         fi
 
     elif [ "$OS_NAME" == "OpenBSD" ]; then
-        cmdline_local_list="pkg_info -L"
+        cmdline_local="pkg_info -L"
     else
         echo -e "Error: Unsupported operating system!"
 
@@ -348,16 +348,16 @@ show-binaries ()
     OUTPUT=""
     PACKAGE_EXISTS=false
 
-    if [ "$($cmdline_local_list $1 2> /dev/null)" ]; then
+    if [ "$($cmdline_local $1 2> /dev/null)" ]; then
         echo -e "Info: Found local package '$1'."
         PACKAGE_EXISTS=true
 
-        OUTPUT="$($cmdline_local_list $1 | grep -E '/(s?bin|games|libexec)/' | sort)"
-    elif [ -f /etc/debian/version && "$(apt-cache show $1 2> /dev/null)" ]; then
+        OUTPUT="$($cmdline_local $1 | grep -E '/(s?bin|games|libexec)/' | sort)"
+    elif [ -f /etc/debian_version ] && apt-cache show "$1" &> /dev/null; then
         echo -e "Info: Found remote package '$1'."
         PACKAGE_EXISTS=true
 
-        # Check if cmdline_remote_list command exists.
+        # Check if apt-file command exists.
 
         if [ ! "$(command -v apt-file 2> /dev/null)" ]; then
             echo -e "\nError: 'apt-file' not found."
