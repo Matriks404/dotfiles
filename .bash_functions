@@ -187,7 +187,7 @@ edit-repos ()
     elif [ "$OS_NAME" == "OpenBSD" ]; then
         doas $EDITOR /etc/installurl
     else
-        echo -e "Error: Unsupported operating system/Linux distribution."
+        echo -e "Error: Unsupported operating system or Linux distribution!"
     fi
 }
 
@@ -298,7 +298,7 @@ get-repos ()
     elif [ "$OS_NAME" == "OpenBSD" ]; then
         cat /etc/installurl
     else
-        echo -e "Error: Unsupported operating system/Linux distribution."
+        echo -e "Error: Unsupported operating system or Linux distribution!"
     fi
 }
 
@@ -337,19 +337,12 @@ show-binaries ()
 
     cmdline_local=""
 
-    if [ "$OS_NAME" == "Linux" ]; then
-        if [ -f /etc/debian_version ]; then
-            cmdline_local="dpkg -L"
-        else
-            echo -e "Error: Unsupported Linux distribution!"
-
-            return 1
-        fi
-
+    if [ -f /etc/debian_version ]; then
+        cmdline_local="dpkg -L"
     elif [ "$OS_NAME" == "OpenBSD" ]; then
         cmdline_local="pkg_info -L"
     else
-        echo -e "Error: Unsupported operating system!"
+        echo -e "Error: Unsupported operating system or Linux distribution!"
 
         return 1
     fi
@@ -477,6 +470,7 @@ if [ "$OS_NAME" == "Linux" ]; then
 
         wikipedia2text "$article" | less
     }
+
 
     update-software ()
     {
