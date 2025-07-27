@@ -318,6 +318,15 @@ git-push ()
     git push
 }
 
+restart-network-service ()
+    {
+        if [ "$OS_NAME" == "Linux" ]; then
+            sudo systemctl restart NetworkManager
+        elif [ "$OS_NAME" == "OpenBSD" ]; then
+            doas sh /etc/netstart
+        fi
+    }
+
 show-binaries ()
 {
     if [ -z "$1" ]; then
@@ -469,26 +478,24 @@ if [ "$OS_NAME" == "Linux" ]; then
         wikipedia2text "$article" | less
     }
 
-    restart-networkmanager-service ()
-    {
-        sudo systemctl restart NetworkManager
-    }
-
-    restart-tailscaled-service ()
-    {
-        sudo systemctl restart tailscaled
-    }
-
-    restart-all-networks ()
-    {
-        restart-networkmanager-service
-        restart-tailscaled-service
-    }
-
     update-software ()
     {
         $HOME/.local/bin/user-update-software.sh
     }
+
+    # Functions specific to Tailscale (if it's installed)
+    if [ "$(command -v tailscale)" ]; then
+        restart-tailscaled-service ()
+        {
+            sudo systemctl restart tailscaled
+        }
+
+        restart-all-networks ()
+        {
+            restart-network-service
+            restart-tailscaled-service
+        }
+    fi
 
     # Debian-specific functions
     if [ -f /etc/debian_version ]; then
