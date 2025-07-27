@@ -349,7 +349,13 @@ show-binaries ()
     PACKAGE_EXISTS=false
 
     if [ "$($cmdline_local $1 2> /dev/null)" ]; then
-        echo -e "Info: Found local package '$1'."
+        # Show different message on OpenBSD, because it actually looks up remote package files, if they are not installed.
+        if [ "$OS_NAME" == "OpenBSD" ]; then
+            echo -e "Info: Found package '$1'."
+        else
+            echo -e "Info: Found local package '$1'."
+        fi
+
         PACKAGE_EXISTS=true
 
         OUTPUT="$($cmdline_local $1 | grep -E '/(s?bin|games|libexec)/' | sort)"
