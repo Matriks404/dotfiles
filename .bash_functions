@@ -1,9 +1,9 @@
 #Getting operating system name
 OS_NAME=$(uname -s)
+#OS_TARGET=$(cat $HOME/.dotfiles_os_target)
 
 github_repo=Matriks404/dotfiles
 github_base_url=https://github.com/$github_repo
-#os_target=$(cat $HOME/.dotfiles_os_target)
 
 backup-file ()
 {
@@ -26,104 +26,6 @@ check-dotfiles-update ()
 
         return 0
     fi
-}
-
-clone-dotfiles-repository ()
-{
-    local repos_dir=$HOME/repos
-    local dotfiles_repo_dir=$HOME/repos/dotfiles
-
-    # Return prematurely if dotfiles repository already exists.
-    if [ -d $dotfiles_repo_dir ]; then
-        return 1
-    fi
-
-    mkdir -p $repos_dir
-
-    #git clone --branch $os_target $github_base_url.git $dotfiles_repo_dir
-    git clone $github_base_url.git $dotfiles_repo_dir
-}
-
-copy-dotfiles-to-repos-directory ()
-{
-    if [ "$OS_NAME" == "Linux" ]; then
-        short_name='linux'
-    elif [ "$OS_NAME" == "OpenBSD" ]; then
-        short_name='openbsd'
-    fi
-
-    local repos_dir=$HOME/repos
-    local dotfiles_repo_dir=$HOME/repos/dotfiles
-
-    # Clone dotfiles repository if it doesn't exist.
-    if [ ! -d $dotfiles_repo_dir ]; then
-        echo -e "=== Cloning the dotfiles repository, because it doesn't exist yet... ==="
-        clone-dotfiles-repository
-    fi
-
-    echo -e "\n=== Updating dotfiles repository to the latest commit... ==="
-    echo -e "Info: This script won't copy dotfiles, unless dotfiles git repository is updated."
-    echo -e "Are you OK with pulling the latest git commit? If so, enter \"Yes.\" (without quotes):"
-    echo -en "? "
-    read answer
-    echo
-
-    if [ ! "$answer" == "Yes." ]; then
-        echo -e "Quitting..."
-
-        return 1
-    fi
-
-    if ! update-dotfiles-repository; then
-        return 1
-    fi
-
-    echo -e "\n=== Copying dotfiles lists... ==="
-    local txtfiles_to_copy="$HOME/.dotfiles_lists/*"
-    local txtfiles_repo_dir="$dotfiles_repo_dir/.dotfiles_lists/"
-
-    rsync -civ $txtfiles_to_copy $txtfiles_repo_dir
-
-    echo -e "\n=== Copying dotfiles... ==="
-    local dotfiles_to_copy="$(cat $HOME/.dotfiles_lists/common.txt)"
-
-    if [ -f "$HOME/.dotfiles_lists/$short_name.txt" ]; then
-        dotfiles_to_copy="$dotfiles_to_copy $(cat $HOME/.dotfiles_lists/$short_name.txt)"
-    fi
-
-    if [ -f /etc/debian_version ]; then
-        dotfiles_to_copy="$dotfiles_to_copy $(cat $HOME/.dotfiles_lists/debian.txt)"
-    fi
-
-    if [ "$USER" == "marcin" ]; then
-        full_username=$(getent passwd "marcin" | cut -d ':' -f 5)
-
-        if [[ "$full_username" =~ ^Marcin\ Kralka ]]; then
-            dotfiles_to_copy="$dotfiles_to_copy $(cat $HOME/.dotfiles_lists/private.txt)"
-
-            if [ -f /etc/debian_version ]; then
-                dotfiles_to_copy="$dotfiles_to_copy $(cat $HOME/.dotfiles_lists/private_debian.txt)"
-            fi
-        fi
-    fi
-
-    rsync -ciRv $dotfiles_to_copy $dotfiles_repo_dir
-
-    echo -e "\n=== Copying OS-specific dotfiles... ==="
-    local os_specific_dotfiles_list="$(cat $HOME/.dotfiles_lists/os_specific.txt)"
-    local os_specific_repo_dir="$dotfiles_repo_dir/os_specific"
-
-    mkdir -p $os_specific_repo_dir
-
-    for entry in $os_specific_dotfiles_list; do
-        filename="${entry}.1"
-
-        if [ -f "$filename" ]; then
-            final_name=$entry.$short_name
-
-            rsync -ciRv $filename $os_specific_repo_dir/$final_name
-        fi
-    done
 }
 
 edit-repos ()
@@ -323,22 +225,6 @@ get-repos ()
     fi
 }
 
-git-commit ()
-{
-    local comment=$1
-
-    git add .
-    git commit -m "$comment"
-}
-
-git-push ()
-{
-    local comment=$1
-
-    git-commit "$comment"
-    git push
-}
-
 restart-network-service ()
     {
         if [ "$OS_NAME" == "Linux" ]; then
@@ -459,29 +345,6 @@ toggle-disabled ()
     fi
 }
 
-update-dotfiles-repository ()
-{
-    local dotfiles_repo_dir=$HOME/repos/dotfiles
-
-    # Clone repository if it doesn't exist.
-    if [ ! -d $dotfiles_repo_dir ]; then
-        clone-dotfiles-repository
-    fi
-
-    cd $dotfiles_repo_dir
-
-    git pull
-    exit_status=$?
-
-    cd $OLDPWD
-
-    if [ $exit_status -ne 0 ]; then
-        echo -e "Error: Couldn't pull the latest commit in the dotfiles git repository!"
-    fi
-
-    return $exit_status
-}
-
 # Package updates / System upgrades
 
 su-update-software ()
@@ -505,6 +368,146 @@ su-upgrade-system ()
         doas $HOME/.local/bin/su-upgrade-system.sh
     fi
 }
+
+# Functions available only if git is installed
+if [ "$(command -v git)" ]; then
+    clone-dotfiles-repository ()
+    {
+        local repos_dir=$HOME/repos
+        local dotfiles_repo_dir=$HOME/repos/dotfiles
+
+        # Return prematurely if dotfiles repository already exists.
+        if [ -d $dotfiles_repo_dir ]; then
+            return 1
+        fi
+
+        mkdir -p $repos_dir
+
+        #git clone --branch $OS_TARGET $github_base_url.git $dotfiles_repo_dir
+        git clone $github_base_url.git $dotfiles_repo_dir
+    }
+
+    copy-dotfiles-to-repos-directory ()
+    {
+        if [ "$OS_NAME" == "Linux" ]; then
+            short_name='linux'
+        elif [ "$OS_NAME" == "OpenBSD" ]; then
+            short_name='openbsd'
+        fi
+
+        local repos_dir=$HOME/repos
+        local dotfiles_repo_dir=$HOME/repos/dotfiles
+
+        # Clone dotfiles repository if it doesn't exist.
+        if [ ! -d $dotfiles_repo_dir ]; then
+            echo -e "=== Cloning the dotfiles repository, because it doesn't exist yet... ==="
+            clone-dotfiles-repository
+        fi
+
+        echo -e "\n=== Updating dotfiles repository to the latest commit... ==="
+        echo -e "Info: This script won't copy dotfiles, unless dotfiles git repository is updated."
+        echo -e "Are you OK with pulling the latest git commit? If so, enter \"Yes.\" (without quotes):"
+        echo -en "? "
+        read answer
+        echo
+
+        if [ ! "$answer" == "Yes." ]; then
+            echo -e "Quitting..."
+
+            return 1
+        fi
+
+        if ! update-dotfiles-repository; then
+            return 1
+        fi
+
+        echo -e "\n=== Copying dotfiles lists... ==="
+        local txtfiles_to_copy="$HOME/.dotfiles_lists/*"
+        local txtfiles_repo_dir="$dotfiles_repo_dir/.dotfiles_lists/"
+
+        rsync -civ $txtfiles_to_copy $txtfiles_repo_dir
+
+        echo -e "\n=== Copying dotfiles... ==="
+        local dotfiles_to_copy="$(cat $HOME/.dotfiles_lists/common.txt)"
+
+        if [ -f "$HOME/.dotfiles_lists/$short_name.txt" ]; then
+            dotfiles_to_copy="$dotfiles_to_copy $(cat $HOME/.dotfiles_lists/$short_name.txt)"
+        fi
+
+        if [ -f /etc/debian_version ]; then
+            dotfiles_to_copy="$dotfiles_to_copy $(cat $HOME/.dotfiles_lists/debian.txt)"
+        fi
+
+        if [ "$USER" == "marcin" ]; then
+            full_username=$(getent passwd "marcin" | cut -d ':' -f 5)
+
+            if [[ "$full_username" =~ ^Marcin\ Kralka ]]; then
+                dotfiles_to_copy="$dotfiles_to_copy $(cat $HOME/.dotfiles_lists/private.txt)"
+
+                if [ -f /etc/debian_version ]; then
+                    dotfiles_to_copy="$dotfiles_to_copy $(cat $HOME/.dotfiles_lists/private_debian.txt)"
+                fi
+            fi
+        fi
+
+        rsync -ciRv $dotfiles_to_copy $dotfiles_repo_dir
+
+        echo -e "\n=== Copying OS-specific dotfiles... ==="
+        local os_specific_dotfiles_list="$(cat $HOME/.dotfiles_lists/os_specific.txt)"
+        local os_specific_repo_dir="$dotfiles_repo_dir/os_specific"
+
+        mkdir -p $os_specific_repo_dir
+
+        for entry in $os_specific_dotfiles_list; do
+            filename="${entry}.1"
+
+            if [ -f "$filename" ]; then
+                final_name=$entry.$short_name
+
+                rsync -ciRv $filename $os_specific_repo_dir/$final_name
+            fi
+        done
+    }
+
+    git-commit ()
+    {
+        local comment=$1
+
+        git add .
+        git commit -m "$comment"
+    }
+
+    git-push ()
+    {
+        local comment=$1
+
+        git-commit "$comment"
+        git push
+    }
+
+    update-dotfiles-repository ()
+    {
+        local dotfiles_repo_dir=$HOME/repos/dotfiles
+
+        # Clone repository if it doesn't exist.
+        if [ ! -d $dotfiles_repo_dir ]; then
+            clone-dotfiles-repository
+        fi
+
+        cd $dotfiles_repo_dir
+
+        git pull
+        exit_status=$?
+
+        cd $OLDPWD
+
+        if [ $exit_status -ne 0 ]; then
+            echo -e "Error: Couldn't pull the latest commit in the dotfiles git repository!"
+        fi
+
+        return $exit_status
+    }
+fi
 
 # Linux-specific functions
 if [ "$OS_NAME" == "Linux" ]; then
