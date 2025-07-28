@@ -42,7 +42,7 @@ rsync -civ $txtfiles_to_move $txtfiles_dir
 echo ""
 echo "=== Updating dotfiles... ==="
 
-dotfiles_to_move="$(cat $dotfiles_dir/.dotfiles_lists/common.txt)"
+dotfiles_to_move="$(cat $dotfiles_dir/.dotfiles_lists/common.txt) $(cat $dotfiles_dir/.dotfiles_lists/common_buildonly.txt)"
 
 if [ -f "$dotfiles_dir/.dotfiles_lists/$short_name.txt" ]; then
     dotfiles_to_move="$dotfiles_to_move $(cat $dotfiles_dir/.dotfiles_lists/$short_name.txt)"

@@ -6,7 +6,6 @@
 .bash_functions
 .bash_logout
 .bashrc
-.dotfiles_version
 .nanorc
 .profile
 .Xdefaults
