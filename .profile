@@ -6,7 +6,7 @@ mkdir -p "$HOME/.local/bin"
 OS_NAME="$(uname -s)"
 
 if [ "$OS_NAME" == "OpenBSD" ]; then
-    PATH="/usr/X11R6/bin:$PATH"
+    PATH="/usr/X11R6/bin:/sbin:/usr/sbin:/usr/local/sbin:$PATH"
 fi
 
 if [ -n "$BASH_VERSION" ]; then
