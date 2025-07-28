@@ -15,7 +15,6 @@ if [ -n "$BASH_VERSION" ]; then
     fi
 fi
 
-PATH="$HOME/bin:$PATH"
-PATH="$HOME/.local/bin:$PATH"
+PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
 export HOME PATH TERM
