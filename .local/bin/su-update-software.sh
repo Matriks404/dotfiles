@@ -20,25 +20,25 @@ if [ "$EUID" -eq 0 ]; then
             echo -e "    === Updating APT package list... ==="
             apt update
 
-            echo -e "    === Upgrading your system... ==="
+            echo -e "\n    === Upgrading your system... ==="
             apt dist-upgrade
 
-            echo -e "    === Cleaning up stuff... ==="
+            echo -e "\n    === Cleaning up stuff... ==="
             apt clean
         fi
     elif [ "$OS_NAME" == "OpenBSD" ]; then
         pkg_add -u
     fi
 
-    echo -e "=== Full package update complete! ==="
+    echo -e "\n=== Full package update complete! ==="
 
     if [ "$OS_NAME" == "OpenBSD" ]; then
         echo -e "\n=== Patching operating system... ==="
 
         syspatch
 
-        echo -e "=== Operating system patching process complete! ==="
+        echo -e "\n=== Operating system patching process complete! ==="
     fi
 
-    echo -e ""
+    echo
 fi

@@ -61,7 +61,7 @@ copy-dotfiles-to-repos-directory ()
         clone-dotfiles-repository
     fi
 
-    echo -e "=== Updating dotfiles repository to the latest commit... ==="
+    echo -e "\n=== Updating dotfiles repository to the latest commit... ==="
     echo -e "Info: This script won't copy dotfiles, unless dotfiles git repository is updated."
     echo -e "Are you OK with pulling the latest git commit? If so, enter \"Yes.\" (without quotes):"
     echo -en "? "
@@ -78,13 +78,13 @@ copy-dotfiles-to-repos-directory ()
         return 1
     fi
 
-    echo -e "=== Copying dotfiles lists... ==="
+    echo -e "\n=== Copying dotfiles lists... ==="
     local txtfiles_to_copy="$HOME/.dotfiles_lists/*"
     local txtfiles_repo_dir="$dotfiles_repo_dir/.dotfiles_lists/"
 
     rsync -civ $txtfiles_to_copy $txtfiles_repo_dir
 
-    echo -e "=== Copying dotfiles... ==="
+    echo -e "\n=== Copying dotfiles... ==="
     local dotfiles_to_copy="$(cat $HOME/.dotfiles_lists/common.txt)"
 
     if [ -f "$HOME/.dotfiles_lists/$short_name.txt" ]; then
@@ -109,7 +109,7 @@ copy-dotfiles-to-repos-directory ()
 
     rsync -ciRv $dotfiles_to_copy $dotfiles_repo_dir
 
-    echo -e "=== Copying OS-specific dotfiles... ==="
+    echo -e "\n=== Copying OS-specific dotfiles... ==="
     local os_specific_dotfiles_list="$(cat $HOME/.dotfiles_lists/os_specific.txt)"
     local os_specific_repo_dir="$dotfiles_repo_dir/os_specific"
 

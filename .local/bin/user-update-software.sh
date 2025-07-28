@@ -3,5 +3,5 @@
 if [ $(command -v flatpak) ]; then
     echo -e "=== Updating flatpak applicaitons... ==="
     flatpak update
-    echo -e "=== Flatpak applications update complete! ==="
+    echo -e "\n=== Flatpak applications update complete! ==="
 fi
