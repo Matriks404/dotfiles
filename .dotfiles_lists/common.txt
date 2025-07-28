@@ -8,5 +8,6 @@
 .bashrc
 .dotfiles_version
 .nanorc
+.profile
 .Xdefaults
 .Xresources
