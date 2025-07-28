@@ -61,6 +61,23 @@ copy-dotfiles-to-repos-directory ()
         clone-dotfiles-repository
     fi
 
+    echo -e "=== Updating dotfiles repository to the latest commit... ==="
+    echo -e "Info: This script won't copy dotfiles, unless dotfiles git repository is updated."
+    echo -e "Are you OK with pulling the latest git commit? If so, enter \"Yes.\" (without quotes):"
+    echo -en "? "
+    read answer
+    echo
+
+    if [ ! "$answer" == "Yes." ]; then
+        echo -e "Quitting..."
+
+        return 1
+    fi
+
+    if ! update-dotfiles-repository; then
+        return 1
+    fi
+
     echo -e "=== Copying dotfiles lists... ==="
     local txtfiles_to_copy="$HOME/.dotfiles_lists/*"
     local txtfiles_repo_dir="$dotfiles_repo_dir/.dotfiles_lists/"
@@ -440,6 +457,29 @@ toggle-disabled ()
             return 1
         fi
     fi
+}
+
+update-dotfiles-repository ()
+{
+    local dotfiles_repo_dir=$HOME/repos/dotfiles
+
+    # Clone repository if it doesn't exist.
+    if [ ! -d $dotfiles_repo_dir ]; then
+        clone-dotfiles-repository
+    fi
+
+    cd $dotfiles_repo_dir
+
+    git pull
+    exit_status=$?
+
+    cd $OLDPWD
+
+    if [ $exit_status -ne 0 ]; then
+        echo -e "Error: Couldn't pull the latest commit in the dotfiles git repository!"
+    fi
+
+    return $exit_status
 }
 
 # Package updates / System upgrades
