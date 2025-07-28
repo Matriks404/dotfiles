@@ -1,5 +1,7 @@
 #!/bin/sh
 
+. ~/.profile
+
 xrdb -load .Xresources
 
 xterm -geometry 80x32+16+16 -e bash &
