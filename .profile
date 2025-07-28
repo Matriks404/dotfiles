@@ -17,4 +17,5 @@ fi
 
 PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
+export ENV="$HOME/.shrc"
 export HOME PATH TERM
