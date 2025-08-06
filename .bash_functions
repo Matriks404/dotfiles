@@ -5,11 +5,6 @@ OS_NAME=$(uname -s)
 github_repo=Matriks404/dotfiles
 github_base_url=https://github.com/$github_repo
 
-backup-file ()
-{
-    cp $1 $1.bak
-}
-
 check-dotfiles-update ()
 {
     url="https://raw.githubusercontent.com/$github_repo/refs/heads/master/.dotfiles_version"

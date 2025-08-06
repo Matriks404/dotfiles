@@ -1,6 +1,62 @@
-OS_NAME="$(uname -s)"
+os_name="$(uname -s)"
 
 # Hash the location of an utility if it is executed, so that future invocations do not need to search for it.
-if [ "$OS_NAME" = "OpenBSD" ] ; then
+if [ "os_name" = "OpenBSD" ] ; then
     set -h
+fi
+
+# Set console language to English. See locale(7) for more info.
+export LANG=en_US.UTF-8
+export LANGUAGE=en_US
+
+if [ $(command -v editor) ]; then
+    # Detect (if possible) text editor and use it
+    export EDITOR=$(command -v editor)
+else
+    # Otheriwse, manually set your favourite editor.
+    export EDITOR=nano
+fi
+
+# Set history size.
+HISTSIZE=10000
+
+# Make less more friendly for non-text input files, see lesspipe(1)
+[ $(command -v lesspipe) ] && eval "$(lesspipe)"
+
+# Enable color support of ls and also add handy aliases.
+if [ $(command -v dircolors) ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
+# colored GCC warnings and errors
+#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
+alias dotver="cat .dotfiles_version"
+
+# CUSTOM FUNCTIONS
+
+if [ -f ~/.shell_functions ]; then
+    . ~/.shell_functions
+fi
+
+# CUSTOM ALIASES
+
+if [ -f ~/.shell_aliases ]; then
+    . ~/.shell_aliases
+fi
+
+# CUSTOM LOCAL FUNCTIONS
+
+if [ -f ~/.shell_functions.local ]; then
+    . ~/.shell_functions.local
+fi
+
+# CUSTOM LOCAL ALIASES
+
+if [ -f ~/.shell_aliases.local ]; then
+    . ~/.shell_aliases.local
 fi

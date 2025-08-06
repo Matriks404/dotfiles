@@ -1,0 +1,4 @@
+backup_file()
+{
+    cp "$1" "$1.bak"
+}
