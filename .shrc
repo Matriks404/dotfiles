@@ -4,6 +4,11 @@ case $- in
       *) return;;
 esac
 
+# Set up prompt for non-Bash shells.
+if [ -z "$BASH_VERSION" ]; then
+    PS1="`pwd`\$ "
+fi
+
 # Hash the location of an utility if it is executed, so that future invocations do not need to search for it.
 if [ "OS_NAME" = "OpenBSD" ] ; then
     set -h
