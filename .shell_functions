@@ -40,7 +40,7 @@ su_upgrade_system ()
 if [ "$(command -v git)" ]; then
     git_commit ()
     {
-        local comment=$1
+        local comment="$1"
 
         git add .
         git commit -m "$comment"
@@ -48,7 +48,7 @@ if [ "$(command -v git)" ]; then
 
     git_push ()
     {
-        local comment=$1
+        local comment="$1"
 
         git_commit "$comment"
         git push
@@ -78,8 +78,8 @@ if [ "$OS_NAME" = "Linux" ]; then
 
     wiki ()
     {
-        local article=$1
+        local article="$1"
 
-        lynx gopher://gopherpedia.com/0/"$article"
+        lynx gopher://gopherpedia.com/0/"${article}"
     }
 fi
