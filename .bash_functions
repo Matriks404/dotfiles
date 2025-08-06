@@ -515,7 +515,7 @@ if [ "$OS_NAME" == "Linux" ]; then
     {
         local article=$1
 
-        wikipedia2text "$article" | less
+        lynx gopher://gopherpedia.com/0/"$article"
     }
 
 
