@@ -6,7 +6,17 @@ esac
 
 # Set up prompt for non-Bash shells.
 if [ -z "$BASH_VERSION" ]; then
-    PS1="`pwd`\$ "
+    if [ -f "/etc/debian_version" ]; then
+        shell_name="$(ps -o ucomm= -p $$)"
+
+        if [ "$shell_name" = "sh" -o "$shell_name" = "dash" ]; then
+            PS1="$ "
+        else
+            PS1="`pwd`\$ "
+        fi
+    else
+        PS1="`pwd`\$ "
+    fi
 fi
 
 # Hash the location of an utility if it is executed, so that future invocations do not need to search for it.
