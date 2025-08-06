@@ -10,12 +10,12 @@ if [ -z "$BASH_VERSION" ]; then
         shell_name="$(ps -o ucomm= -p $$)"
 
         if [ "$shell_name" = "sh" -o "$shell_name" = "dash" ]; then
-            PS1="$ "
+            PS1='$ '
         else
-            PS1="`pwd`\$ "
+            PS1='\w\$ '
         fi
     else
-        PS1="`pwd`\$ "
+        PS1='\w$ '
     fi
 fi
 
