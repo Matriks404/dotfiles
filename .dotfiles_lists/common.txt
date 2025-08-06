@@ -8,6 +8,7 @@
 .bashrc
 .nanorc
 .profile
+.shell_aliases
 .shell_functions
 .shrc
 .Xdefaults

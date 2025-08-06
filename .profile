@@ -3,7 +3,7 @@ PATH=/bin:/usr/bin:/usr/local/bin:/usr/games:/usr/local/games
 mkdir -p "$HOME/bin"
 mkdir -p "$HOME/.local/bin"
 
-OS_NAME="$(uname -s)"
+export OS_NAME="$(uname -s)"
 
 if [ "$OS_NAME" == "OpenBSD" ]; then
     PATH="/usr/X11R6/bin:/sbin:/usr/sbin:/usr/local/sbin:$PATH"

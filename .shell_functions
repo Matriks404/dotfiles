@@ -1,4 +1,85 @@
-backup_file()
+backup_file ()
 {
     cp "$1" "$1.bak"
 }
+
+restart_network_service ()
+    {
+        if [ "$OS_NAME" = "Linux" ]; then
+            sudo systemctl restart NetworkManager
+        elif [ "$OS_NAME" = "OpenBSD" ]; then
+            doas sh "/etc/netstart"
+        fi
+    }
+
+# Package updates / System upgrades
+
+su_update_software ()
+{
+    if [ "$OS_NAME" = "Linux" ]; then
+        sudo "$HOME/.local/bin/su-update-software.sh"
+    elif [ "$OS_NAME" = "OpenBSD" ]; then
+        doas "$HOME/.local/bin/su-update-software.sh"
+    fi
+
+    if [ "$OS_NAME" = "Linux" ]; then
+        update_software
+    fi
+}
+
+su_upgrade_system ()
+{
+    if [ "$OS_NAME" = "Linux" ]; then
+        sudo "$HOME/.local/bin/su-upgrade-system.sh"
+    elif [ "$OS_NAME" = "OpenBSD" ]; then
+        doas "$HOME/.local/bin/su-upgrade-system.sh"
+    fi
+}
+
+# Functions available only if git is installed
+if [ "$(command -v git)" ]; then
+    git_commit ()
+    {
+        local comment=$1
+
+        git add .
+        git commit -m "$comment"
+    }
+
+    git_push ()
+    {
+        local comment=$1
+
+        git_commit "$comment"
+        git push
+    }
+fi
+
+# Linux-specific functions
+if [ "$OS_NAME" = "Linux" ]; then
+    # Functions specific to Tailscale (if it's installed)
+    if [ "$(command -v tailscale)" ]; then
+        restart_tailscaled_service ()
+        {
+            sudo systemctl restart tailscaled
+        }
+
+        restart_all_networks ()
+        {
+            restart_network_service
+            restart_tailscaled_service
+        }
+    fi
+
+    update_software ()
+    {
+        "$HOME/.local/bin/user-update-software.sh"
+    }
+
+    wiki ()
+    {
+        local article=$1
+
+        lynx gopher://gopherpedia.com/0/"$article"
+    }
+fi

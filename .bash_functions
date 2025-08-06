@@ -1,23 +1,21 @@
-#Getting operating system name
-OS_NAME=$(uname -s)
-#OS_TARGET=$(cat $HOME/.dotfiles_os_target)
+#os_target="$(cat ${HOME}/.dotfiles_os_target)"
 
-github_repo=Matriks404/dotfiles
-github_base_url=https://github.com/$github_repo
+github_repo="Matriks404/dotfiles"
+github_base_url="https://github.com/${github_repo}"
 
 check-dotfiles-update ()
 {
-    url="https://raw.githubusercontent.com/$github_repo/refs/heads/master/.dotfiles_version"
+    local url="https://raw.githubusercontent.com/${github_repo}/refs/heads/master/.dotfiles_version"
 
-    current_version="$(dotver | cut -d ' ' -f 1)"
-    latest_version="$(curl -s $url | cut -d ' ' -f 1)"
+    local current_version="$(dotver | cut -d ' ' -f 1)"
+    local latest_version="$(curl -s $url | cut -d ' ' -f 1)"
 
     if [[ "$current_version" = "$latest_version" || "$current_version" > "$latest_version" ]]; then
-        echo "You have the latest version of dotfiles! ($current_version)"
+        echo -e "You have the latest version of dotfiles! (${current_version})"
 
         return 1
     else
-        echo "There is a dotfiles update available! ($current_version --> $latest_version)"
+        echo -e "There is a dotfiles update available! (${current_version} --> ${latest_version})"
 
         return 0
     fi
@@ -25,7 +23,7 @@ check-dotfiles-update ()
 
 edit-repos ()
 {
-    if [ -f /etc/debian_version ]; then
+    if [ -f "/etc/debian_version" ]; then
         if [[ "$1" == "-f" || "$1" == "-fl" || "$1" == "-fs" || "$1" == "--file" ]]; then
             if [ -z "$2" ]; then
                 echo -e "Error: You need to provide a filename!"
@@ -33,47 +31,53 @@ edit-repos ()
                 return 1
             fi
 
+            local file
+
             if [ "$1" == "-fl" ]; then
-                local file="/etc/apt/sources.list.d/$2.list"
+                file="/etc/apt/sources.list.d/${2}.list"
             elif [ "$1" == "-fs" ]; then
-                local file="/etc/apt/sources.list.d/$2.sources"
+                file="/etc/apt/sources.list.d/${2}.sources"
             else
-                local file="/etc/apt/sources.list.d/$2"
+                file="/etc/apt/sources.list.d/${2}"
             fi
 
-            if [ -f "$file" ]; then
-                sudo $EDITOR "$file"
-            else
-                echo -e "Error: $file doesn't exist!"
+            if [ ! -f "$file" ]; then
+                echo -e "Error: File '${file}' doesn't exist!"
+
+                return 1
             fi
 
-            return 1
+            sudo "$EDITOR" "$file"
+
+            return $?
         fi
 
+        # Logic for interactive file selection
         local files=()
 
-        if [ -f /etc/apt/sources.list ]; then
+        if [ -f "/etc/apt/sources.list" ]; then
             files+=("/etc/apt/sources.list")
         fi
 
-        sources_list_dir="/etc/apt/sources.list.d"
+        local sources_list_dir="/etc/apt/sources.list.d"
 
-        if [ -d $sources_list_dir ]; then
-            for file in $sources_list_dir/*.{list,sources}; do
+        if [ -d "$sources_list_dir" ]; then
+            for file in "$sources_list_dir/"*.{list,sources}; do
                 if [ -f "$file" ]; then
                     files+=("$file")
                 fi
             done
         fi
 
-        local num_files=${#files[@]}
+        local num_files="${#files[@]}"
 
         if [ "$num_files" -eq 0 ]; then
             echo -e "Error: You don't have valid sources.list available!"
 
             return 1
+
         elif [ "$num_files" -eq 1 ]; then
-            sudo $EDITOR "${files[0]}"
+            sudo "$EDITOR" "${files[0]}"
 
             return 0
         fi
@@ -91,37 +95,41 @@ edit-repos ()
 
         echo ""
 
-        read -rp "Select file you want to edit (1-$num_files): " selection
+        read -rp "Select file you want to edit (1-${num_files}): " selection
 
         if ! [[ "$selection" =~ ^[0-9]+$ ]] || [[ "$selection" -lt 1 ]] || [[ "$selection" -gt "$num_files" ]]; then
-            echo -e "\nError: Invalid selection. Next time enter a number between 1 and $num_files."
+            echo -e "\nError: Invalid selection! Next time enter a number between 1 and ${num_files}."
 
             return 1
         fi
 
         local selected_file="${sorted_files[$((selection - 1))]}"
-        sudo $EDITOR "$selected_file"
+        sudo "$EDITOR" "$selected_file"
 
     elif [ "$OS_NAME" == "OpenBSD" ]; then
-        doas $EDITOR /etc/installurl
+        doas "$EDITOR" "/etc/installurl"
+
+        return $?
     else
         echo -e "Error: Unsupported operating system or Linux distribution!"
+
+        return 1
     fi
 }
 
 get-manual ()
 {
-    parent_pid=$(ps -p $$ -o ppid= | xargs)
+    local parent_pid="$(ps -p $$ -o ppid= | xargs)"
 
-    current_pid=$parent_pid
-    is_unicode_term="true"
+    local current_pid="$parent_pid"
+    local is_unicode_term="true"
 
-    while [ -n "$current_pid" ] && [ "$current_pid" -ne "1" ]; do
-        cmd=$(ps -p $current_pid -o command= | xargs)
+    while [[ -n "$current_pid" && "$current_pid" -ne "1" ]]; do
+        local cmd="$(ps -p $current_pid -o command= | xargs)"
 
-        term="${cmd%% *}"
+        local term="${cmd%% *}"
 
-        if [ $term = "xterm" ] || [ $term = "/usr/X11R6/bin/xterm" ] || [ $term = "/usr/bin/X11/xterm" ] || [ $term = "/usr/bin/xterm" ]; then
+        if [ "$term" = "xterm" ] || [ "$term" = "/usr/X11R6/bin/xterm" ] || [ "$term" = "/usr/bin/X11/xterm" ] || [ "$term" = "/usr/bin/xterm" ]; then
             if [ "$cmd" = "$term -class UXTerm" ] || [ "$cmd" = "$term -class UXTerm -u8" ]; then
                 is_unicode_term="true"
 
@@ -133,7 +141,7 @@ get-manual ()
             fi
         fi
 
-        current_pid=$(ps -p "$current_pid" -o ppid= | xargs)
+        current_pid="$(ps -p "$current_pid" -o ppid= | xargs)"
     done
 
     if [ -z "$1" ]; then
@@ -141,7 +149,7 @@ get-manual ()
     elif [ "$is_unicode_term" = "false" ]; then
         echo -e "Running external UXTerm, since current terminal dosen't support UTF-8..."
 
-        (xterm -class UXTerm -e sh -c "man $* && echo Press RETURN to continue. && read DUMMY" &)
+        (xterm -class "UXTerm" -e "sh -c \"man $* && echo Press RETURN to continue. && read DUMMY\"" &)
     else
         man "$*"
     fi
@@ -155,18 +163,18 @@ get-new-dotfiles ()
         return 1
     fi
 
-    FORCE_UPDATE=false
+    force_update="false"
 
-    if [ "$1" == "-f" -o "$1" == "--force" ]; then
-        FORCE_UPDATE=true
+    if [ "$1" = "-f" -o "$1" = "--force" ]; then
+        force_update="true"
     fi
 
-    if $FORCE_UPDATE || check-dotfiles-update; then
+    if $force_update || check-dotfiles-update; then
         echo -e "\nGetting new dotfiles..."
 
-        repo_name='Matriks404/dotfiles'
+        repo_name="Matriks404/dotfiles"
 
-        curl --silent "https://raw.githubusercontent.com/$repo_name/refs/heads/master/build/update.sh" | sh
+        curl --silent "https://raw.githubusercontent.com/${repo_name}/refs/heads/master/build/update.sh" | sh
     else
         echo -e "\nThere is no need to update dotfiles."
         echo -e "Use -f or --force option to force update them."
@@ -175,7 +183,7 @@ get-new-dotfiles ()
 
 get-repos ()
 {
-    if [ -f /etc/debian_version ]; then
+    if [ -f "/etc/debian_version" ]; then
         local files=()
 
         sources_list_dir="/etc/apt/sources.list.d"
@@ -219,15 +227,6 @@ get-repos ()
         echo -e "Error: Unsupported operating system or Linux distribution!"
     fi
 }
-
-restart-network-service ()
-    {
-        if [ "$OS_NAME" == "Linux" ]; then
-            sudo systemctl restart NetworkManager
-        elif [ "$OS_NAME" == "OpenBSD" ]; then
-            doas sh /etc/netstart
-        fi
-    }
 
 show-binaries ()
 {
@@ -340,30 +339,6 @@ toggle-disabled ()
     fi
 }
 
-# Package updates / System upgrades
-
-su-update-software ()
-{
-    if [ "$OS_NAME" == "Linux" ]; then
-        sudo $HOME/.local/bin/su-update-software.sh
-    elif [ "$OS_NAME" == "OpenBSD" ]; then
-        doas $HOME/.local/bin/su-update-software.sh
-    fi
-
-    if [ "$OS_NAME" == "Linux" ]; then
-        update-software
-    fi
-}
-
-su-upgrade-system ()
-{
-    if [ "$OS_NAME" == "Linux" ]; then
-        sudo $HOME/.local/bin/su-upgrade-system.sh
-    elif [ "$OS_NAME" == "OpenBSD" ]; then
-        doas $HOME/.local/bin/su-upgrade-system.sh
-    fi
-}
-
 # Functions available only if git is installed
 if [ "$(command -v git)" ]; then
     clone-dotfiles-repository ()
@@ -464,22 +439,6 @@ if [ "$(command -v git)" ]; then
         done
     }
 
-    git-commit ()
-    {
-        local comment=$1
-
-        git add .
-        git commit -m "$comment"
-    }
-
-    git-push ()
-    {
-        local comment=$1
-
-        git-commit "$comment"
-        git push
-    }
-
     update-dotfiles-repository ()
     {
         local dotfiles_repo_dir=$HOME/repos/dotfiles
@@ -506,33 +465,6 @@ fi
 
 # Linux-specific functions
 if [ "$OS_NAME" == "Linux" ]; then
-    wiki ()
-    {
-        local article=$1
-
-        lynx gopher://gopherpedia.com/0/"$article"
-    }
-
-
-    update-software ()
-    {
-        $HOME/.local/bin/user-update-software.sh
-    }
-
-    # Functions specific to Tailscale (if it's installed)
-    if [ "$(command -v tailscale)" ]; then
-        restart-tailscaled-service ()
-        {
-            sudo systemctl restart tailscaled
-        }
-
-        restart-all-networks ()
-        {
-            restart-network-service
-            restart-tailscaled-service
-        }
-    fi
-
     # Debian-specific functions
     if [ -f /etc/debian_version ]; then
         edit-debian-sources ()
@@ -549,3 +481,4 @@ if [ "$OS_NAME" == "Linux" ]; then
         }
     fi
 fi
+

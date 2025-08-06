@@ -1,7 +1,11 @@
-os_name="$(uname -s)"
+# If not running interactively, don't do anything.
+case $- in
+    *i*) ;;
+      *) return;;
+esac
 
 # Hash the location of an utility if it is executed, so that future invocations do not need to search for it.
-if [ "os_name" = "OpenBSD" ] ; then
+if [ "OS_NAME" = "OpenBSD" ] ; then
     set -h
 fi
 

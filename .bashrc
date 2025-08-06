@@ -1,12 +1,5 @@
 # NOTE: On Debian GNU/Linux edit the file /etc/bash.bashrc and uncomment
-# the code fragment which enables bash completion in interactive shells.
-
-
-# If not running interactively, don't do anything.
-case $- in
-    *i*) ;;
-      *) return;;
-esac
+# the code fragment which enables Bash completion in interactive shells.
 
 # Load common shell stuff.
 if [ -f "$HOME/.shrc" ]; then
@@ -61,8 +54,6 @@ esac
 
 
 # CUSTOM BASH FUNCTIONS, ALIASES AND BINDINGS
-
-# Dotfiles version alias
 alias dotver='cat .dotfiles_version'
 
 
