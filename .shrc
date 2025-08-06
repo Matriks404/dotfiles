@@ -13,10 +13,10 @@ if [ -z "$BASH_VERSION" ]; then
         if [ "$shell_name" = "sh" -o "$shell_name" = "dash" -o "$shell_name" = "ksh" ]; then
             PS1='$ '
         else
-            PS1='\w$ '
+            PS1='\w $ '
         fi
     else
-        PS1='\w$ '
+        PS1='\[\033[0;33m\]\w\[\033[0m\] $ '
     fi
 fi
 
