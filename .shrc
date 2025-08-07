@@ -4,24 +4,21 @@ case $- in
       *) return;;
 esac
 
-# Set up prompt for non-Bash shells.
-if [ -z "$BASH_VERSION" ]; then
-    if [ -f "/etc/debian_version" ]; then
-        shell_name="$(ps -o ucomm= -p $$)"
+SHELL_CMD="$(ps -o ucomm= -p $$)"
 
-        # Neither of these shells support '\w$ ' prompt on Debian GNU/Linux.
-        if [ "$shell_name" = "sh" -o "$shell_name" = "dash" -o "$shell_name" = "ksh" ]; then
-            PS1='$ '
-        else
+# Set up prompt for non-Bash shells.
+if [ "$SHELL_CMD" = "bash" ]; then
+    if [ -f "/etc/debian_version" ]; then
+        if [ ! "$SHELL_CMD" = "sh" -a ! "$SHELL_CMD" = "dash" -a ! "$SHELL_CMD" = "ksh" ]; then
             PS1='\w $ '
         fi
-    else
+    elif "$OS_NAME" = "OpenBSD" ]; then
         PS1='\[\033[0;33m\]\w\[\033[0m\] $ '
     fi
 fi
 
 # Hash the location of an utility if it is executed, so that future invocations do not need to search for it.
-if [ "OS_NAME" = "OpenBSD" ] ; then
+if [ "$SHELL_CMD" = "ksh" ]; then
     set -h
 fi
 
