@@ -7,12 +7,12 @@ esac
 SHELL_CMD="$(ps -o ucomm= -p $$)"
 
 # Set up prompt for non-Bash shells.
-if [ "$SHELL_CMD" = "bash" ]; then
+if [ ! "$SHELL_CMD" = "bash" ]; then
     if [ -f "/etc/debian_version" ]; then
         if [ ! "$SHELL_CMD" = "sh" -a ! "$SHELL_CMD" = "dash" -a ! "$SHELL_CMD" = "ksh" ]; then
             PS1='\w $ '
         fi
-    elif "$OS_NAME" = "OpenBSD" ]; then
+    elif [ "$OS_NAME" = "OpenBSD" ]; then
         PS1='\[\033[0;33m\]\w\[\033[0m\] $ '
     fi
 fi
