@@ -2,13 +2,15 @@ These are my personal dotfiles that should work on **Debian GNU/Linux** 11+ (bul
 
 Dotfiles for other operating systems:
 
-* **openSUSE Tumbleweed** dotfiles are in `opensuse` branch [right here](https://github.com/Matriks404/dotfiles/tree/opensuse).
+* **openSUSE Tumbleweed** - [opensuse branch](https://github.com/Matriks404/dotfiles/tree/opensuse) - commit **f8b2734** as of 2025-05-16 (deprecated and not supported).
 
 For the list of files in the repository [go here](FILE_LIST.md).
 
 # Essential software
 
-For getting full potential of these dotfiles you need to install following packages (using your favourite package manager such as `apt`, `zypper`, `pkg_add` etc.):
+For getting full potential of these dotfiles you need to make sure to have all neccessary packages:
+
+On **Debian GNU/Linux** (and maybe **Ubuntu** and other Debian-based Linux distributions) you need to:
 
 * `aptitude` (**Debian GNU/Linux** only, for `a` Bash alias);
 * `bash` (for everything Bash-related);
