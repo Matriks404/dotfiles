@@ -75,11 +75,19 @@ fi
 alias e="$EDITOR"
 alias se="$superuser_cmd $EDITOR"
 
-alias ebaliases="$EDITOR ~/.bash_aliases && backup-file ~/.bash_aliases"
-alias ebfunctions="$EDITOR ~/.bash_functions && backup-file ~/.bash_functions"
+alias esaliases="$EDITOR ~/.shell_aliases && backup_file ~/.shell_aliases"
+alias esfunctions="$EDITOR ~/.shell_functions && backup_file ~/.shell_functions"
 
-alias eblaliases="$EDITOR ~/.bash_local_aliases"
-alias eblfunctions="$EDITOR ~/.bash_local_functions"
+alias eslaliases="$EDITOR ~/.shell_aliases.local && backup_file ~/.shell_aliases.local"
+alias eslfunctions="$EDITOR ~/.shell_functions.local && backup_file ~/.shell_functions.local"
+
+alias ebaliases="$EDITOR ~/.bash_aliases && backup_file ~/.bash_aliases"
+alias ebbindings="$EDITOR ~/.bash_bindings && backup_file ~/.bash_bindings"
+alias ebfunctions="$EDITOR ~/.bash_functions && backup_file ~/.bash_functions"
+
+alias eblaliases="$EDITOR ~/.bash_aliases.local && backup_file ~/.bash_aliases.local"
+alias eblbindings="$EDITOR ~/.bash_bindings.local && backup_file ~/.bash_bindings.local"
+alias eblfunctions="$EDITOR ~/.bash_functions.local && backup_file ~/.bash_functions.local"
 
 
 # Aliases for X11 applications

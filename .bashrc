@@ -78,18 +78,18 @@ fi
 
 # Custom LOCAL Bash functions
 
-if [ -f ~/.bash_local_functions ]; then
-    . ~/.bash_local_functions
+if [ -f ~/.bash_functions.local ]; then
+    . ~/.bash_functions.local
 fi
 
 # Custom LOCAL Bash aliases
 
-if [ -f ~/.bash_local_aliases ]; then
-    . ~/.bash_local_aliases
+if [ -f ~/.bash_aliases.local ]; then
+    . ~/.bash_aliases.local
 fi
 
 # Custom LOCAL Bash bindings
 
-if [ -f ~/.bash_local_bindings ]; then
-    . ~/.bash_local_bindings
+if [ -f ~/.bash_bindings.local ]; then
+    . ~/.bash_bindings.local
 fi
