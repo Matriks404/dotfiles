@@ -125,6 +125,6 @@ fi
 alias sus='su_update_software'
 alias susg='su_upgrade_system'
 
-if [ "$os_name" = "Linux" ]; then
+if [ "$OS_NAME" = "Linux" ]; then
     alias us='update_software'
 fi
