@@ -6,32 +6,30 @@ Dotfiles for other operating systems:
 
 For the list of files in the repository [go here](FILE_LIST.md).
 
-# Essential software
+# Prerequirements
 
-For getting full potential of these dotfiles you need to make sure to have all neccessary packages:
+Before getting dotfiles, you need to make sure to have all neccessary packages.
 
-On **Debian GNU/Linux** (and maybe **Ubuntu** and other Debian-based Linux distributions) you need to:
+## Debian GNU/Linux and other Debian-based Linux distributions (like Ubuntu)
 
-* `aptitude` (**Debian GNU/Linux** only, for `a` Bash alias);
-* `bash` (for everything Bash-related);
-* `curl` (for `check-dotfiles-update` Bash function and `dotverc` Bash alias);
-* `flatpak` (**Linux** only, for `upgrade-all` Bash function);
-* `fonts-hack` or `hack-fonts` (for `uxterm` Bash alias);
-* `git` (for `gitd` and `gits` Bash aliases and `clone-dotfiles-repository`, `copy-dotfiles-to-repos-directory`, `git-commit` and `git-push` Bash functions);
-* `lynx` (**Linux** only, for `wiki` Bash function);
-* `rsync` (for `copy-dotofiles-to-repos-directory` and `get-new-dotfiles` Bash functions);
-* `sudo` (**Linux** only, for `se` Bash alias and `edit-repos` and `upgrade-all` Bash functions);
-* `unzip` (for `get-new-dotfiles` Bash function);
-* `upgrade-system` (**Debian GNU/Linux** only, for `upgrade-all` Bash function);
-* `wget` (for `get-new-dotfiles` Bash function).
+Execute the following:
+
+```bash
+sudo apt install aptitude bash curl flatpak fonts-hack git lynx rsync sudo unzip upgrade-system wget xterm
+```
+
+## OpenBSD:
+
+Execute the following as `root` (you might want to execute `su` first, or add `doas` before following command, if you have it configured):
+```ksh
+pkg_add bash curl git hack-fonts rsync unzip wget
+```
 
 # Getting latest version
 
 If getting dotfiles for the first time, run following command in some safe directory (probably not home if you don't want to replace your already configured setup):
 
-**NOTE:** You need to have `curl`, `rsync`, `unzip` and `wget` installed first!
-
-```bash
+```sh
 curl https://raw.githubusercontent.com/Matriks404/dotfiles/refs/heads/master/build/update.sh | sh
 ```
 
@@ -39,7 +37,15 @@ Otherwise, execute: `get-new-dotfiles` in your bash session (it will actually ex
 
 # Cloning and setting up repository
 
-In your usual directory where you put clone repositories enter following commands:
+If you have dotfiles installed, just run the following command within **Bash** shell (this will clone the repository to `$HOME/repos/dotfiles/` directory):
+
+```bash
+clone-dotfiles-repository
+cd ~/repos/dotfiles
+tools/initial_repository_setup.sh
+```
+
+Or alternatively, in your usual directory where you put clone repositories enter following commands:
 
 ```bash
 git clone https://github.com/Matriks404/dotfiles.git
