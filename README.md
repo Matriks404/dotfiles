@@ -15,7 +15,7 @@ Before getting dotfiles, you need to make sure to have all neccessary packages.
 Execute the following:
 
 ```bash
-sudo apt install aptitude bash curl flatpak fonts-hack git lynx rsync sudo unzip upgrade-system wget xterm
+sudo apt install aptitude bash curl deborphan flatpak fonts-hack git lynx rsync sudo unzip upgrade-system wget xterm
 ```
 
 ## OpenBSD:
