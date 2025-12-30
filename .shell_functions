@@ -3,14 +3,54 @@ backup_file ()
     cp "$1" "$1.bak"
 }
 
-restart_network_service ()
-    {
-        if [ "$OS_NAME" = "Linux" ]; then
-            sudo systemctl restart NetworkManager
-        elif [ "$OS_NAME" = "OpenBSD" ]; then
-            doas sh "/etc/netstart"
+# Document this function
+create_flatpak_symlinks ()
+{
+    TARGET_DIR="$HOME/.local/bin/flatpak-executables"
+    mkdir -p "$TARGET_DIR"
+
+    declare -A CUSTOM_NAMES
+    CUSTOM_NAMES=(
+        ["net._86box._86Box"]="86box"
+        ["org.telegram.desktop"]="telegram"
+    )
+
+    flatpak list --app --columns=application | while read -r app_id; do
+
+        # Check if we have a custom name defined
+        if [[ -n "${CUSTOM_NAMES[$app_id]}" ]]; then
+            script_name="${CUSTOM_NAMES[$app_id]}"
+        else
+            # Default logic: get part after last dot and lowercase it
+            script_name=$(echo "$app_id" | awk -F. '{print $NF}' | tr '[:upper:]' '[:lower:]')
+
+            # Remove leading underscores (e.g., _86box -> 86box)
+            script_name="${script_name#_}"
         fi
-    }
+
+        script_path="$TARGET_DIR/$script_name"
+
+        cat <<EOF > "$script_path"
+#!/bin/sh
+flatpak run $app_id
+EOF
+
+        chmod +x "$script_path"
+        echo "Mapped: $app_id -> $script_name"
+    done
+
+    echo "---"
+    echo "Finished! Scripts are in $TARGET_DIR"
+}
+
+restart_network_service ()
+{
+    if [ "$OS_NAME" = "Linux" ]; then
+        sudo systemctl restart NetworkManager
+    elif [ "$OS_NAME" = "OpenBSD" ]; then
+        doas sh "/etc/netstart"
+    fi
+}
 
 # Package updates / System upgrades
 

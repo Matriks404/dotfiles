@@ -15,7 +15,11 @@ if [ -n "$BASH_VERSION" ]; then
     fi
 fi
 
-PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+PATH="$PATH:$HOME/bin:$HOME/.local/bin"
+
+if [ "$OS_NAME" == "Linux" -a $(command -v flatpak) ]; then
+    PATH="$PATH:$HOME/.local/bin/flatpak-executables"
+fi
 
 export ENV="$HOME/.shrc"
 export HOME PATH TERM
