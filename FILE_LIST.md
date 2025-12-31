@@ -16,7 +16,8 @@ These are always included and used by various shell scripts.
 These are always included.
 
 * `.local/bin/su-update-software.sh` - script that updates all packages and **flatpak** applications/runtimes;
-* `.local/bin/su-upgrade-system.sh` - script that upgrades the operating system to the latest version.
+* `.local/bin/su-upgrade-system.sh` - script that upgrades the operating system to the latest version;
+* `.local/scripts.noexecute/backup_job.sh` - scripts that backs up important files (configured per user on a system);
 
 ## Linux binaries (shell scripts)
 These are included only if on **Linux** system.
@@ -26,6 +27,11 @@ These are included only if on **Linux** system.
 ## Common dotfiles
 These are always included.
 
+* `.local/scripts.noexecute/backup_job_files/exclude.txt` - default exclude file for the automatic backup job script, do not modify this file;
+* `.local/scripts.noexecute/backup_job_files/include.txt` - default include file for 
+   the automatic backup job script, do not modify this file;
+* `.local/scripts.noexecute/backup_job_files/settings.sh` - default settings file for 
+   the automatic backup job script, do not modify this file;
 * `.bash_aliases` - various useful **Bash** aliases;
 * `.bash_bindings` - various useful **Bash** bindings;
 * `.bash_functions` - various useful **Bash** functions;

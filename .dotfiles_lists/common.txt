@@ -1,5 +1,9 @@
 .local/bin/su-update-software.sh
 .local/bin/su-upgrade-system.sh
+.local/scripts.noexecute/backup_job.sh
+.local/scripts.noexecute/backup_job_files/exclude.txt
+.local/scripts.noexecute/backup_job_files/include.txt
+.local/scripts.noexecute/backup_job_files/settings.sh
 .bash_aliases
 .bash_bindings
 .bash_functions

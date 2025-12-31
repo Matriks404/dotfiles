@@ -3,46 +3,6 @@ backup_file ()
     cp "$1" "$1.bak"
 }
 
-# Document this function
-create_flatpak_symlinks ()
-{
-    TARGET_DIR="$HOME/.local/bin/flatpak-executables"
-    mkdir -p "$TARGET_DIR"
-
-    declare -A CUSTOM_NAMES
-    CUSTOM_NAMES=(
-        ["net._86box._86Box"]="86box"
-        ["org.telegram.desktop"]="telegram"
-    )
-
-    flatpak list --app --columns=application | while read -r app_id; do
-
-        # Check if we have a custom name defined
-        if [[ -n "${CUSTOM_NAMES[$app_id]}" ]]; then
-            script_name="${CUSTOM_NAMES[$app_id]}"
-        else
-            # Default logic: get part after last dot and lowercase it
-            script_name=$(echo "$app_id" | awk -F. '{print $NF}' | tr '[:upper:]' '[:lower:]')
-
-            # Remove leading underscores (e.g., _86box -> 86box)
-            script_name="${script_name#_}"
-        fi
-
-        script_path="$TARGET_DIR/$script_name"
-
-        cat <<EOF > "$script_path"
-#!/bin/sh
-flatpak run $app_id
-EOF
-
-        chmod +x "$script_path"
-        echo "Mapped: $app_id -> $script_name"
-    done
-
-    echo "---"
-    echo "Finished! Scripts are in $TARGET_DIR"
-}
-
 restart_network_service ()
 {
     if [ "$OS_NAME" = "Linux" ]; then
@@ -50,6 +10,31 @@ restart_network_service ()
     elif [ "$OS_NAME" = "OpenBSD" ]; then
         doas sh "/etc/netstart"
     fi
+}
+
+set_up_automatic_backup ()
+{
+    #TODO: Detect if there's already '/usr/local/scripts/backup_job' and/or '/usr/local/scripts/backup_job_files'. If there is error out.
+
+    echo "Copying backup files to '/usr/local/scripts'..."
+    sudo cp -v "$HOME/.local/scripts.noexecute/backup_job.sh" "/usr/local/scripts"
+    sudo cp -rv "$HOME/.local/scripts.noexecute/backup_job_files" "/usr/local/scripts"
+
+    #TODO: Add detection for other operating systems.
+    if [ -f /etc/debian_version ]; then
+        echo "Creating a daily cron job in '/etc/cron.daily'..."
+        sudo ln -s "/usr/local/scripts/backup_job.sh" "/etc/cron.daily/backup_job"
+    else
+        echo "\nInfo: Unknown operating system. Make sure to add '/usr/local/scripts/backup_job.sh to your system-wide crontab for it to work without user interaction."
+    fi
+
+    echo "\nInfo: For backup system to work, you need to configure your includes, excludes, and settings over in '/usr/local/scripts/backup_job_files' first!"
+
+    #TODO: Make it possible to do it here.
+
+    echo "Also, if working over ssh and authentication is needed, you need to make sure you have neccesary keys (by using 'ssh-keygen') and you have copied it to your remote device (by using 'ssh-copy-id')."
+
+    #TODO: Make it possible to do it here.
 }
 
 # Package updates / System upgrades
@@ -97,6 +82,49 @@ fi
 
 # Linux-specific functions
 if [ "$OS_NAME" = "Linux" ]; then
+    # Functions specific to Flatpak (if it's installed)
+    if [ "$(command -v flatpak)" ]; then
+        # Document this function
+        create_flatpak_symlinks ()
+        {
+            TARGET_DIR="$HOME/.local/bin/flatpak-executables"
+            mkdir -p "$TARGET_DIR"
+
+            declare -A CUSTOM_NAMES
+            CUSTOM_NAMES=(
+                ["net._86box._86Box"]="86box"
+                ["org.telegram.desktop"]="telegram"
+            )
+
+            flatpak list --app --columns=application | while read -r app_id; do
+
+                # Check if we have a custom name defined
+                if [[ -n "${CUSTOM_NAMES[$app_id]}" ]]; then
+                    script_name="${CUSTOM_NAMES[$app_id]}"
+                else
+                    # Default logic: get part after last dot and lowercase it
+                    script_name=$(echo "$app_id" | awk -F. '{print $NF}' | tr '[:upper:]' '[:lower:]')
+
+                    # Remove leading underscores (e.g., _86box -> 86box)
+                    script_name="${script_name#_}"
+                fi
+
+                script_path="$TARGET_DIR/$script_name"
+
+                cat <<EOF > "$script_path"
+#!/bin/sh
+flatpak run $app_id
+EOF
+
+                chmod +x "$script_path"
+                echo "Mapped: $app_id -> $script_name"
+            done
+
+            echo "---"
+            echo "Finished! Scripts are in $TARGET_DIR"
+        }
+    fi
+
     # Functions specific to Tailscale (if it's installed)
     if [ "$(command -v tailscale)" ]; then
         restart_tailscaled_service ()
