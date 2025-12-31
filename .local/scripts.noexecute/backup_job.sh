@@ -50,19 +50,8 @@ INCLUDE_FROM=()
 
 mapfile -t INCLUDE_FROM < /usr/local/scripts/backup_job_files/include.txt
 
-#while IFS= read -r F; do
-#    INCLUDE_FROM+=("$F")
-#done < /usr/local/scripts/backup_job_files/include.txt
-
 EXCLUDE_FROM=/usr/local/scripts/backup_job_files/exclude.txt
-
-#while read F; do
-#INCLUDE_FROM="$INCLUDE_FROM $F"
-#done < /usr/local/scripts/backup_job_files/include.txt
-
-#EXCLUDE_FROM=/usr/local/scripts/backup_job_files/exclude.txt
 
 echo -e '* Backing up files to remote host: '$REMOTE_HOSTNAME' in directory: '$REMOTE_LOCATION' ...'
 rsync -aRv -e "ssh -p $REMOTE_PORT" --delete --exclude-from="$EXCLUDE_FROM" \
 "${INCLUDE_FROM[@]}" "$REMOTE_HOSTNAME:$REMOTE_LOCATION"
-#rsync -aRv -e "ssh -p $REMOTE_PORT" --delete  --exclude-from=$EXCLUDE_FROM $INCLUDE_FROM $REMOTE_HOSTNAME:$REMOTE_LOCATION
