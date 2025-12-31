@@ -14,25 +14,26 @@ restart_network_service ()
 
 set_up_automatic_backup ()
 {
-    #TODO: Detect if there's already '/usr/local/scripts/backup_job' and/or '/usr/local/scripts/backup_job_files'. If there is error out.
+    #TODO: Detect if there's already '/usr/local/scripts/backup_job.sh' and/or '/usr/local/scripts/backup_job_files'. If there is error out.
+    #TODO: Also error out on `/etc/cron.daily/backup_job` existing.
 
-    echo "Copying backup files to '/usr/local/scripts'..."
+    echo -e "Copying backup files to '/usr/local/scripts'..."
     sudo cp -v "$HOME/.local/scripts.noexecute/backup_job.sh" "/usr/local/scripts"
     sudo cp -rv "$HOME/.local/scripts.noexecute/backup_job_files" "/usr/local/scripts"
 
     #TODO: Add detection for other operating systems.
     if [ -f /etc/debian_version ]; then
-        echo "Creating a daily cron job in '/etc/cron.daily'..."
+        echo -e "Creating a daily cron job in '/etc/cron.daily'..."
         sudo ln -s "/usr/local/scripts/backup_job.sh" "/etc/cron.daily/backup_job"
     else
-        echo "\nInfo: Unknown operating system. Make sure to add '/usr/local/scripts/backup_job.sh to your system-wide crontab for it to work without user interaction."
+        echo -e "\nInfo: Unknown operating system. Make sure to add '/usr/local/scripts/backup_job.sh to your system-wide crontab for it to work without user interaction."
     fi
 
-    echo "\nInfo: For backup system to work, you need to configure your includes, excludes, and settings over in '/usr/local/scripts/backup_job_files' first!"
+    echo -e "\nInfo: For backup system to work, you need to configure your includes, excludes, and settings over in '/usr/local/scripts/backup_job_files' first!"
 
     #TODO: Make it possible to do it here.
 
-    echo "Also, if working over ssh and authentication is needed, you need to make sure you have neccesary keys (by using 'ssh-keygen') and you have copied it to your remote device (by using 'ssh-copy-id')."
+    echo -e "Also, if working over ssh and authentication is needed, you need to make sure you have neccesary keys (by using 'ssh-keygen') and you have copied it to your remote device (by using 'ssh-copy-id')."
 
     #TODO: Make it possible to do it here.
 }
@@ -117,11 +118,10 @@ flatpak run $app_id
 EOF
 
                 chmod +x "$script_path"
-                echo "Mapped: $app_id -> $script_name"
+                echo -e "Mapped: $app_id -> $script_name"
             done
 
-            echo "---"
-            echo "Finished! Scripts are in $TARGET_DIR"
+            echo -e "\nFinished! Scripts are in $TARGET_DIR"
         }
     fi
 
