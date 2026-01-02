@@ -3,7 +3,8 @@ PATH=/bin:/usr/bin:/usr/local/bin:/usr/games:/usr/local/games
 mkdir -p "$HOME/bin"
 mkdir -p "$HOME/.local/bin"
 
-export OS_NAME="$(uname -s)"
+#HACK: Ideally this should be an export, but it's not working properly on Debian 11.
+OS_NAME="$(uname -s)"
 
 if [ "$OS_NAME" == "OpenBSD" ]; then
     PATH="/usr/X11R6/bin:/sbin:/usr/sbin:/usr/local/sbin:$PATH"

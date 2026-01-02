@@ -1,3 +1,6 @@
+#HACK: Ideally this should be an export in '.profile., but it's not working properly on Debian 11.
+OS_NAME="$(uname -s)"
+
 # Shell aliases
 alias cd..='cd ..'
 alias cd...='cd ../..'
