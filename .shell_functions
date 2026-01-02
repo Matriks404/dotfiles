@@ -1,3 +1,6 @@
+#HACK: Ideally this should be an export in '.profile., but it's not working properly on Debian 11.
+OS_NAME="$(uname -s)"
+
 backup_file ()
 {
     cp "$1" "$1.bak"
@@ -8,7 +11,7 @@ edit_backup_excludes ()
     target="/usr/local/scripts/backup_job_files/exclude.txt"
 
     if [ -f "$target" ]; then
-        sudo editor "$target"
+        sudo "$EDITOR" "$target"
     fi
 }
 
@@ -17,7 +20,7 @@ edit_backup_includes ()
     target="/usr/local/scripts/backup_job_files/include.txt"
 
     if [ -f "$target" ]; then
-        sudo editor "$target"
+        sudo "$EDITOR" "$target"
     fi
 }
 
@@ -26,7 +29,7 @@ edit_backup_settings ()
     target="/usr/local/scripts/backup_job_files/settings.sh"
 
     if [ -f "$target" ]; then
-        sudo editor "$target"
+        sudo "$EDITOR" "$target"
     fi
 }
 
@@ -41,11 +44,13 @@ restart_network_service ()
 
 reinstall_backup_script ()
 {
+    sudo mkdir -p "/usr/local/scripts"
     sudo cp -v "$HOME/.local/scripts.noexecute/backup_job.sh" "/usr/local/scripts"
 }
 
 replace_backup_configuration_files ()
 {
+    sudo mkdir -p "/usr/local/scripts"
     sudo cp -rv "$HOME/.local/scripts.noexecute/backup_job_files" "/usr/local/scripts"
 }
 
@@ -134,7 +139,7 @@ set_up_automatic_backup ()
         echo -e "\nInfo: For backup system to work, you need to configure your includes, excludes, and settings over in '/usr/local/scripts/backup_job_files' first!"
     fi
 
-    echo -e "\nInfo: if working over ssh and authentication is needed, you need to make sure you have neccesary keys (by using 'ssh-keygen') and you have copied it to your remote device (by using 'ssh-copy-id')."
+    echo -e "\nInfo: If working over ssh and authentication is needed, you need to make sure you have neccesary keys (by using 'ssh-keygen') and you have copied it to your remote device (by using 'ssh-copy-id')."
 
     #TODO: Make it possible to do it here.
 }

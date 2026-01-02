@@ -1,3 +1,6 @@
+#HACK: Ideally this should be an export in '.profile., but it's not working properly on Debian 11.
+OS_NAME="$(uname -s)"
+
 #os_target="$(cat ${HOME}/.dotfiles_os_target)"
 
 github_repo="Matriks404/dotfiles"
