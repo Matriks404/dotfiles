@@ -34,7 +34,7 @@ NUM_COMMITS=$(git rev-list --count ${FIRST_COMMIT_HASH}..HEAD)
 BUILD_DATE=$(date +"%Y-%m-%d %H:%M")
 
 # Construct the version string.
-VERSION_STRING="r74.${NUM_COMMITS} (built on ${BUILD_DATE})"
+VERSION_STRING="v0.0.0.${NUM_COMMITS} (Pre-Alpha/Preview) (built on ${BUILD_DATE})"
 
 # Update the '.dotfiles_version' file.
 echo "${VERSION_STRING}" > "${DOTFILES_VERSION_FILE}"
