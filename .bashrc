@@ -54,7 +54,7 @@ esac
 
 
 # CUSTOM BASH FUNCTIONS, ALIASES AND BINDINGS
-alias dotver='cat .dotfiles_version'
+alias dotver='cat $HOME/.dotfiles_version'
 
 
 # Custom Bash functions
