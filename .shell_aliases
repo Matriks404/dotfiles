@@ -122,9 +122,14 @@ fi
 
 # Aliases for .shell_functions
 
+alias ebe='edit_backup_excludes'
+alias ebi='edit_backup_includes'
+alias ebs='edit_backup_settings'
+
 alias sus='su_update_software'
 alias susg='su_upgrade_system'
 
 if [ "$OS_NAME" = "Linux" ]; then
     alias us='update_software'
 fi
+

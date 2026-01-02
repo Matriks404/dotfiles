@@ -3,6 +3,33 @@ backup_file ()
     cp "$1" "$1.bak"
 }
 
+edit_backup_excludes ()
+{
+    target="/usr/local/scripts/backup_job_files/exclude.txt"
+
+    if [ -f "$target" ]; then
+        sudo editor "$target"
+    fi
+}
+
+edit_backup_includes ()
+{
+    target="/usr/local/scripts/backup_job_files/include.txt"
+
+    if [ -f "$target" ]; then
+        sudo editor "$target"
+    fi
+}
+
+edit_backup_settings ()
+{
+    target="/usr/local/scripts/backup_job_files/settings.sh"
+
+    if [ -f "$target" ]; then
+        sudo editor "$target"
+    fi
+}
+
 restart_network_service ()
 {
     if [ "$OS_NAME" = "Linux" ]; then
