@@ -4,7 +4,7 @@
 #if sudo -v; then
     echo -e "Welcome to Matriks404's backup program."
     echo -e "Originally written for Debian 12+.\n"
-    echo -e "Version 0.9 (Preview) -- USE ON YOUR OWN RISK.\n\n"
+    echo -e "Version 0.9.1 (Preview) -- USE ON YOUR OWN RISK.\n\n"
 #else
 #    echo -e "Authentication failed. Please enter the correct sudo passowrd."
 #    exit 1
@@ -64,6 +64,18 @@ mapfile -t INCLUDE_FROM < /usr/local/scripts/backup_job_files/include.txt
 
 EXCLUDE_FROM=/usr/local/scripts/backup_job_files/exclude.txt
 
-echo -e "* Backing up files to remote host: "$REMOTE_HOSTNAME" in directory: "$REMOTE_LOCATION" ..."
-rsync -aRv -e "ssh -p $REMOTE_PORT" --delete --exclude-from="$EXCLUDE_FROM" \
-"${INCLUDE_FROM[@]}" "$REMOTE_HOSTNAME:$REMOTE_LOCATION"
+if [ -n "$REMOTE_HOSTNAME" ]; then
+    if [ -z "$REMOTE_PORT" ]; then
+        echo -e "Warning: '\$REMOTE_PORT' is not set. Using default port 22."
+
+        REMOTE_PORT=22
+    fi
+
+    echo -e "* Backing up files to remote host: "$REMOTE_HOSTNAME" in directory: "$BACKUP_LOCATION" ..."
+    rsync -aRv -e "ssh -p $REMOTE_PORT" --delete --exclude-from="$EXCLUDE_FROM" "${INCLUDE_FROM[@]}" "$REMOTE_HOSTNAME:$TARGET_LOCATION"
+
+else
+   echo -e "* Backing up files to local directory: "$BACKUP_LOCATION" ..."
+
+   rsync -aRv --delete --exclude-from="$EXCLUDE_FROM" "${INCLUDE_FROM[@]}" "$BACKUP_LOCATION"
+fi
