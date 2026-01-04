@@ -100,4 +100,4 @@ rm -r $dotfiles_dir
 rm master.zip
 
 
-echo "\nEverything is done! Make sure to restart your Bash instance to get all new features and improvements!"
+echo "\nEverything is done! Make sure to restart your shell to get all new features and improvements!"
