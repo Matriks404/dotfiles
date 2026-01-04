@@ -1,6 +1,6 @@
-These are my personal dotfiles that should work on **Debian GNU/Linux** 11+ (bullseye) and the latest version of **OpenBSD**.
+These are my personal dotfiles that should work on **Debian GNU/Linux** 11+ (bullseye), latest version of **Linux Mint** and **OpenBSD**.
 
-Dotfiles for other operating systems:
+Legacy versions of dotfiles for other operating systems:
 
 * **openSUSE Tumbleweed** - [opensuse branch](https://github.com/Matriks404/dotfiles/tree/opensuse) - commit **f8b2734** as of 2025-05-16 (deprecated and not supported).
 
