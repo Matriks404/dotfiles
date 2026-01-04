@@ -217,11 +217,16 @@ if [ "$OS_NAME" = "Linux" ]; then
             TARGET_DIR="$HOME/.local/bin/flatpak-executables"
             mkdir -p "$TARGET_DIR"
 
-            declare -A CUSTOM_NAMES
-            CUSTOM_NAMES=(
-                ["net._86box._86Box"]="86box"
-                ["org.telegram.desktop"]="telegram"
-            )
+            #HACK: We'll use eval here, so OpenBSD's ksh don't complain about this code (even though it is never be executed).
+            #TODO: Ideally, this should be inside `.shell_functions.linux` file, or something similar.
+            #      This move will eventually happen, in some future reorganization.
+            eval '
+                declare -A CUSTOM_NAMES
+                CUSTOM_NAMES=(
+                    ["net._86box._86Box"]="86box"
+                    ["org.telegram.desktop"]="telegram"
+                )
+            '
 
             flatpak list --app --columns=application | while read -r app_id; do
 
