@@ -202,6 +202,11 @@ fi
 if [ "$OS_NAME" = "Linux" ]; then
     # Functions specific to Debian GNU/Linux
     if [ -f "/etc/debian_version" ]; then
+        reconfigure_locales ()
+        {
+            "$SU_CMD" dpkg-reconfigure locales
+        }
+
         relink_backup_script ()
         {
             echo -e "Creating a daily cron job in '/etc/cron.daily'..."
