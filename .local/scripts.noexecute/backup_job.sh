@@ -4,7 +4,8 @@
 #if sudo -v; then
     echo -e "Welcome to Matriks404's backup program."
     echo -e "Originally written for Debian 12+.\n"
-    echo -e "Version 0.9.1 (Preview) -- USE ON YOUR OWN RISK.\n\n"
+    echo -e "Version $(cat /usr/local/scripts/backup_job.sh.version) -- USE ON YOUR OWN RISK."
+    echo -e "Backup files version $(cat /usr/local/scripts/backup_job_files/version)\n\n"
 #else
 #    echo -e "Authentication failed. Please enter the correct sudo passowrd."
 #    exit 1

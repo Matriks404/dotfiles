@@ -73,15 +73,31 @@ run_automatic_backup ()
 
 set_up_automatic_backup ()
 {
+    OLD_LOCATION="/usr/local/scripts"
+    NEW_LOCATION="$HOME/.local/scripts.noexecute"
+
+    SCRIPT_VERSION_FILENAME="backup_job.sh.version"
+    FILES_VERSION_FILENAME="backup_job_files/version"
+
+    OLD_BACKUP_SCRIPT_VERSION="$(cat ${OLD_LOCATION}/${SCRIPT_VERSION_FILENAME})"
+    OLD_BACKUP_FILES_VERSION="$(cat ${OLD_LOCATION}/${FILES_VERSION_FILENAME})"
+
+    NEW_BACKUP_SCRIPT_VERSION="$(cat ${NEW_LOCATION}/${SCRIPT_VERSION_FILENAME})"
+    NEW_BACKUP_FILES_VERSION="$(cat ${NEW_LOCATION}/${FILES_VERSION_FILENAME})"
+
+
     if [ -f "/usr/local/scripts/backup_job.sh" ]; then
         echo -e "Info: It looks like, there's already backup job script installed."
-        echo -e "Do you want to reinstall the script? If so, enter \"Yes.\" (without quotes):"
+        echo -e "Current version is: ${OLD_BACKUP_SCRIPT_VERSION}"
+        echo -e "The new version is: ${NEW_BACKUP_SCRIPT_VERSION}\n"
+
+        echo -e "Do you still want to reinstall/upgrade the script? If so, enter \"Yes.\" (without quotes):"
         echo -en "? "
         read answer
         echo
 
         if [ "$answer" = "Yes." ]; then
-            echo -e "Reinstalling the script..."
+            echo -e "Reinstalling/Upgrading the script..."
             reinstall_backup_script
         else
             echo -e "Operation canceled by user."
@@ -93,6 +109,9 @@ set_up_automatic_backup ()
 
     if [ -d "/usr/local/scripts/backup_job_files" ]; then
         echo -e "\n\nInfo: It looks like, a directory with backup job configuration at '/usr/local/scripts/backup_job_files' is already present."
+        echo -e "Current version is: ${OLD_BACKUP_FILES_VERSION}"
+        echo -e "The new version is: ${NEW_BACKUP_FILES_VERSION}\n"
+
         echo -e "Do you want to replace these files with new fresh ones?"
         echo -e "MAKE SURE YOU KNOW WHAT YOU'RE DOING AND MAKE A COPY OF YOUR EXISTING BACKUP CONFIGURATION DIRECTORY IF NECCESARY!"
         echo -e "\nANYWAY, IF YOU WANT TO DO THIS, ENTER \"Yes.\" (without quotes):"

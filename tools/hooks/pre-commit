@@ -41,7 +41,7 @@ BUILD_DATE=$(date +"%Y-%m-%d %H:%M")
 DOTFILES_VERSION_STRING="v0.0.0.${NUM_COMMITS} (Pre-Alpha/Preview) (built on ${BUILD_DATE})"
 BACKUP_SCRIPT_VERSION_STRING="v0.9.2.${NUM_COMMITS} (Beta) (built on ${BUILD_DATE})"
 
-BACKUP_SCRIPT_FILES_VERSION_STRING="v2, processed using script ${BACKUP_SCRIPT_VERSION_STRING}"
+BACKUP_SCRIPT_FILES_VERSION_STRING="v2, originally distributed with script ${BACKUP_SCRIPT_VERSION_STRING}"
 
 # Update the '.dotfiles_version' file.
 echo "${DOTFILES_VERSION_STRING}" > "${DOTFILES_VERSION_FILE}"
