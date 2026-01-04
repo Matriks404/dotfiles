@@ -37,6 +37,12 @@ else
     export EDITOR=nano
 fi
 
+if [ "$OS_NAME" = "Linux" ]; then
+    export SU_CMD=sudo
+elif [ "$OS_NAME" = "OpenBSD" ]; then
+    export SU_CMD=doas
+fi
+
 # Set history size.
 HISTSIZE=10000
 

@@ -1,4 +1,4 @@
-#!/bin/env bash
+#!/usr/bin/env bash
 #printf -v date "%(%Y-%m-%d)T" -1
 
 #if sudo -v; then

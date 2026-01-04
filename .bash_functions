@@ -50,7 +50,7 @@ edit-repos ()
                 return 1
             fi
 
-            sudo "$EDITOR" "$file"
+            "$SU_CMD" "$EDITOR" "$file"
 
             return $?
         fi
@@ -80,7 +80,7 @@ edit-repos ()
             return 1
 
         elif [ "$num_files" -eq 1 ]; then
-            sudo "$EDITOR" "${files[0]}"
+            "$SU_CMD" "$EDITOR" "${files[0]}"
 
             return 0
         fi
@@ -107,10 +107,10 @@ edit-repos ()
         fi
 
         local selected_file="${sorted_files[$((selection - 1))]}"
-        sudo "$EDITOR" "$selected_file"
+        "$SU_CMD" "$EDITOR" "$selected_file"
 
     elif [ "$OS_NAME" == "OpenBSD" ]; then
-        doas "$EDITOR" "/etc/installurl"
+        "$SU_CMD" "$EDITOR" "/etc/installurl"
 
         return $?
     else

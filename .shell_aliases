@@ -69,14 +69,8 @@ fi
 
 # Aliases for editor commands
 
-if [ "$OS_NAME" = "Linux" ]; then
-    superuser_cmd='sudo'
-elif [ "$OS_NAME" = "OpenBSD" ]; then
-    superuser_cmd='doas'
-fi
-
 alias e="$EDITOR"
-alias se="$superuser_cmd $EDITOR"
+alias se="$SU_CMD $EDITOR"
 
 alias esaliases="$EDITOR ~/.shell_aliases && backup_file ~/.shell_aliases"
 alias esfunctions="$EDITOR ~/.shell_functions && backup_file ~/.shell_functions"
