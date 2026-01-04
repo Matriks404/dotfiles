@@ -18,7 +18,7 @@ fi
 
 PATH="$PATH:$HOME/bin:$HOME/.local/bin"
 
-if [ "$OS_NAME" == "Linux" -a $(command -v flatpak) ]; then
+if [ "$OS_NAME" = "Linux" ] && [ -n "$(command -v flatpak)" ]; then
     PATH="$PATH:$HOME/.local/bin/flatpak-executables"
 fi
 
