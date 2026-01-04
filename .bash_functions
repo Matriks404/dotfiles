@@ -359,8 +359,9 @@ if [[ "$(command -v git)" ]]; then
         #git clone --branch $OS_TARGET $github_base_url.git $dotfiles_repo_dir
         git clone $github_base_url.git $dotfiles_repo_dir
 
-        cd $repos_dir
+        cd $dotfiles_repo_dir
         tools/initial_repository_setup.sh
+        cd $OLDPWD
     }
 
     copy-dotfiles-to-repos-directory ()
