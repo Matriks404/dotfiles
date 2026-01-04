@@ -71,14 +71,14 @@ fi
 
 # Custom Bash bindings
 
-if [ -f ~/.bash_bindings ]; then
+if [ -f ~/.bash_bindings ] && [[ $- == *i* ]]; then
     . ~/.bash_bindings
 fi
 
 
 # Custom LOCAL Bash functions
 
-if [ -f ~/.bash_functions.local ]; then
+if [ -f ~/.bash_functions.local ] && [[ $- == *i* ]]; then
     . ~/.bash_functions.local
 fi
 
