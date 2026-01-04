@@ -13,7 +13,7 @@ check-dotfiles-update ()
     local current_version="$(dotver | cut -d ' ' -f 1)"
     local latest_version="$(curl -s $url | cut -d ' ' -f 1)"
 
-    if [[ "$current_version" = "$latest_version" || "$current_version" > "$latest_version" ]]; then
+    if [[ "$current_version" == "$latest_version" || "$current_version" > "$latest_version" ]]; then
         echo -e "You have the latest version of dotfiles! (${current_version})"
 
         return 1
@@ -26,9 +26,9 @@ check-dotfiles-update ()
 
 edit-repos ()
 {
-    if [ -f "/etc/debian_version" ]; then
+    if [[ -f "/etc/debian_version" ]]; then
         if [[ "$1" == "-f" || "$1" == "-fl" || "$1" == "-fs" || "$1" == "--file" ]]; then
-            if [ -z "$2" ]; then
+            if [[ -z "$2" ]]; then
                 echo -e "Error: You need to provide a filename!"
 
                 return 1
@@ -36,15 +36,15 @@ edit-repos ()
 
             local file
 
-            if [ "$1" == "-fl" ]; then
+            if [[ "$1" == "-fl" ]]; then
                 file="/etc/apt/sources.list.d/${2}.list"
-            elif [ "$1" == "-fs" ]; then
+            elif [[ "$1" == "-fs" ]]; then
                 file="/etc/apt/sources.list.d/${2}.sources"
             else
                 file="/etc/apt/sources.list.d/${2}"
             fi
 
-            if [ ! -f "$file" ]; then
+            if [[ ! -f "$file" ]]; then
                 echo -e "Error: File '${file}' doesn't exist!"
 
                 return 1
@@ -58,15 +58,15 @@ edit-repos ()
         # Logic for interactive file selection
         local files=()
 
-        if [ -f "/etc/apt/sources.list" ]; then
+        if [[ -f "/etc/apt/sources.list" ]]; then
             files+=("/etc/apt/sources.list")
         fi
 
         local sources_list_dir="/etc/apt/sources.list.d"
 
-        if [ -d "$sources_list_dir" ]; then
+        if [[ -d "$sources_list_dir" ]]; then
             for file in "$sources_list_dir/"*.{list,sources}; do
-                if [ -f "$file" ]; then
+                if [[ -f "$file" ]]; then
                     files+=("$file")
                 fi
             done
@@ -74,12 +74,12 @@ edit-repos ()
 
         local num_files="${#files[@]}"
 
-        if [ "$num_files" -eq 0 ]; then
+        if [[ "$num_files" -eq 0 ]]; then
             echo -e "Error: You don't have valid sources.list available!"
 
             return 1
 
-        elif [ "$num_files" -eq 1 ]; then
+        elif [[ "$num_files" -eq 1 ]]; then
             "$SU_CMD" "$EDITOR" "${files[0]}"
 
             return 0
@@ -109,7 +109,7 @@ edit-repos ()
         local selected_file="${sorted_files[$((selection - 1))]}"
         "$SU_CMD" "$EDITOR" "$selected_file"
 
-    elif [ "$OS_NAME" == "OpenBSD" ]; then
+    elif [[ "$OS_NAME" == "OpenBSD" ]]; then
         "$SU_CMD" "$EDITOR" "/etc/installurl"
 
         return $?
@@ -132,8 +132,8 @@ get-manual ()
 
         local term="${cmd%% *}"
 
-        if [ "$term" = "xterm" ] || [ "$term" = "/usr/X11R6/bin/xterm" ] || [ "$term" = "/usr/bin/X11/xterm" ] || [ "$term" = "/usr/bin/xterm" ]; then
-            if [ "$cmd" = "$term -class UXTerm" ] || [ "$cmd" = "$term -class UXTerm -u8" ]; then
+        if [[ "$term" == "xterm" ]] || [[ "$term" == "/usr/X11R6/bin/xterm" ]] || [[ "$term" == "/usr/bin/X11/xterm" ]] || [[ "$term" == "/usr/bin/xterm" ]]; then
+            if [[ "$cmd" == "$term -class UXTerm" ]] || [[ "$cmd" == "$term -class UXTerm -u8" ]]; then
                 is_unicode_term="true"
 
                 break
@@ -147,29 +147,29 @@ get-manual ()
         current_pid="$(ps -p "$current_pid" -o ppid= | xargs)"
     done
 
-    if [ -z "$1" ]; then
+    if [[ -z "$1" ]]; then
         man
-    elif [ "$is_unicode_term" = "false" ]; then
+    elif [[ "$is_unicode_term" == "false" ]]; then
         echo -e "Running external UXTerm, since current terminal dosen't support UTF-8..."
 
         (xterm -class "UXTerm" -e "sh -c \"man $* && echo Press RETURN to continue. && read DUMMY\"" &)
     else
-        man "$*"
+        man "$@"
     fi
 }
 
 get-new-dotfiles ()
 {
-    if [ -d "./.git" ]; then
+    if [[ -d "./.git" ]]; then
         echo -e "ERROR: You are in the git repository directory! Quitting..."
 
         return 1
     fi
 
-    force_update="false"
+    local force_update="false"
 
-    if [ "$1" = "-f" -o "$1" = "--force" ]; then
-        force_update="true"
+    if [[ "$1" == "-f" ]] || [[ "$1" == "--force" ]]; then
+        local force_update="true"
     fi
 
     if $force_update || check-dotfiles-update; then
@@ -186,18 +186,18 @@ get-new-dotfiles ()
 
 get-repos ()
 {
-    if [ -f "/etc/debian_version" ]; then
+    if [[ -f "/etc/debian_version" ]]; then
         local files=()
 
         sources_list_dir="/etc/apt/sources.list.d"
 
-        if [ -f /etc/apt/sources.list ]; then
+        if [[ -f /etc/apt/sources.list ]]; then
             files+=("/etc/apt/sources.list")
         fi
 
-        if [ -d $sources_list_dir ]; then
-            for file in $sources_list_dir/*.{list,sources}; do
-                if [ -f "$file" ]; then
+        if [[ -d $sources_list_dir ]]; then
+            for file in "${sources_list_dir}"/*.{list,sources}; do
+                if [[ -f "$file" ]]; then
                     files+=("$file")
                 fi
             done
@@ -205,7 +205,7 @@ get-repos ()
 
         local num_files=${#files[@]}
 
-        if [ "$num_files" -eq 0 ]; then
+        if [[ "$num_files" -eq 0 ]]; then
             echo -e "Error: You don't have valid sources.list available!"
 
             return 1
@@ -224,7 +224,7 @@ get-repos ()
         less $temp_file
         rm $temp_file
 
-    elif [ "$OS_NAME" == "OpenBSD" ]; then
+    elif [[ "$OS_NAME" == "OpenBSD" ]]; then
         cat /etc/installurl
     else
         echo -e "Error: Unsupported operating system or Linux distribution!"
@@ -233,17 +233,17 @@ get-repos ()
 
 show-binaries ()
 {
-    if [ -z "$1" ]; then
+    if [[ -z "$1" ]]; then
         echo -e "Error: You need to provide a package name!"
 
         return 1
     fi
 
-    cmdline_local=""
+    local cmdline_local=""
 
-    if [ -f /etc/debian_version ]; then
+    if [[ -f /etc/debian_version ]]; then
         cmdline_local="dpkg -L"
-    elif [ "$OS_NAME" == "OpenBSD" ]; then
+    elif [[ "$OS_NAME" == "OpenBSD" ]]; then
         cmdline_local="pkg_info -L"
     else
         echo -e "Error: Unsupported operating system or Linux distribution!"
@@ -251,27 +251,27 @@ show-binaries ()
         return 1
     fi
 
-    OUTPUT=""
-    PACKAGE_EXISTS=false
+    local output=""
+    local package_exists="false"
 
-    if [ "$($cmdline_local $1 2> /dev/null)" ]; then
+    if [[ "$($cmdline_local $1 2> /dev/null)" ]]; then
         # Show different message on OpenBSD, because it actually looks up remote package files, if they are not installed.
-        if [ "$OS_NAME" == "OpenBSD" ]; then
+        if [[ "$OS_NAME" == "OpenBSD" ]]; then
             echo -e "Info: Found package '$1'."
         else
             echo -e "Info: Found local package '$1'."
         fi
 
-        PACKAGE_EXISTS=true
+        local package_exists=true
 
-        OUTPUT="$($cmdline_local $1 | grep -E '/(s?bin|games|libexec)/' | sort)"
-    elif [ -f /etc/debian_version ] && apt-cache show "$1" &> /dev/null; then
+        local output="$($cmdline_local $1 | grep -E '/(s?bin|games|libexec)/' | sort)"
+    elif [[ -f /etc/debian_version ]] && apt-cache show "$1" &> /dev/null; then
         echo -e "Info: Found remote package '$1'."
-        PACKAGE_EXISTS=true
+        local package_exists=true
 
         # Check if apt-file command exists.
 
-        if [ ! "$(command -v apt-file 2> /dev/null)" ]; then
+        if [[ ! "$(command -v apt-file 2> /dev/null)" ]]; then
             echo -e "\nError: 'apt-file' not found."
             echo -e "To list binaries for remote package you might want to run: 'sudo apt update && sudo apt install apt-file'"
             echo -e "After installation, remember to run: 'sudo apt-file update' to update list of files for remote packages.\n"
@@ -279,18 +279,18 @@ show-binaries ()
             return 1
         fi
 
-        OUTPUT="$(apt-file list $1 | grep -E '/(s?bin|games|libexec)/' | sort)"
+        local output="$(apt-file list $1 | grep -E '/(s?bin|games|libexec)/' | sort)"
     fi
 
-    if [ "$PACKAGE_EXISTS" = false ]; then
+    if [[ "$package_exists" == "false" ]]; then
         echo -e "Error: Package '$1' does not exist or could not be found!"
 
         return 1
     fi
 
-    if [ -n "$OUTPUT" ]; then
+    if [[ -n "$output" ]]; then
         echo -e "\nBinary files:"
-        echo "$OUTPUT"
+        echo "$output"
     else
         echo -e "Info: No binary files found for package '$1'."
     fi
@@ -300,13 +300,13 @@ toggle-disabled ()
 {
     file_path=$1
 
-    if [ -z "$file_path" ]; then
+    if [[ -z "$file_path" ]]; then
         echo -e "Error: No file path provided."
 
         return 1
     fi
 
-    if [ ! -e "$file_path" ]; then
+    if [[ ! -e "$file_path" ]]; then
         echo -e "Error: File '$file_path' does not exist!"
 
         return 1
@@ -319,7 +319,7 @@ toggle-disabled ()
 
         mv "$file_path" "$new_file_path"
 
-        if [ $? -eq 0 ]; then
+        if [[ $? -eq 0 ]]; then
             echo "Successfully renamed to '$new_file_path'."
         else
             echo "Error: Failed to rename '$file_path' to '$new_file_path'."
@@ -332,7 +332,7 @@ toggle-disabled ()
 
         mv "$file_path" "$new_file_path"
 
-        if [ $? -eq 0 ]; then
+        if [[ $? -eq 0 ]]; then
             echo "Successfully renamed to '$new_file_path'."
         else
             echo "Error: Failed to rename '$file_path' to '$new_file_path'."
@@ -343,14 +343,14 @@ toggle-disabled ()
 }
 
 # Functions available only if git is installed
-if [ "$(command -v git)" ]; then
+if [[ "$(command -v git)" ]]; then
     clone-dotfiles-repository ()
     {
         local repos_dir=$HOME/repos
         local dotfiles_repo_dir=$HOME/repos/dotfiles
 
         # Return prematurely if dotfiles repository already exists.
-        if [ -d $dotfiles_repo_dir ]; then
+        if [[ -d $dotfiles_repo_dir ]]; then
             return 1
         fi
 
@@ -362,9 +362,9 @@ if [ "$(command -v git)" ]; then
 
     copy-dotfiles-to-repos-directory ()
     {
-        if [ "$OS_NAME" == "Linux" ]; then
+        if [[ "$OS_NAME" == "Linux" ]]; then
             short_name='linux'
-        elif [ "$OS_NAME" == "OpenBSD" ]; then
+        elif [[ "$OS_NAME" == "OpenBSD" ]]; then
             short_name='openbsd'
         fi
 
@@ -372,7 +372,7 @@ if [ "$(command -v git)" ]; then
         local dotfiles_repo_dir=$HOME/repos/dotfiles
 
         # Clone dotfiles repository if it doesn't exist.
-        if [ ! -d $dotfiles_repo_dir ]; then
+        if [[ ! -d $dotfiles_repo_dir ]]; then
             echo -e "=== Cloning the dotfiles repository, because it doesn't exist yet... ==="
             clone-dotfiles-repository
         fi
@@ -384,7 +384,7 @@ if [ "$(command -v git)" ]; then
         read answer
         echo
 
-        if [ ! "$answer" == "Yes." ]; then
+        if [[ ! "$answer" == "Yes." ]]; then
             echo -e "Quitting..."
 
             return 1
@@ -403,21 +403,21 @@ if [ "$(command -v git)" ]; then
         echo -e "\n=== Copying dotfiles... ==="
         local dotfiles_to_copy="$(cat $HOME/.dotfiles_lists/common.txt)"
 
-        if [ -f "$HOME/.dotfiles_lists/$short_name.txt" ]; then
+        if [[ -f "$HOME/.dotfiles_lists/$short_name.txt" ]]; then
             dotfiles_to_copy="$dotfiles_to_copy $(cat $HOME/.dotfiles_lists/$short_name.txt)"
         fi
 
-        if [ -f /etc/debian_version ]; then
+        if [[ -f /etc/debian_version ]]; then
             dotfiles_to_copy="$dotfiles_to_copy $(cat $HOME/.dotfiles_lists/debian.txt)"
         fi
 
-        if [ "$USER" == "marcin" ]; then
+        if [[ "$USER" == "marcin" ]]; then
             full_username=$(getent passwd "marcin" | cut -d ':' -f 5)
 
             if [[ "$full_username" =~ ^Marcin\ Kralka ]]; then
                 dotfiles_to_copy="$dotfiles_to_copy $(cat $HOME/.dotfiles_lists/private.txt)"
 
-                if [ -f /etc/debian_version ]; then
+                if [[ -f /etc/debian_version ]]; then
                     dotfiles_to_copy="$dotfiles_to_copy $(cat $HOME/.dotfiles_lists/private_debian.txt)"
                 fi
             fi
@@ -431,10 +431,10 @@ if [ "$(command -v git)" ]; then
 
         mkdir -p $os_specific_repo_dir
 
-        for entry in $os_specific_dotfiles_list; do
+        for entry in "$os_specific_dotfiles_list"; do
             filename="${entry}.1"
 
-            if [ -f "$filename" ]; then
+            if [[ -f "$filename" ]]; then
                 final_name=$entry.$short_name
 
                 rsync -ciRv $filename $os_specific_repo_dir/$final_name
@@ -447,7 +447,7 @@ if [ "$(command -v git)" ]; then
         local dotfiles_repo_dir=$HOME/repos/dotfiles
 
         # Clone repository if it doesn't exist.
-        if [ ! -d $dotfiles_repo_dir ]; then
+        if [[ ! -d $dotfiles_repo_dir ]]; then
             clone-dotfiles-repository
         fi
 
@@ -458,7 +458,7 @@ if [ "$(command -v git)" ]; then
 
         cd $OLDPWD
 
-        if [ $exit_status -ne 0 ]; then
+        if [[ $exit_status -ne 0 ]]; then
             echo -e "Error: Couldn't pull the latest commit in the dotfiles git repository!"
         fi
 
@@ -467,14 +467,14 @@ if [ "$(command -v git)" ]; then
 fi
 
 # Linux-specific functions
-if [ "$OS_NAME" == "Linux" ]; then
+if [[ "$OS_NAME" == "Linux" ]]; then
     # Debian-specific functions
-    if [ -f /etc/debian_version ]; then
+    if [[ -f /etc/debian_version ]]; then
         edit-debian-sources ()
         {
-            if [ -f /etc/apt/sources.list ]; then
+            if [[ -f /etc/apt/sources.list ]]; then
                 edit-repos
-            elif [ -f /etc/apt/sources.list.d/debian.sources ]; then
+            elif [[ -f /etc/apt/sources.list.d/debian.sources ]]; then
                 edit-repos --file debian.sources
             else
                 echo -e "Error: No valid sources.list found!"

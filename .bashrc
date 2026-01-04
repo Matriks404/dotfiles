@@ -78,7 +78,7 @@ fi
 
 # Custom LOCAL Bash functions
 
-if [ -f ~/.bash_functions.local ] && [[ $- == *i* ]]; then
+if [ -f ~/.bash_functions.local ]; then
     . ~/.bash_functions.local
 fi
 
@@ -90,6 +90,6 @@ fi
 
 # Custom LOCAL Bash bindings
 
-if [ -f ~/.bash_bindings.local ]; then
+if [ -f ~/.bash_bindings.local ] && [[ $- == *i* ]]; then
     . ~/.bash_bindings.local
 fi
