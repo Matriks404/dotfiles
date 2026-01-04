@@ -1,4 +1,12 @@
 #!/bin/sh
+
+echo() {
+    case "$1" in
+        -e) shift; printf "%b\n" "$*" ;;
+        *) printf "%s\n" "$*" ;;
+    esac
+}
+
 #printf -v date "%(%Y-%m-%d)T" -1
 
 #if sudo -v; then
