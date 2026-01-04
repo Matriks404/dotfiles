@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 
 # Updates version information inside '.dotfiles_version' file.
-# Format is: `r74.COMMIT_NO (built on YYYY-MM-DD HH:MM).
-# Where 'COMMIT_NO' is a number of commit since the first commit on master branch.
 
 # Script below is generated using Gemini 2.5 Flash, with some modifications.
 # If you have problems with that, remove or replace it.
 
-# Define the target file
+# Define target files
 DOTFILES_VERSION_FILE=".dotfiles_version"
+BACKUP_SCRIPT_VERSION_FILE=".local/scripts.noexecute/backup_job.sh.version"
+BACKUP_SCRIPT_FILES_VERSION_FILE=".local/scripts.noexecute/backup_job_files/version"
 
 # Get the first commit hash on the master branch.
 if git show-ref --verify --quiet refs/heads/master; then
@@ -34,14 +34,27 @@ NUM_COMMITS=$(git rev-list --count ${FIRST_COMMIT_HASH}..HEAD)
 BUILD_DATE=$(date +"%Y-%m-%d %H:%M")
 
 # Construct the version string.
-VERSION_STRING="v0.0.0.${NUM_COMMITS} (Pre-Alpha/Preview) (built on ${BUILD_DATE})"
+#TODO: Versions itself (not builds) should ideally be in some other location.
+
+# Format for dotfiles and the backup script version file is: `vx.y.z.COMMIT_NO (built on YYYY-MM-DD HH:MM).
+# Where 'COMMIT_NO' is a number of commit since the first commit on master branch.
+DOTFILES_VERSION_STRING="v0.0.0.${NUM_COMMITS} (Pre-Alpha/Preview) (built on ${BUILD_DATE})"
+BACKUP_SCRIPT_VERSION_STRING="v0.9.2.${NUM_COMMITS} (Beta) (built on ${BUILD_DATE})"
+
+BACKUP_SCRIPT_FILES_VERSION_STRING="v2, processed using script ${BACKUP_SCRIPT_VERSION_STRING}"
 
 # Update the '.dotfiles_version' file.
-echo "${VERSION_STRING}" > "${DOTFILES_VERSION_FILE}"
+echo "${DOTFILES_VERSION_STRING}" > "${DOTFILES_VERSION_FILE}"
 
-# Add the updated file to the staging area so it's commited.
-git add "${DOTFILES_VERSION_FILE}"
+# Update backup job script version files.
+echo "${BACKUP_SCRIPT_VERSION_STRING}" > "${BACKUP_SCRIPT_VERSION_FILE}"
+echo "${BACKUP_SCRIPT_FILES_VERSION_STRING}" > "${BACKUP_SCRIPT_FILES_VERSION_FILE}"
 
-echo "Updated ${DOTFILES_VERSION_FILE} to: ${VERSION_STRING}"
+# Add updated files to the staging area so it's commited.
+git add "${DOTFILES_VERSION_FILE}" "${BACKUP_SCRIPT_VERSION_FILE}" "${BACKUP_SCRIPT_FILES_VERSION_FILE}"
+
+echo "Updated ${DOTFILES_VERSION_FILE} to: ${DOTFILES_VERSION_STRING}"
+echo "Updated ${BACKUP_SCRIPT_VERSION_FILE} to: ${BACKUP_SCRIPT_VERSION_STRING}"
+echo "Updated ${BACKUP_SCRIPT_FILES_VERSION_FILE} to: ${BACKUP_SCRIPT_FILES_VERSION_STRING}"
 
 exit 0
