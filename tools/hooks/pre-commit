@@ -39,7 +39,7 @@ BUILD_DATE=$(date +"%Y-%m-%d %H:%M")
 # Format for dotfiles and the backup script version file is: `vx.y.z.COMMIT_NO (built on YYYY-MM-DD HH:MM).
 # Where 'COMMIT_NO' is a number of commit since the first commit on master branch.
 DOTFILES_VERSION_STRING="v0.0.0.${NUM_COMMITS} (Pre-Alpha/Preview) (built on ${BUILD_DATE})"
-BACKUP_SCRIPT_VERSION_STRING="v0.9.2.${NUM_COMMITS} (Beta) (built on ${BUILD_DATE})"
+BACKUP_SCRIPT_VERSION_STRING="v0.10.0.${NUM_COMMITS} (Beta) (built on ${BUILD_DATE})"
 
 BACKUP_SCRIPT_FILES_VERSION_STRING="v2, originally distributed with script ${BACKUP_SCRIPT_VERSION_STRING}"
 

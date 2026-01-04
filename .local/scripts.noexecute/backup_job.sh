@@ -34,7 +34,16 @@ if [ -d $target ]; then
 fi
 
 if [ -f "/etc/debian_version" ]; then
-    MAJOR_VERSION=$(cut -d. -f1 /etc/debian_version)
+    VERSION_STRING=$(cat /etc/debian_version)
+
+    case "$VERSION_STRING" in
+        [0-9]*)
+            MAJOR_VERSION=$(echo "$VERSION_STRING" | cut -d. -f1)
+            ;;
+        *)
+            MAJOR_VERSION=9999
+            ;;
+    esac
 
     echo -e "\n===== backing up apt data ====="
     echo -e "Backing up apt data to: "$target
@@ -52,7 +61,11 @@ if [ -f "/etc/debian_version" ]; then
     if [ "$MAJOR_VERSION" -le 12 ]; then
         sudo apt-key exportall > $target/apt_repository.keys
     else
-        sudo cp -rv /etc/apt/keyrings $target/apt_keyrings
+        if [ -d /etc/apt/keyrings ]; then
+            sudo cp -rv /etc/apt/keyrings $target/apt_keyrings
+        else
+            echo -e "No '/etc/apt/keyrings' directory. Skipping."
+        fi
     fi
 fi
 
