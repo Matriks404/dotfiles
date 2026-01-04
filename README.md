@@ -4,7 +4,7 @@ Legacy versions of dotfiles for other operating systems:
 
 * **openSUSE Tumbleweed** - [opensuse branch](https://github.com/Matriks404/dotfiles/tree/opensuse) - commit **f8b2734** as of 2025-05-16 (deprecated and not supported).
 
-For the list of files in the repository [go here](FILE_LIST.md) -- **NOTE:** This list is updated only occasionally and might be outdated.
+For the list of files in the repository [go here](Documentation/FILE_LIST.md) -- **NOTE:** This list is updated only occasionally and might be outdated.
 
 # Prerequirements
 

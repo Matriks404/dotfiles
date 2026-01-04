@@ -26,7 +26,7 @@ elif [ "$OS_NAME" = "OpenBSD" ]; then
     exclude_files="$dotfiles_dir/os_specific/*.linux"
 fi
 
-files_to_exclude="$dotfiles_dir/README.md $dotfiles_dir/FILE_LIST.md $dotfiles_dir/.gitignore $dotfiles_dir/build/* $dotfiles_dir/tools/hooks/* $dotfiles_dir/tools/* $exclude_files"
+files_to_exclude="$dotfiles_dir/README.md $dotfiles_dir/.gitignore $dotfiles_dir/Documentation/* $dotfiles_dir/build/* $dotfiles_dir/tools/hooks/* $dotfiles_dir/tools/* $exclude_files"
 
 unzip -qq master.zip -x $files_to_exclude
 
