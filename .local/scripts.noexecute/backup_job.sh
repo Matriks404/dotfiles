@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 #printf -v date "%(%Y-%m-%d)T" -1
 
 #if sudo -v; then
@@ -12,7 +12,7 @@
 #fi
 
 echo -e "* Processing settings shell script ..."
-source /usr/local/scripts/backup_job_files/settings.sh
+. /usr/local/scripts/backup_job_files/settings.sh
 target=$ESSENTIAL_INFO_LOCAL_DIR
 
 if [ -d $target ]; then
@@ -59,9 +59,24 @@ fi
 echo -e "\n===== BACKING UP FILES ====="
 
 echo -e "* Reading include text file ..."
-INCLUDE_FROM=()
 
-mapfile -t INCLUDE_FROM < /usr/local/scripts/backup_job_files/include.txt
+# Save the old IFS
+old_ifs="$IFS"
+
+# Set IFS to only a newline character
+IFS='
+'
+
+set -f # Disable globbing
+set -- $(cat /usr/local/scripts/backup_job_files/include.txt)
+set +f # Re-enable globbing
+
+# Restore original IFS
+IFS="$old_ifs"
+
+for item in "$@"; do
+    echo "Include item: $item"
+done
 
 EXCLUDE_FROM=/usr/local/scripts/backup_job_files/exclude.txt
 
@@ -73,10 +88,10 @@ if [ -n "$REMOTE_HOSTNAME" ]; then
     fi
 
     echo -e "* Backing up files to remote host: "$REMOTE_HOSTNAME" in directory: "$BACKUP_LOCATION" ..."
-    rsync -aRv -e "ssh -p $REMOTE_PORT" --delete --exclude-from="$EXCLUDE_FROM" "${INCLUDE_FROM[@]}" "$REMOTE_HOSTNAME:$BACKUP_LOCATION"
+    rsync -aRv -e "ssh -p $REMOTE_PORT" --delete --exclude-from="$EXCLUDE_FROM" "${@}" "$REMOTE_HOSTNAME:$BACKUP_LOCATION"
 
 else
    echo -e "* Backing up files to local directory: "$BACKUP_LOCATION" ..."
 
-   rsync -aRv --delete --exclude-from="$EXCLUDE_FROM" "${INCLUDE_FROM[@]}" "$BACKUP_LOCATION"
+   rsync -aRv --delete --exclude-from="$EXCLUDE_FROM" "${@}" "$BACKUP_LOCATION"
 fi
