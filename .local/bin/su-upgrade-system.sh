@@ -48,7 +48,9 @@ fi
 echo -e "\n"
 
 if [ -f /etc/debian_version ]; then
-    if [ $(command -v upgrade-system) ]; then
+    #NOTE: Do not run upgrade-system if deborphan is installed, because if user proceeds with removing packages flagged to uninstall by deborphan, they can break their system.
+    #      Latest version of Linux Mint (and probably Ubuntu as well) specifically ships with deborphan that wants to remove essential system packages when run. We want to avoid that at all cost.
+    if [ $(command -v upgrade-system) ] && [ ! $(command -v deborphan)  ]; then
         upgrade-system
     else
         echo -e "=== Updating APT package list... ==="
