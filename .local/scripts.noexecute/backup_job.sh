@@ -74,10 +74,6 @@ set +f # Re-enable globbing
 # Restore original IFS
 IFS="$old_ifs"
 
-for item in "$@"; do
-    echo "Include item: $item"
-done
-
 EXCLUDE_FROM=/usr/local/scripts/backup_job_files/exclude.txt
 
 if [ -n "$REMOTE_HOSTNAME" ]; then
