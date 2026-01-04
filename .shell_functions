@@ -45,7 +45,7 @@ restart_network_service ()
 reinstall_backup_script ()
 {
     sudo mkdir -p "/usr/local/scripts"
-    sudo cp -v "$HOME/.local/scripts.noexecute/backup_job.sh" "/usr/local/scripts"
+    sudo cp -v "$HOME/.local/scripts.noexecute/backup_job.sh" "$HOME/.local/scripts.noexecute/backup_job.sh.version" "/usr/local/scripts"
 }
 
 replace_backup_configuration_files ()
