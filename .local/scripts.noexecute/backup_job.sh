@@ -110,7 +110,6 @@ if [ -n "$REMOTE_HOSTNAME" ]; then
 
 else
    echo -e "* Backing up files to local directory: "$BACKUP_LOCATION" ..."
-   echo "$TARGET_OLD"
 
    rsync -aRv --delete --exclude-from="$EXCLUDE_FROM" "${@}" "$TARGET" "$TARGET_OLD" "$BACKUP_LOCATION"
 fi
