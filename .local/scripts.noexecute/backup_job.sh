@@ -106,10 +106,11 @@ if [ -n "$REMOTE_HOSTNAME" ]; then
     fi
 
     echo -e "* Backing up files to remote host: "$REMOTE_HOSTNAME" in directory: "$BACKUP_LOCATION" ..."
-    rsync -aRv -e "ssh -p $REMOTE_PORT" --delete --exclude-from="$EXCLUDE_FROM" "${@}" "$ESSENTIAL_INFO_LOCAL_DIR" "$REMOTE_HOSTNAME:$BACKUP_LOCATION"
+    rsync -aRv -e "ssh -p $REMOTE_PORT" --delete --exclude-from="$EXCLUDE_FROM" "${@}" "$TARGET" "$TARGET_OLD" "$REMOTE_HOSTNAME:$BACKUP_LOCATION"
 
 else
    echo -e "* Backing up files to local directory: "$BACKUP_LOCATION" ..."
+   echo "$TARGET_OLD"
 
    rsync -aRv --delete --exclude-from="$EXCLUDE_FROM" "${@}" "$TARGET" "$TARGET_OLD" "$BACKUP_LOCATION"
 fi
