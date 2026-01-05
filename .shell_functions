@@ -8,28 +8,35 @@ backup_file ()
 
 edit_backup_excludes ()
 {
-    target="/usr/local/scripts/backup_job_files/exclude.txt"
-
-    if [ -f "$target" ]; then
-        "$SU_CMD" "$EDITOR" "$target"
-    fi
+    TARGET="/usr/local/scripts/backup_job_files/exclude.txt"
+   "$SU_CMD" "$EDITOR" "$TARGET"
 }
 
 edit_backup_includes ()
 {
-    target="/usr/local/scripts/backup_job_files/include.txt"
-
-    if [ -f "$target" ]; then
-        "$SU_CMD" "$EDITOR" "$target"
-    fi
+    TARGET="/usr/local/scripts/backup_job_files/include.txt"
+    "$SU_CMD" "$EDITOR" "$TARGET"
 }
 
 edit_backup_settings ()
 {
-    target="/usr/local/scripts/backup_job_files/settings.sh"
+    SOURCE="$HOME/.local/scripts.noexecute/backup_job_files/settings.sh"
+    TARGET="/usr/local/scripts/backup_job_files/settings.sh"
 
-    if [ -f "$target" ]; then
-        "$SU_CMD" "$EDITOR" "$target"
+    if [ -f "$TARGET" ]; then
+        "$SU_CMD" "$EDITOR" "$TARGET"
+    else
+        echo -e "Info: No '${TARGET}' file is present. Initializing new one..."
+
+        "$SU_CMD" cp -v "$SOURCE" "$TARGET"
+
+        if [ $? -ne 0 ]; then
+            echo "Error: Cannot copy settings file."
+
+            return
+        fi
+
+        "$SU_CMD" "$EDITOR" "$TARGET"
     fi
 }
 
