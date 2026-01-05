@@ -75,24 +75,24 @@ restart_network_service ()
     fi
 }
 
-run_automatic_backup ()
+run_backup_script ()
 {
     if [ -f "/usr/local/scripts/backup_job.sh" ]; then
         "$SU_CMD" "/usr/local/scripts/backup_job.sh"
     else
-        echo -e "Error: Your automatic backup job script is not installed properly."
+        echo -e "Error: Your backup job script is not installed properly."
         echo -e "Do you want to set it up? If so, enter \"Yes.\" (without quotes):"
         echo -en "? "
         read answer
         echo
 
         if [ "$answer" = "Yes." ]; then
-            set_up_automatic_backup
+            set_up_backup_script
         fi
     fi
 }
 
-set_up_automatic_backup ()
+set_up_backup_script ()
 {
     OLD_LOCATION="/usr/local/scripts"
     NEW_LOCATION="$HOME/.local/scripts.noexecute"
