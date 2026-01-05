@@ -39,7 +39,14 @@ reinstall_backup_script ()
     local TARGET_SCRIPTS_DIR="/usr/local/scripts"
 
     "$SU_CMD" mkdir -p "$TARGET_SCRIPTS_DIR"
-    "$SU_CMD" install -vm 0744 -o root -g root "${SOURCE_SCRIPTS_DIR}/backup_job.sh" "${TARGET_SCRIPTS_DIR}/backup_job.sh"
+
+    if [ "$OS_NAME" = "OpenBSD" ]; then
+        local OPTS="-m 0744 -o root -g bin"
+    else
+        local OPTS="-vm 0744 -o root -g root"
+    fi
+    
+    "$SU_CMD" install $INSTALL_OPTS "${SOURCE_SCRIPTS_DIR}/backup_job.sh" "${TARGET_SCRIPTS_DIR}/backup_job.sh"
     "$SU_CMD" cp -v "${SOURCE_SCRIPTS_DIR}/backup_job.sh.version" "${TARGET_SCRIPTS_DIR}"
 }
 
