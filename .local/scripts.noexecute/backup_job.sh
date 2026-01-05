@@ -21,16 +21,17 @@ echo() {
 
 echo -e "* Processing settings shell script ..."
 . /usr/local/scripts/backup_job_files/settings.sh
-target=$ESSENTIAL_INFO_LOCAL_DIR
+TARGET="$ESSENTIAL_INFO_LOCAL_DIR"
+TARGET_OLD="${TARGET}.old"
 
-if [ -d $target ]; then
-    if [ -d $target.old ]; then
-        echo -e "* Removing older version of local backup directory: "$target".old ..."
-        rm -r $target.old
+if [ -d "$TARGET" ]; then
+    if [ -d "$TARGET_OLD" ]; then
+        echo -e "* Removing older version of local backup directory: ${TARGET_OLD} ..."
+        rm -r "$TARGET_OLD"
     fi
 
-    echo -e "* Moving old local backup directory to: "$target".old ..."
-    mv $target $target.old
+    echo -e "* Moving old local backup directory to: ${TARGET_OLD} ..."
+    mv "$TARGET" "$TARGET_OLD"
 fi
 
 if [ -f "/etc/debian_version" ]; then
@@ -46,23 +47,23 @@ if [ -f "/etc/debian_version" ]; then
     esac
 
     echo -e "\n===== backing up apt data ====="
-    echo -e "Backing up apt data to: "$target
+    echo -e "Backing up apt data to: ${TARGET}"
 
-    mkdir $target
+    mkdir "$TARGET"
 
     echo -e "* Backing up apt package list ..."
-    sudo dpkg --get-selections > $target/apt_package.list
+    sudo dpkg --get-selections > "${TARGET}/apt_package.list"
 
     echo -e "* Backing up apt source lists ..."
-    mkdir $target/apt_sources/
-    sudo cp -rv /etc/apt/sources.list* $target/apt_sources/
+    mkdir "${TARGET}/apt_sources/"
+    sudo cp -rv "/etc/apt/sources.list"* "${TARGET}/apt_sources/"
 
     echo -e "* Backing up apt repository keys ..."
     if [ "$MAJOR_VERSION" -le 12 ]; then
-        sudo apt-key exportall > $target/apt_repository.keys
+        sudo apt-key exportall > "${TARGET}/apt_repository.keys"
     else
         if [ -d /etc/apt/keyrings ]; then
-            sudo cp -rv /etc/apt/keyrings $target/apt_keyrings
+            sudo cp -rv "/etc/apt/keyrings" "${TARGET}/apt_keyrings"
         else
             echo -e "No '/etc/apt/keyrings' directory. Skipping."
         fi
@@ -71,10 +72,10 @@ fi
 
 if [ $(command -v flatpak) ]; then
     echo -e "\n===== backing up flatpak data ====="
-    echo -e "Backing up flatpak data to: "$target
+    echo -e "Backing up flatpak data to: ${TARGET}"
 
     echo -e "* Backing up installed flatpak app list ..."
-    flatpak list --columns=application --app > $target/flatpaks.txt
+    flatpak list --columns=application --app > "${TARGET}/flatpaks.txt"
 fi
 
 echo -e "\n===== BACKING UP FILES ====="
@@ -105,10 +106,10 @@ if [ -n "$REMOTE_HOSTNAME" ]; then
     fi
 
     echo -e "* Backing up files to remote host: "$REMOTE_HOSTNAME" in directory: "$BACKUP_LOCATION" ..."
-    rsync -aRv -e "ssh -p $REMOTE_PORT" --delete --exclude-from="$EXCLUDE_FROM" "${@}" "$REMOTE_HOSTNAME:$BACKUP_LOCATION"
+    rsync -aRv -e "ssh -p $REMOTE_PORT" --delete --exclude-from="$EXCLUDE_FROM" "${@}" "$ESSENTIAL_INFO_LOCAL_DIR" "$REMOTE_HOSTNAME:$BACKUP_LOCATION"
 
 else
    echo -e "* Backing up files to local directory: "$BACKUP_LOCATION" ..."
 
-   rsync -aRv --delete --exclude-from="$EXCLUDE_FROM" "${@}" "$BACKUP_LOCATION"
+   rsync -aRv --delete --exclude-from="$EXCLUDE_FROM" "${@}" "$TARGET" "$TARGET_OLD" "$BACKUP_LOCATION"
 fi
