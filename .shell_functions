@@ -33,6 +33,25 @@ edit_backup_settings ()
     fi
 }
 
+reinstall_backup_script ()
+{
+    local SOURCE_SCRIPTS_DIR="$HOME/.local/scripts.noexecute"
+    local TARGET_SCRIPTS_DIR="/usr/local/scripts"
+
+    "$SU_CMD" mkdir -p "$TARGET_SCRIPTS_DIR"
+    "$SU_CMD" install -vm 0744 -o root -g root "${SOURCE_SCRIPTS_DIR}/backup_job.sh" "${TARGET_SCRIPTS_DIR}/backup_job.sh"
+    "$SU_CMD" cp -v "${SOURCE_SCRIPTS_DIR}/backup_job.sh.version" "${TARGET_SCRIPTS_DIR}"
+}
+
+replace_backup_configuration_files ()
+{
+    local SOURCE_SCRIPTS_DIR="$HOME/.local/scripts.noexecute"
+    local TARGET_SCRIPTS_DIR="/usr/local/scripts"
+
+    "$SU_CMD" mkdir -p "$TARGET_SCRIPTS_DIR"
+    "$SU_CMD" cp -rv "${SOURCE_SCRIPTS_DIR}/backup_job_files" "${TARGET_SCRIPTS_DIR}"
+}
+
 restart_network_service ()
 {
     if [ "$OS_NAME" = "Linux" ]; then
@@ -40,18 +59,6 @@ restart_network_service ()
     elif [ "$OS_NAME" = "OpenBSD" ]; then
         "$SU_CMD" sh "/etc/netstart"
     fi
-}
-
-reinstall_backup_script ()
-{
-    "$SU_CMD" mkdir -p "/usr/local/scripts"
-    "$SU_CMD" cp -v "$HOME/.local/scripts.noexecute/backup_job.sh" "$HOME/.local/scripts.noexecute/backup_job.sh.version" "/usr/local/scripts"
-}
-
-replace_backup_configuration_files ()
-{
-    "$SU_CMD" mkdir -p "/usr/local/scripts"
-    "$SU_CMD" cp -rv "$HOME/.local/scripts.noexecute/backup_job_files" "/usr/local/scripts"
 }
 
 run_automatic_backup ()
@@ -120,7 +127,7 @@ set_up_automatic_backup ()
         echo
 
         if [ "$answer" = "Yes." ]; then
-            echo -e "Replacing backup configuration files at '/usr/local/scripts/backup_job_files..."
+            echo -e "\nReplacing backup configuration files at '/usr/local/scripts/backup_job_files..."
             replace_backup_configuration_files
 
             first_conf_setup=1
@@ -128,7 +135,7 @@ set_up_automatic_backup ()
             echo -e "Operation canceled by user."
         fi
     else
-        echo -e "Copying backup configuration files to '/usr/local/scripts/backup_job_files'..."
+        echo -e "\nCopying backup configuration files to '/usr/local/scripts/backup_job_files'..."
         replace_backup_configuration_files
 
         first_conf_setup=1
@@ -209,8 +216,11 @@ if [ "$OS_NAME" = "Linux" ]; then
 
         relink_backup_script ()
         {
-            echo -e "Creating a daily cron job in '/etc/cron.daily'..."
-            "$SU_CMD" ln -fsv "/usr/local/scripts/backup_job.sh" "/etc/cron.daily/backup_job"
+            local CRON_FILE="/etc/cron.daily/backup_job"
+            local SCRIPTS_DIR="/usr/local/scripts"
+
+            echo -e "\nCreating a daily cron job in '${CRON_FILE}'..."
+            "$SU_CMD" ln -fsv "${SCRIPTS_DIR}/backup_job.sh" "${CRON_FILE}"
         }
     fi
 
