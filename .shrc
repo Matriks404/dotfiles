@@ -12,7 +12,7 @@ SHELL_CMD="$(ps -o ucomm= -p $$)"
 # Set up prompt for non-Bash shells.
 if [ ! "$SHELL_CMD" = "bash" ]; then
     if [ -f "/etc/debian_version" ]; then
-        if [ ! "$SHELL_CMD" = "sh" -a ! "$SHELL_CMD" = "dash" -a ! "$SHELL_CMD" = "ksh" ]; then
+        if [ ! "$SHELL_CMD" = "sh" ] && [ ! "$SHELL_CMD" = "dash" ] && [ ! "$SHELL_CMD" = "ksh" ]; then
             PS1='\w $ '
         fi
     elif [ "$OS_NAME" = "OpenBSD" ]; then
