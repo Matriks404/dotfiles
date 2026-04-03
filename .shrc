@@ -7,6 +7,19 @@ case $- in
       *) return;;
 esac
 
+# Only run this if the shell is interactive and stdin is a TTY
+if [ -t 0 ]; then
+    CURRENT_TTY=$(tty)
+    case "$CURRENT_TTY" in
+        "/dev/tty6"|"/dev/ttyv5")
+            # Clear the screen first for a clean "Dashboard" look
+            clear
+            echo "Starting System Monitor..."
+            exec top
+            ;;
+    esac
+fi
+
 SHELL_CMD="$(ps -o ucomm= -p $$)"
 
 # Set up prompt for non-Bash shells.
