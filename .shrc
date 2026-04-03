@@ -11,7 +11,7 @@ esac
 if [ -t 0 ]; then
     CURRENT_TTY=$(tty)
     case "$CURRENT_TTY" in
-        "/dev/tty6"|"/dev/ttyv5")
+        "/dev/tty6"|"/dev/ttyC5")
             # Clear the screen first for a clean "Dashboard" look
             clear
             echo "Starting System Monitor..."
