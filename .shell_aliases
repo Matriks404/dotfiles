@@ -19,9 +19,9 @@ alias wf='tail -f'
 # diskfree alias
 
 if [ "$OS_NAME" = "Linux" ]; then
-    alias diskfree='df -hT -x efivarfs -x tmpfs -x devtmpfs'
+    alias dff='df -hT -x efivarfs -x tmpfs -x devtmpfs'
 elif [ "$OS_NAME" = "OpenBSD" ]; then
-    alias diskfree='df -t ffs'
+    alias dff='df -t ffs'
 fi
 
 # free alias
