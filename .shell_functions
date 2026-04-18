@@ -6,6 +6,39 @@ backup_file ()
     cp "$1" "$1.bak"
 }
 
+check_network_connection() {
+    # 1. Try to ping a global IP (Cloudflare DNS) to check raw Internet
+    # We adjust flags based on OS because 'ping' is not standardized
+    if [ "$OS_NAME" = "OpenBSD" ]; then
+        # OpenBSD: -c (count), -w (deadline in seconds)
+        ping -n -c 1 -w 2 1.1.1.1 >/dev/null 2>&1
+    else
+        # Linux/General: -c (count), -W (timeout in seconds)
+        ping -n -c 1 -W 2 1.1.1.1 >/dev/null 2>&1
+    fi
+
+    # Check the exit status of the ping
+    if [ $? -eq 0 ]; then
+        echo "The host is connected to the Internet."
+        return 0
+    fi
+
+    # 2. If Ping failed, check if we at least have a default gateway
+    # This identifies if the issue is 'no network' vs 'no internet'
+    HAS_GATEWAY=1
+    if [ "$OS_NAME" = "OpenBSD" ]; then
+        route -n show -gateway | grep -q 'default' || HAS_GATEWAY=0
+    else
+        ip route | grep -q 'default' || HAS_GATEWAY=0
+    fi
+
+    if [ "$HAS_GATEWAY" -eq 1 ]; then
+        echo "The host is connected to a network, but not the Internet."
+    else
+        echo "The host is not connected to any network (no default route)."
+    fi
+}
+
 edit_backup_excludes ()
 {
     TARGET="/usr/local/scripts/backup_job_files/exclude.txt"

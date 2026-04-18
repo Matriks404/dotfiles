@@ -119,6 +119,7 @@ fi
 
 
 # Aliases for .shell_functions
+alias cn='check_network_connection'
 
 alias ebe='edit_backup_excludes'
 alias ebi='edit_backup_includes'
