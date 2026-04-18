@@ -124,6 +124,12 @@ alias ebe='edit_backup_excludes'
 alias ebi='edit_backup_includes'
 alias ebs='edit_backup_settings'
 
+alias rn='restart_network_service'
+
+if [ "$OS_NAME" = "Linux" ]; then
+    alias ran='restart_all_networks'
+fi
+
 alias sus='su_update_software'
 alias susg='su_upgrade_system'
 

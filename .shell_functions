@@ -69,7 +69,8 @@ replace_backup_configuration_files ()
 restart_network_service ()
 {
     if [ "$OS_NAME" = "Linux" ]; then
-        "$SU_CMD" systemctl restart NetworkManager
+        nmcli networking off
+        nmcli networking on
     elif [ "$OS_NAME" = "OpenBSD" ]; then
         "$SU_CMD" sh "/etc/netstart"
     fi
