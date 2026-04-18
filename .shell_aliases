@@ -97,6 +97,7 @@ if [ "$OS_NAME" = "Linux" ]; then
     alias ii='ip addr'
 
     alias reb='systemctl reboot'
+    alias rebfirm='systemctl reboot --firmware-setup'
     alias shut='systemctl poweroff'
 elif [ "$OS_NAME" = "OpenBSD" ]; then
     alias ii='ifconfig'
