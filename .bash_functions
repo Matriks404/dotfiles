@@ -300,16 +300,21 @@ if command -v git &>/dev/null; then
         )
     }
 
-    copy-dotfiles-to-repos-directory() {
-        local short_name='unknown'
+copy-dotfiles-to-repos-directory ()
+    {
+        local short_name
 
-        [[ "$OS_NAME" == "Linux" ]] && short_name='linux'
-        [[ "$OS_NAME" == "OpenBSD" ]] && short_name='openbsd'
+        if [[ "$OS_NAME" == "Linux" ]]; then
+            short_name='linux'
+        elif [[ "$OS_NAME" == "OpenBSD" ]]; then
+            short_name='openbsd'
+        fi
 
+        local repos_dir="$HOME/repos"
         local dotfiles_repo_dir="$HOME/repos/dotfiles"
 
         # Clone dotfiles repository if it doesn't exist.
-        if [[ ! -d $dotfiles_repo_dir ]]; then
+        if [[ ! -d "$dotfiles_repo_dir" ]]; then
             echo -e "=== Cloning the dotfiles repository, because it doesn't exist yet... ==="
             clone-dotfiles-repository
         fi
@@ -318,14 +323,26 @@ if command -v git &>/dev/null; then
         echo -e "Info: This script won't copy dotfiles, unless dotfiles git repository is updated."
         echo -e "Are you OK with pulling the latest git commit? If so, enter \"Yes.\" (without quotes):"
         echo -en "? "
+        local answer
         read -r answer
+        echo
 
-        [[ "$answer" != "Yes." ]] && { echo -e "Quitting..."; return 1; }
+        if [[ ! "$answer" == "Yes." ]]; then
+            echo -e "Quitting..."
 
-        update-dotfiles-repository || return 1
+            return 1
+        fi
+
+        if ! update-dotfiles-repository; then
+
+            return 1
+        fi
 
         echo -e "\n=== Copying dotfiles lists... ==="
-        rsync -civ "$HOME"/.dotfiles_lists/* "$dotfiles_repo_dir/.dotfiles_lists/"
+        local txtfiles_to_copy="$HOME/.dotfiles_lists/*"
+        local txtfiles_repo_dir="$dotfiles_repo_dir/.dotfiles_lists/"
+
+        rsync -civ $txtfiles_to_copy "$txtfiles_repo_dir"
 
         echo -e "\n=== Copying dotfiles... ==="
         local dotfiles_to_copy
@@ -352,6 +369,7 @@ if command -v git &>/dev/null; then
             fi
         fi
 
+        # Logic check: $dotfiles_to_copy must remain unquoted here to allow rsync to see multiple files
         rsync -ciRv $dotfiles_to_copy "$dotfiles_repo_dir"
 
         echo -e "\n=== Copying OS-specific dotfiles... ==="
@@ -376,16 +394,30 @@ if command -v git &>/dev/null; then
         done
     }
 
-    update-dotfiles-repository() {
+    update-dotfiles-repository () {
         local dotfiles_repo_dir="$HOME/repos/dotfiles"
-        [[ ! -d "$dotfiles_repo_dir" ]] && clone-dotfiles-repository
+        local exit_status
 
-        (
-            cd "$dotfiles_repo_dir" || exit 1
-            git pull
-        )
+        # Clone repository if it doesn't exist.
+        if [[ ! -d "$dotfiles_repo_dir" ]]; then
+            clone-dotfiles-repository
+        fi
+
+        cd "$dotfiles_repo_dir"
+
+        git pull
+        exit_status=$?
+
+        cd "$OLDPWD"
+
+        if [[ $exit_status -ne 0 ]]; then
+            echo -e "Error: Couldn't pull the latest commit in the dotfiles git repository!"
+        fi
+
+        return $exit_status
     }
 fi
+
 
 # Debian-specific shorthand
 if [[ "$OS_NAME" == "Linux" && -f /etc/debian_version ]]; then
