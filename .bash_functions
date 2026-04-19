@@ -300,8 +300,7 @@ if command -v git &>/dev/null; then
         )
     }
 
-copy-dotfiles-to-repos-directory ()
-    {
+    copy-dotfiles-to-repos-directory () {
         local short_name
 
         if [[ "$OS_NAME" == "Linux" ]]; then
