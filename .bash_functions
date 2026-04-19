@@ -26,6 +26,7 @@ edit-repos() {
         if [[ "$1" == "-f" || "$1" == "-fl" || "$1" == "-fs" || "$1" == "--file" ]]; then
             if [[ -z "$2" ]]; then
                 echo -e "Error: You need to provide a filename!"
+
                 return 1
             fi
 
@@ -41,6 +42,7 @@ edit-repos() {
 
             if [[ ! -f "$file" ]]; then
                 echo -e "Error: File '${file}' doesn't exist!"
+
                 return 1
             fi
 
@@ -67,9 +69,11 @@ edit-repos() {
 
         if [[ "$num_files" -eq 0 ]]; then
             echo -e "Error: You don't have valid sources.list available!"
+
             return 1
         elif [[ "$num_files" -eq 1 ]]; then
             "$SU_CMD" "$EDITOR" "${files[0]}"
+
             return 0
         fi
 
@@ -89,6 +93,7 @@ edit-repos() {
 
         if ! [[ "$selection" =~ ^[0-9]+$ ]] || (( selection < 1 || selection > num_files )); then
             echo -e "\nError: Invalid selection!"
+
             return 1
         fi
 
@@ -100,6 +105,7 @@ edit-repos() {
         return $?
     else
         echo -e "Error: Unsupported operating system!"
+
         return 1
     fi
 }
@@ -143,6 +149,7 @@ get-manual() {
 get-new-dotfiles() {
     if [[ -d "./.git" ]]; then
         echo -e "ERROR: You are in a git repository directory! Quitting..."
+
         return 1
     fi
 
@@ -176,6 +183,7 @@ get-repos() {
 
         if [[ "${#files[@]}" -eq 0 ]]; then
             echo -e "Error: No sources found."
+
             return 1
         fi
 
@@ -204,6 +212,7 @@ get-repos() {
 show-binaries() {
     if [[ -z "$1" ]]; then
         echo -e "Error: Provide a package name!"
+
         return 1
     fi
 
@@ -215,6 +224,7 @@ show-binaries() {
         cmdline_local="pkg_info -L"
     else
         echo -e "Error: Unsupported OS."
+
         return 1
     fi
 
@@ -231,6 +241,7 @@ show-binaries() {
 
         if ! command -v apt-file &>/dev/null; then
             echo -e "Error: 'apt-file' not found."
+
             return 1
         fi
         output="$(apt-file list "$1" | grep -E '/(s?bin|games|libexec)/' | sort)"
@@ -238,6 +249,7 @@ show-binaries() {
 
     if [[ "$package_exists" == "false" ]]; then
         echo -e "Error: Package '$1' not found!"
+
         return 1
     fi
 
@@ -266,6 +278,7 @@ toggle-disabled() {
         echo -e "Successfully renamed to '$new_file_path'."
     else
         echo -e "Error: Rename failed."
+
         return 1
     fi
 }
@@ -350,6 +363,7 @@ if [[ "$OS_NAME" == "Linux" && -f /etc/debian_version ]]; then
             edit-repos --file debian.sources
         else
             echo -e "Error: No sources found!"
+
             return 1
         fi
     }
