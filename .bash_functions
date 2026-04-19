@@ -308,39 +308,72 @@ if command -v git &>/dev/null; then
 
         local dotfiles_repo_dir="$HOME/repos/dotfiles"
 
-        [[ ! -d "$dotfiles_repo_dir" ]] && clone-dotfiles-repository
+        # Clone dotfiles repository if it doesn't exist.
+        if [[ ! -d $dotfiles_repo_dir ]]; then
+            echo -e "=== Cloning the dotfiles repository, because it doesn't exist yet... ==="
+            clone-dotfiles-repository
+        fi
 
-        echo -e "Update repository to latest commit? (Enter 'Yes.')"
-        read -rp "? " answer
+        echo -e "\n=== Updating dotfiles repository to the latest commit... ==="
+        echo -e "Info: This script won't copy dotfiles, unless dotfiles git repository is updated."
+        echo -e "Are you OK with pulling the latest git commit? If so, enter \"Yes.\" (without quotes):"
+        echo -en "? "
+        read -r answer
+
         [[ "$answer" != "Yes." ]] && { echo -e "Quitting..."; return 1; }
 
         update-dotfiles-repository || return 1
 
-        echo -e "\n=== Copying files... ==="
-        # Note: Globbing ($HOME/...) needs to be unquoted in rsync or handled carefully
+        echo -e "\n=== Copying dotfiles lists... ==="
         rsync -civ "$HOME"/.dotfiles_lists/* "$dotfiles_repo_dir/.dotfiles_lists/"
 
+        echo -e "\n=== Copying dotfiles... ==="
         local dotfiles_to_copy
         dotfiles_to_copy="$(cat "$HOME/.dotfiles_lists/common.txt")"
 
-        # Append specific lists
-        for list in "$short_name" "debian" "private" "private_debian"; do
-            local list_path="$HOME/.dotfiles_lists/${list}.txt"
+        if [[ -f "$HOME/.dotfiles_lists/${short_name}.txt" ]]; then
+            dotfiles_to_copy="$dotfiles_to_copy $(cat "$HOME/.dotfiles_lists/${short_name}.txt")"
+        fi
 
-            if [[ -f "$list_path" ]]; then
-                # Personal check for private files
-                if [[ "$list" == "private"* ]]; then
-                     local full_name
-                     full_name=$(getent passwd "marcin" | cut -d ':' -f 5)
-                     [[ ! "$full_name" =~ ^Marcin\ Kralka ]] && continue
+        if [[ -f /etc/debian_version ]]; then
+            dotfiles_to_copy="$dotfiles_to_copy $(cat "$HOME/.dotfiles_lists/debian.txt")"
+        fi
+
+        if [[ "$USER" == "marcin" ]]; then
+            local full_username
+            full_username=$(getent passwd "marcin" | cut -d ':' -f 5)
+
+            if [[ "$full_username" =~ ^Marcin\ Kralka ]]; then
+                dotfiles_to_copy="$dotfiles_to_copy $(cat "$HOME/.dotfiles_lists/private.txt")"
+
+                if [[ -f /etc/debian_version ]]; then
+                    dotfiles_to_copy="$dotfiles_to_copy $(cat "$HOME/.dotfiles_lists/private_debian.txt")"
                 fi
-                dotfiles_to_copy="$dotfiles_to_copy $(cat "$list_path")"
+            fi
+        fi
+
+        rsync -ciRv $dotfiles_to_copy "$dotfiles_repo_dir"
+
+        echo -e "\n=== Copying OS-specific dotfiles... ==="
+        local os_specific_dotfiles_list
+        os_specific_dotfiles_list="$(cat "$HOME/.dotfiles_lists/os_specific.txt")"
+        local os_specific_repo_dir="$dotfiles_repo_dir/os_specific"
+
+        mkdir -p "$os_specific_repo_dir"
+
+        local entry
+        local filename
+        local final_name
+
+        for entry in $os_specific_dotfiles_list; do
+            filename="${entry}.1"
+
+            if [[ -f "$filename" ]]; then
+                final_name="${entry}.${short_name}"
+
+                rsync -ciRv "$filename" "${os_specific_repo_dir}/${final_name}"
             fi
         done
-
-        # rsync needs the unquoted variable to expand the file list
-        # shellcheck disable=SC2086
-        rsync -ciRv $dotfiles_to_copy "$dotfiles_repo_dir"
     }
 
     update-dotfiles-repository() {
