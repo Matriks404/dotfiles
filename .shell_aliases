@@ -122,7 +122,7 @@ fi
 # Aliases for flatpak commands
 
 if [ $(command -v flatpak) ]; then
-    alias fa='flatpak list --app --columns=name,version'
+    alias fa='flatpak list --app --columns=name,version | sort | column -t -s $'\''\t'\'
 fi
 
 
