@@ -1,5 +1,12 @@
-# NOTE: On Debian GNU/Linux edit the file /etc/bash.bashrc and uncomment
+#NOTE: On Debian GNU/Linux edit the file /etc/bash.bashrc and uncomment
 # the code fragment which enables Bash completion in interactive shells.
+
+# If not running interactively, don't do anything.
+#NOTE: I am not sure if this is needed, because there's already a check for that in .shrc, but it won't hurt, I guess.
+case $- in
+    *i*) ;;
+      *) return;;
+esac
 
 # Load common shell stuff.
 if [ -f "$HOME/.shrc" ]; then
@@ -71,7 +78,7 @@ fi
 
 # Custom Bash bindings
 
-if [ -f ~/.bash_bindings ] && [[ $- == *i* ]]; then
+if [ -f ~/.bash_bindings ]; then
     . ~/.bash_bindings
 fi
 
@@ -90,6 +97,6 @@ fi
 
 # Custom LOCAL Bash bindings
 
-if [ -f ~/.bash_bindings.local ] && [[ $- == *i* ]]; then
+if [ -f ~/.bash_bindings.local ]; then
     . ~/.bash_bindings.local
 fi
