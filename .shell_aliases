@@ -45,12 +45,14 @@ fi
 
 if [ "$OS_NAME" = "Linux" ]; then
     alias ls="$ls_base --group-directories-first --time-style=long-iso"
-    alias l='ls -ho'
-    alias la='ls -Aho'
+    alias l='ls -hl'
+    alias la='ls -Ahl'
+    alias l.='ls -dhl .*'
 elif [ "$OS_NAME" = "OpenBSD" ]; then
     alias ls="$ls_base"
-    alias l='ls -ghT'
-    alias la='ls -AghT'
+    alias l='ls -hlT'
+    alias la='ls -AhlT'
+    alias l.='ls -dhlT .*'
 fi
 
 
@@ -115,6 +117,12 @@ alias psx='ps aux'
 if [ $(command -v git) ]; then
     alias gitd='git diff'
     alias gits='git status'
+fi
+
+# Aliases for flatpak commands
+
+if [ $(command -v flatpak) ]; then
+    alias fa='flatpak list --app --columns=name,version'
 fi
 
 
