@@ -5,7 +5,9 @@ GITHUB_REPO="Matriks404/dotfiles"
 GITHUB_BASE_URL="https://github.com/${GITHUB_REPO}"
 
 check-dotfiles-update() {
-    local url="https://raw.githubusercontent.com/${GITHUB_REPO}/refs/heads/master/.dotfiles_version"
+    local url
+    url="https://raw.githubusercontent.com/${GITHUB_REPO}/refs/heads/master/.dotfiles_version"
+
     local current_version
     local latest_version
 
@@ -51,21 +53,29 @@ edit-repos() {
         fi
 
         # Logic for interactive file selection
-        local files=()
+        local files
+        files=()
 
-        [[ -f "/etc/apt/sources.list" ]] && files+=("/etc/apt/sources.list")
+        if [[ -f "/etc/apt/sources.list" ]]; then
+            files+=("/etc/apt/sources.list")
+        fi
 
-        local sources_list_dir="/etc/apt/sources.list.d"
+        local sources_list_dir
+        sources_list_dir="/etc/apt/sources.list.d"
+
         local file
 
         if [[ -d "$sources_list_dir" ]]; then
             # Using a loop to avoid issues if no files match glob
             for file in "${sources_list_dir}/"*.{list,sources}; do
-                [[ -f "$file" ]] && files+=("$file")
+                if [[ -f "$file" ]]; then
+                    files+=("$file")
+                fi
             done
         fi
 
-        local num_files="${#files[@]}"
+        local num_files
+        num_files="${#files[@]}"
 
         if [[ "$num_files" -eq 0 ]]; then
             echo -e "Error: You don't have valid sources.list available!"
@@ -80,7 +90,8 @@ edit-repos() {
         local sorted_files
         mapfile -t sorted_files < <(printf "%s\n" "${files[@]}" | sort)
 
-        local i=1
+        local i
+        i=1
 
         echo -e "Files available:"
         for file in "${sorted_files[@]}"; do
@@ -92,12 +103,14 @@ edit-repos() {
         read -rp "Select file you want to edit (1-${num_files}): " selection
 
         if ! [[ "$selection" =~ ^[0-9]+$ ]] || (( selection < 1 || selection > num_files )); then
-            echo -e "\nError: Invalid selection!"
+            echo -e "\nError: Invalid selection! Next time enter a number between 1 and ${num_files}."
 
             return 1
         fi
 
-        local selected_file="${sorted_files[selection - 1]}"
+        local selected_file
+        selected_file="${sorted_files[selection - 1]}"
+
         "$SU_CMD" "$EDITOR" "$selected_file"
 
     elif [[ "$OS_NAME" == "OpenBSD" ]]; then
@@ -114,8 +127,12 @@ get-manual() {
     local parent_pid
     parent_pid="$(ps -p $$ -o ppid= | xargs)"
 
-    local current_pid="$parent_pid"
-    local is_unicode_term="true"
+    local current_pid
+    current_pid="$parent_pid"
+
+    local is_unicode_term
+    is_unicode_term="true"
+
     local cmd
     local term
 
@@ -153,31 +170,43 @@ get-new-dotfiles() {
         return 1
     fi
 
-    local force_update="false"
+    local force_update
+    force_update="false"
 
-    [[ "$1" == "-f" || "$1" == "--force" ]] && force_update="true"
+    if [[ "$1" == "-f" ]] || [[ "$1" == "--force" ]]; then
+        force_update="true"
+    fi
+
+    local repo_name
 
     if [[ "$force_update" == "true" ]] || check-dotfiles-update; then
         echo -e "\nGetting new dotfiles..."
-        local repo_name="Matriks404/dotfiles"
+        repo_name="Matriks404/dotfiles"
 
         curl --silent "https://raw.githubusercontent.com/${repo_name}/refs/heads/master/build/update.sh" | sh
     else
-        echo -e "\nNo update needed. Use -f to force."
+        echo -e "\nThere is no need to update dotfiles."
+        echo -e "Use -f or --force option to force update them."
     fi
 }
 
 get-repos() {
     if [[ -f "/etc/debian_version" ]]; then
-        local files=()
+        local files
+        files=()
+
         local sources_list_dir="/etc/apt/sources.list.d"
         local file
 
-        [[ -f /etc/apt/sources.list ]] && files+=("/etc/apt/sources.list")
+        if [[ -f "/etc/apt/sources.list" ]]; then
+            files+=("/etc/apt/sources.list")
+        fi
 
         if [[ -d "$sources_list_dir" ]]; then
             for file in "${sources_list_dir}"/*.{list,sources}; do
-                [[ -f "$file" ]] && files+=("$file")
+                if [[ -f "$file" ]]; then
+                    files+=("$file")
+                fi
             done
         fi
 
@@ -206,6 +235,8 @@ get-repos() {
 
     elif [[ "$OS_NAME" == "OpenBSD" ]]; then
         cat /etc/installurl
+    else
+        echo -e "Error: Unsupported operating system!"
     fi
 }
 
@@ -216,20 +247,24 @@ show-binaries() {
         return 1
     fi
 
-    local cmdline_local=""
+    local cmdline_local
+    cmdline_local=""
 
     if [[ -f /etc/debian_version ]]; then
         cmdline_local="dpkg -L"
     elif [[ "$OS_NAME" == "OpenBSD" ]]; then
         cmdline_local="pkg_info -L"
     else
-        echo -e "Error: Unsupported OS."
+        echo -e "Error: Unsupported operating system!"
 
         return 1
     fi
 
-    local package_exists="false"
-    local output=""
+    local package_exists
+    package_exists="false"
+
+    local output
+    output=""
 
     if $cmdline_local "$1" &>/dev/null; then
         echo -e "Info: Found local package '$1'."
@@ -240,7 +275,9 @@ show-binaries() {
         package_exists="true"
 
         if ! command -v apt-file &>/dev/null; then
-            echo -e "Error: 'apt-file' not found."
+            echo -e "\nError: 'apt-file' not found."
+            echo -e "To list binaries for remote package you might want to run: 'sudo apt update && sudo apt install apt-file'"
+            echo -e "After installation, remember to run: 'sudo apt-file update' to update list of files for remote packages.\n"
 
             return 1
         fi
@@ -248,23 +285,34 @@ show-binaries() {
     fi
 
     if [[ "$package_exists" == "false" ]]; then
-        echo -e "Error: Package '$1' not found!"
+        echo -e "Error: Package '$1' does not exist or could not be found!"
 
         return 1
     fi
 
     if [[ -n "$output" ]]; then
-        echo -e "\nBinary files:\n$output"
+        echo -e "\nBinary files:"
+        echo "$output"
     else
         echo -e "Info: No binary files found for package '$1'."
     fi
 }
 
 toggle-disabled() {
-    local file_path="$1"
+    local file_path
+    file_path="$1"
 
-    [[ -z "$file_path" ]] && { echo -e "Error: No path."; return 1; }
-    [[ ! -e "$file_path" ]] && { echo -e "Error: Not found."; return 1; }
+    if [[ -z "$file_path" ]]; then
+        echo -e "Error: No path."
+
+        return 1
+    fi
+
+    if [[ ! -e "$file_path" ]]; then
+        echo -e "Error: File '$file_path' does not exist!"
+
+        return 1
+    fi
 
     local new_file_path
 
@@ -277,18 +325,24 @@ toggle-disabled() {
     if mv "$file_path" "$new_file_path"; then
         echo -e "Successfully renamed to '$new_file_path'."
     else
-        echo -e "Error: Rename failed."
+        echo -e "Error: Rename failed!"
 
         return 1
     fi
 }
 
-if command -v git &>/dev/null; then
+if [[ "$(command -v git)" ]]; then
     clone-dotfiles-repository() {
-        local repos_dir="$HOME/repos"
-        local dotfiles_repo_dir="$repos_dir/dotfiles"
+        local repos_dir
+        repos_dir="$HOME/repos"
 
-        [[ -d "$dotfiles_repo_dir" ]] && return 1
+        local dotfiles_repo_dir
+        dotfiles_repo_dir="$repos_dir/dotfiles"
+
+        # Return prematurely if dotfiles repository already exists.
+        if [[ -d $dotfiles_repo_dir ]]; then
+            return 1
+        fi
 
         mkdir -p "$repos_dir"
         git clone "${GITHUB_BASE_URL}.git" "$dotfiles_repo_dir"
@@ -309,8 +363,11 @@ if command -v git &>/dev/null; then
             short_name='openbsd'
         fi
 
-        local repos_dir="$HOME/repos"
-        local dotfiles_repo_dir="$HOME/repos/dotfiles"
+        local repos_dir
+        repos_dir="$HOME/repos"
+
+        local dotfiles_repo_dir
+        dotfiles_repo_dir="$HOME/repos/dotfiles"
 
         # Clone dotfiles repository if it doesn't exist.
         if [[ ! -d "$dotfiles_repo_dir" ]]; then
@@ -322,6 +379,7 @@ if command -v git &>/dev/null; then
         echo -e "Info: This script won't copy dotfiles, unless dotfiles git repository is updated."
         echo -e "Are you OK with pulling the latest git commit? If so, enter \"Yes.\" (without quotes):"
         echo -en "? "
+
         local answer
         read -r answer
         echo
@@ -338,8 +396,11 @@ if command -v git &>/dev/null; then
         fi
 
         echo -e "\n=== Copying dotfiles lists... ==="
-        local txtfiles_to_copy="$HOME/.dotfiles_lists/*"
-        local txtfiles_repo_dir="$dotfiles_repo_dir/.dotfiles_lists/"
+        local txtfiles_to_copy
+        txtfiles_to_copy="$HOME/.dotfiles_lists/*"
+
+        local txtfiles_repo_dir
+        txtfiles_repo_dir="$dotfiles_repo_dir/.dotfiles_lists/"
 
         rsync -civ $txtfiles_to_copy "$txtfiles_repo_dir"
 
@@ -374,7 +435,9 @@ if command -v git &>/dev/null; then
         echo -e "\n=== Copying OS-specific dotfiles... ==="
         local os_specific_dotfiles_list
         os_specific_dotfiles_list="$(cat "$HOME/.dotfiles_lists/os_specific.txt")"
-        local os_specific_repo_dir="$dotfiles_repo_dir/os_specific"
+
+        local os_specific_repo_dir
+        os_specific_repo_dir="$dotfiles_repo_dir/os_specific"
 
         mkdir -p "$os_specific_repo_dir"
 
@@ -394,7 +457,9 @@ if command -v git &>/dev/null; then
     }
 
     update-dotfiles-repository () {
-        local dotfiles_repo_dir="$HOME/repos/dotfiles"
+        local dotfiles_repo_dir
+        dotfiles_repo_dir="$HOME/repos/dotfiles"
+
         local exit_status
 
         # Clone repository if it doesn't exist.
