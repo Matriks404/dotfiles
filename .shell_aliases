@@ -119,13 +119,6 @@ if [ $(command -v git) ]; then
     alias gits='git status'
 fi
 
-# Aliases for flatpak commands
-
-if [ $(command -v flatpak) ]; then
-    alias fa='flatpak list --app --columns=name,version | sort | column -t -s $'\''\t'\'
-fi
-
-
 # Aliases for .shell_functions
 alias cn='check_network_connection'
 
@@ -133,7 +126,9 @@ alias ebe='edit_backup_excludes'
 alias ebi='edit_backup_includes'
 alias ebs='edit_backup_settings'
 
-alias rn='restart_network_service'
+if [ "$(command -v flatpak)" ]; then
+    alias lfa='list_flatpak_applications'
+fi
 
 if [ "$OS_NAME" = "Linux" ]; then
     alias ran='restart_all_networks'

@@ -274,7 +274,6 @@ if [ "$OS_NAME" = "Linux" ]; then
 
     # Functions specific to Flatpak (if it's installed)
     if [ "$(command -v flatpak)" ]; then
-        # Document this function
         create_flatpak_symlinks ()
         {
             TARGET_DIR="$HOME/.local/bin/flatpak-executables"
@@ -316,6 +315,11 @@ EOF
             done
 
             echo -e "\nFinished! Scripts are in $TARGET_DIR"
+        }
+
+        list_flatpak_applications ()
+        {
+            flatpak list --app --columns=name,version | sort | column -t -s $'\t'
         }
     fi
 
