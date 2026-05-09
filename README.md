@@ -15,14 +15,14 @@ Before getting dotfiles, you need to make sure to have all neccessary packages.
 Execute the following:
 
 ```bash
-sudo apt install apt-file aptitude bash curl flatpak fonts-hack git lynx rsync sudo unzip upgrade-system wget xterm
+sudo apt install apt-file aptitude bash curl flatpak fonts-hack git lynx rsync sudo unzip upgrade-system vim wget xterm
 ```
 
 ## OpenBSD:
 
 Execute the following as `root` (you might want to execute `su` first, or add `doas` before following command, if you have it configured):
 ```ksh
-pkg_add bash curl git hack-fonts rsync unzip wget
+pkg_add bash curl git hack-fonts rsync unzip vim wget
 ```
 
 # Getting latest version
