@@ -47,7 +47,7 @@ if [ $(command -v editor) ]; then
     export EDITOR=$(command -v editor)
 else
     # Otheriwse, manually set your favourite editor.
-    export EDITOR=nano
+    export EDITOR=vim
 fi
 
 if [ "$OS_NAME" = "Linux" ]; then
