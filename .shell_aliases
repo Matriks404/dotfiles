@@ -89,10 +89,10 @@ alias eblbindings="$EDITOR ~/.bash_bindings.local && backup_file ~/.bash_binding
 alias eblfunctions="$EDITOR ~/.bash_functions.local && backup_file ~/.bash_functions.local"
 
 
-# Alias for vim's vi-compatible mode on Debian GNU/Linux with clean environment
+# Alias for nvi on Debian GNU/Linux
 
 if [ -f "/etc/debian_version" ]; then
-    alias vi='/usr/bin/vim.tiny -u NONE'
+    alias vi='nvi'
 fi
 
 # Aliases for X11 applications

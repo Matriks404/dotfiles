@@ -10,9 +10,11 @@
 .bash_logout
 .bashrc
 .nanorc
+.nexrc
 .profile
 .shell_aliases
 .shell_functions
 .shrc
+.vimrc
 .Xdefaults
 .Xresources
