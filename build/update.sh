@@ -89,8 +89,18 @@ echo ""
 
 
 if [ $(command -v xrdb) ]; then
-    echo "=== Merging .Xresources... ==="
     xrdb $HOME/.Xresources
+
+    echo "=== Merging .Xresources... ==="
+
+    DPI=$(xdpyinfo 2>/dev/null | grep resolution | awk '{print $2}' | cut -dx -f1)
+    DPI=${DPI:-96)
+
+    TARGET_PIXELS=13
+
+    FACESIZE=$(echo "scale=1; (TARGET_PIXELS * 72) / $DPI" | bc)
+
+    echo "UXTerm*faceSize: $FACESIZE" > ~/.Xresources.local    
 fi
 
 
