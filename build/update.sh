@@ -89,12 +89,17 @@ echo ""
 
 
 if [ $(command -v xrdb) ]; then
-    xrdb $HOME/.Xresources
-
     echo "=== Merging .Xresources... ==="
 
-    DPI=$(xdpyinfo 2>/dev/null | grep resolution | awk '{print $2}' | cut -dx -f1)
-    DPI=${DPI:-96)
+    xrdb $HOME/.Xresources
+
+    echo "=== Making modifications to .Xresources... ==="
+
+    DPI=`xdpyinfo 2>/dev/null | grep resolution | awk '{print $2}' | cut -dx -f1`
+
+    if [ -z "$DPI" ]; then
+        DPI=96
+    fi
 
     TARGET_PIXELS=13
 
