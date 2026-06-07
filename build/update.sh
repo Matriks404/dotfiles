@@ -101,13 +101,16 @@ if [ $(command -v xrdb) ]; then
 
     FACESIZE=$(echo "scale=1; (TARGET_PIXELS * 72) / $DPI" | bc)
 
-    echo "UXTerm*faceSize: $FACESIZE" > ~/.Xresources.local    
+    echo "UXTerm*faceSize: $FACESIZE" > ~/.Xresources.local
 
+
+    echo ""
     echo "=== Merging .Xresources... ==="
     xrdb $HOME/.Xresources
 fi
 
 
+echo ""
 echo "=== Cleaning up... ==="
 
 rm -r $dotfiles_dir
