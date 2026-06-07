@@ -99,9 +99,9 @@ if [ $(command -v xrdb) ]; then
 
     TARGET_PIXELS=13
 
-    FACESIZE=`echo "scale=1; (TARGET_PIXELS * 72) / $DPI" | bc`
+    FACESIZE=`echo "scale=1; $TARGET_PIXELS * 72 / $DPI" | bc`
 
-    echo "UXTerm*faceSize: $FACESIZE" > ~/.Xresources.local
+    echo "UXTerm*faceSize: $FACESIZE" > "$HOME/.Xresources.local"
 
 
     echo ""
