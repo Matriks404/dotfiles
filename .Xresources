@@ -1,5 +1,4 @@
 #include ".Xresources.1"
-#include ".Xresources.local"
 
 ! XTerm settings
 XTerm*background: black
@@ -12,7 +11,7 @@ XTerm*termName: xterm-256color
 UXTerm*background: black
 UXTerm*foreground: white
 UXTerm*faceName: Hack
-#UXTerm*faceSize: 10
+UXTerm*faceSize: 10
 UXTerm*geometry: 80x24
 UXTerm*termName: xterm-256color
 
