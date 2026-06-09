@@ -15,6 +15,23 @@ github_base_url='https://github.com/Matriks404/dotfiles'
 dotfiles_dir='dotfiles-master'
 dotfiles_target=$PWD
 
+if [ -f "master.zip" ]; then
+    echo "=== Removing previous dotfiles zip file... ==="
+    echo "Info: Dotfiles zip file is already present in the current directory possibly because of some problem with previous dotfiles installation or update operation."
+    echo "Info: Do you want to remove it to proceed with this operation? If so, enter \"Yes.\" (without quotes):"
+    echo -en "? "
+    read answer
+
+    if [ "$answer" == "Yes." ]; then
+        rm -fv "master.zip"
+
+        echo ""
+    else
+        echo "Quitting..."
+
+        exit 1
+    fi
+fi
 
 echo "=== Getting dotfiles zip file... ==="
 wget --quiet "$github_base_url/archive/refs/heads/master.zip"
@@ -91,7 +108,7 @@ echo ""
 if [ $(command -v xrdb) ]; then
     echo "=== Generating .Xresources.local... ==="
 
-    DPI=`xdpyinfo 2>/dev/null | grep resolution | awk '{print $2}' | cut -dx -f1`
+    DPI="$(xdpyinfo 2>/dev/null | grep resolution | awk '{print $2}' | cut -dx -f1)"
 
     if [ -z "$DPI" ]; then
         DPI=96
@@ -99,7 +116,7 @@ if [ $(command -v xrdb) ]; then
 
     TARGET_PIXELS=13
 
-    FACESIZE=`echo "scale=1; $TARGET_PIXELS * 72 / $DPI" | bc`
+    FACESIZE="$(echo "scale=1; $TARGET_PIXELS * 72 / $DPI" | bc)"
 
     echo "UXTerm*faceSize: $FACESIZE" > "$HOME/.Xresources.local"
 
