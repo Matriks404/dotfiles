@@ -15,7 +15,7 @@ github_base_url='https://github.com/Matriks404/dotfiles'
 dotfiles_dir='dotfiles-master'
 dotfiles_target=$PWD
 
-if [ -f "master.zip" ] || [ -d "dotfile-master" ]; then
+if [ -f "master.zip" ] || [ -d "dotfiles-master" ]; then
     echo "=== Removing previous dotfiles setup files directory... ==="
     echo "Info: One or more dotfiles setup files are already present in the current directory possibly because of some problem with previous dotfiles installation or update operation."
     echo "Info: Do you want to remove them to proceed with this operation? If so, enter \"Yes.\" (without quotes):"
