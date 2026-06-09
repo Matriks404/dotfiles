@@ -19,10 +19,10 @@ if [ -f "master.zip" ] || [ -d "dotfile-master" ]; then
     echo "=== Removing previous dotfiles setup files directory... ==="
     echo "Info: One or more dotfiles setup files are already present in the current directory possibly because of some problem with previous dotfiles installation or update operation."
     echo "Info: Do you want to remove them to proceed with this operation? If so, enter \"Yes.\" (without quotes):"
-    echo -en "? "
+    printf "? "
     read answer
 
-    if [ "$answer" == "Yes." ]; then
+    if [ "$answer" = "Yes." ]; then
         rm -rfv "master.zip" "dotfiles-master/"
 
         echo ""
