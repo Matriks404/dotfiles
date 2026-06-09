@@ -122,6 +122,14 @@ if [ $(command -v xrdb) ]; then
 
 
     echo ""
+
+
+    if [ ! -f ".Xresources.local" ]; then
+        echo "=== Creating empty .Xresources.local file... ==="
+        touch ".Xresources.local"
+    fi
+
+    echo ""
     echo "=== Merging .Xresources... ==="
     xrdb $HOME/.Xresources
 fi
