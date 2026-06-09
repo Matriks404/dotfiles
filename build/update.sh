@@ -106,7 +106,7 @@ echo ""
 
 
 if [ $(command -v xrdb) ]; then
-    echo "=== Generating .Xresources.local... ==="
+    echo "=== Generating .Xresources.generated... ==="
 
     DPI="$(xdpyinfo 2>/dev/null | grep resolution | awk '{print $2}' | cut -dx -f1)"
 
@@ -118,7 +118,7 @@ if [ $(command -v xrdb) ]; then
 
     FACESIZE="$(echo "scale=1; $TARGET_PIXELS * 72 / $DPI" | bc)"
 
-    echo "UXTerm*faceSize: $FACESIZE" > "$HOME/.Xresources.local"
+    echo "UXTerm*faceSize: $FACESIZE" > "$HOME/.Xresources.generated"
 
 
     echo ""
