@@ -121,13 +121,9 @@ if [ $(command -v xrdb) ]; then
     echo "UXTerm*faceSize: $FACESIZE" > "$HOME/.Xresources.generated"
 
 
-    echo ""
-
-
     if [ ! -f ".Xresources.local" ]; then
         echo "=== Creating empty .Xresources.local file... ==="
         touch ".Xresources.local"
-        echo ""
     fi
 
 
@@ -136,7 +132,6 @@ if [ $(command -v xrdb) ]; then
 fi
 
 
-echo ""
 echo "=== Cleaning up... ==="
 
 rm -r $dotfiles_dir
