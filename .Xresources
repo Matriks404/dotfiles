@@ -1,6 +1,6 @@
 #include ".Xresources.1"
 #include ".Xresources.generated"
-#include ".Xresources.local"
+#sinclude ".Xresources.local"
 
 ! XTerm settings
 XTerm*background: black
