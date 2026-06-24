@@ -72,7 +72,12 @@ fi
 # Aliases for editor commands
 
 alias e="$EDITOR"
-alias se="$SU_CMD $EDITOR"
+
+if [ $(command -v sudoedit) ]; then
+    alias se="sudoedit"
+else
+    alias se="$SU_CMD" "$EDITOR"
+fi
 
 alias esaliases="$EDITOR ~/.shell_aliases && backup_file ~/.shell_aliases"
 alias esfunctions="$EDITOR ~/.shell_functions && backup_file ~/.shell_functions"
