@@ -75,8 +75,8 @@ alias e="$EDITOR"
 
 if [ $(command -v sudoedit) ]; then
     alias se="sudoedit"
-else
-    alias se="$SU_CMD" "$EDITOR"
+elif [ $(command -v doasedit) ]; then
+    alias se="doasedit"
 fi
 
 alias esaliases="$EDITOR ~/.shell_aliases && backup_file ~/.shell_aliases"

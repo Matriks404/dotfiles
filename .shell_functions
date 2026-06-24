@@ -234,6 +234,33 @@ su_upgrade_system ()
     "$SU_CMD" "$HOME/.local/bin/su-upgrade-system.sh"
 }
 
+# Functions available only if doas is installed
+if [ "$(command -v doas)" ]; then
+    doasedit () {
+        if [ -z "$1" ]; then
+            echo -e "Usage: doasedit <file>"
+
+            return 1
+        fi
+
+        local target=$(realpath "$1")
+        local tempfile=$(mktemp -t doasedit.XXXXXXXXXX)
+
+        trap 'rm -f "$tempfile; return 1"' INT TERM
+
+        if doas cat "$target" > "$tempfile" 2>/dev/null; then
+            $EDITOR "$tempfile"
+            
+            doas dd if="$tempfile" of="$target" status=none
+        else
+            echo -e "Error: Authentication failed or file unreadable."
+        fi
+
+        trap - INT TERM
+        rm -f "$tempfile"
+    }
+fi
+
 # Functions available only if git is installed
 if [ "$(command -v git)" ]; then
     git_commit ()
