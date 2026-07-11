@@ -1,4 +1,3 @@
-
 #HACK: Ideally this should be an export in '.profile., but it's not working properly on Debian 11.
 OS_NAME="$(uname -s)"
 
@@ -25,20 +24,12 @@ SHELL_CMD="$(ps -o ucomm= -p $$)"
 
 # Set up prompt for non-Bash shells.
 if [ ! "$SHELL_CMD" = "bash" ]; then
-    NL='
-'
-
     if [ -f "/etc/debian_version" ]; then
-        if [ "$SHELL_CMD" = "ksh" ]; then
-            _PROMPT_COUNT=0
-            # We use an inline variable evaluation to change the state to 1 without printing it
-            PS1='${_PROMPT_COUNT:+"$NL"}$(_PROMPT_COUNT=1)${PWD##*/} $ '
-        elif [ ! "$SHELL_CMD" = "sh" ] && [ ! "$SHELL_CMD" = "dash" ]; then
+        if [ ! "$SHELL_CMD" = "sh" ] && [ ! "$SHELL_CMD" = "dash" ] && [ ! "$SHELL_CMD" = "ksh" ]; then
             PS1='\w $ '
         fi
     elif [ "$OS_NAME" = "OpenBSD" ]; then
-        _PROMPT_COUNT=0
-        PS1='${_PROMPT_COUNT:+"$NL"}$(_PROMPT_COUNT=1)\[\033[0;33m\]\w\[\033[0m\] $ '
+        PS1='\[\033[0;33m\]\w\[\033[0m\] $ '
     fi
 fi
 
