@@ -1,3 +1,4 @@
+
 #HACK: Ideally this should be an export in '.profile., but it's not working properly on Debian 11.
 OS_NAME="$(uname -s)"
 
@@ -28,15 +29,23 @@ if [ ! "$SHELL_CMD" = "bash" ]; then
 '
 
     if [ -f "/etc/debian_version" ]; then
-        # If it's ksh on Debian, give it a clean newline prompt (no fancy colors)
         if [ "$SHELL_CMD" = "ksh" ]; then
-            PS1="${NL}\${PWD##*/} \$ "
+            # 1. Start with no newline for the very first prompt
+            PS1='${PWD##*/} $ '
+            _FIRST_PROMPT=no
+
+            # 2. Use a ksh-native trap/hook to add the newline for all subsequent commands
+            # This executes silently before every command, injecting the newline into PS1
+            trap 'if [ "$_FIRST_PROMPT" = "no" ]; then _FIRST_PROMPT=done; else PS1="'"${NL}"'\${PWD##*/} \$ "; fi' DEBUG
+
         elif [ ! "$SHELL_CMD" = "sh" ] && [ ! "$SHELL_CMD" = "dash" ]; then
             PS1='\w $ '
         fi
     elif [ "$OS_NAME" = "OpenBSD" ]; then
-        # Purely for OpenBSD: Yellow color with the real newline variable $NL
-        PS1="${NL}\[\033[0;33m\]\w\[\033[0m\] $ "
+        # Purely for OpenBSD: Using the same logic to protect the first prompt
+        PS1='\[\033[0;33m\]\w\[\033[0m\] $ '
+        _FIRST_PROMPT=no
+        trap 'if [ "$_FIRST_PROMPT" = "no" ]; then _FIRST_PROMPT=done; else PS1="'"${NL}"'\[\033[0;33m\]\w\[\033[0m\] $ "; fi' DEBUG
     fi
 fi
 
