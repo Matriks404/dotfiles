@@ -49,6 +49,17 @@ else
 fi
 unset color_prompt force_color_prompt
 
+# Print a newline BEFORE every prompt, EXCEPT the very first one.
+_prompt_newline() {
+    if [ -z "$_FIRST_PROMPT" ]; then
+        _FIRST_PROMPT=no
+    else
+        echo ""
+    fi
+}
+
+PROMPT_COMMAND="_prompt_newline"
+
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
 xterm*|rxvt*)
