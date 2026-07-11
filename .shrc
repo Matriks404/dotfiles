@@ -30,22 +30,15 @@ if [ ! "$SHELL_CMD" = "bash" ]; then
 
     if [ -f "/etc/debian_version" ]; then
         if [ "$SHELL_CMD" = "ksh" ]; then
-            # 1. Start with no newline for the very first prompt
-            PS1='${PWD##*/} $ '
-            _FIRST_PROMPT=no
-
-            # 2. Use a ksh-native trap/hook to add the newline for all subsequent commands
-            # This executes silently before every command, injecting the newline into PS1
-            trap 'if [ "$_FIRST_PROMPT" = "no" ]; then _FIRST_PROMPT=done; else PS1="'"${NL}"'\${PWD##*/} \$ "; fi' DEBUG
-
+            _PROMPT_COUNT=0
+            # We use an inline variable evaluation to change the state to 1 without printing it
+            PS1='${_PROMPT_COUNT:+"$NL"}$(_PROMPT_COUNT=1)${PWD##*/} $ '
         elif [ ! "$SHELL_CMD" = "sh" ] && [ ! "$SHELL_CMD" = "dash" ]; then
             PS1='\w $ '
         fi
     elif [ "$OS_NAME" = "OpenBSD" ]; then
-        # Purely for OpenBSD: Using the same logic to protect the first prompt
-        PS1='\[\033[0;33m\]\w\[\033[0m\] $ '
-        _FIRST_PROMPT=no
-        trap 'if [ "$_FIRST_PROMPT" = "no" ]; then _FIRST_PROMPT=done; else PS1="'"${NL}"'\[\033[0;33m\]\w\[\033[0m\] $ "; fi' DEBUG
+        _PROMPT_COUNT=0
+        PS1='${_PROMPT_COUNT:+"$NL"}$(_PROMPT_COUNT=1)\[\033[0;33m\]\w\[\033[0m\] $ '
     fi
 fi
 
