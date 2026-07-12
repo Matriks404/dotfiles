@@ -1,2 +1,15 @@
+" Interface preferences
 set nonumber
 set showmode
+
+
+" Code indentation and tab spacing rules
+set autoindent
+set tabstop=4
+set shiftwidth=4
+
+
+" Search behavior tweaks
+"set iclower
+"set ignorecase
+set searchincr
