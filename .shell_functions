@@ -282,6 +282,18 @@ fi
 
 # Linux-specific functions
 if [ "$OS_NAME" = "Linux" ]; then
+    list_cpus () {
+        lscpu "$@" | less -FRX
+    }
+
+    list_hardware () {
+        lshw "$@" | less -FRX
+    }
+
+    list_devices () {
+        lsdev "$@" | less -FRX
+    }
+
     # Functions specific to Debian GNU/Linux
     if [ -f "/etc/debian_version" ]; then
         reconfigure_locales ()
@@ -349,6 +361,14 @@ EOF
             flatpak list --app --columns=name,version | sort | column -t -s $'\t'
         }
     fi
+
+    # Functions specific to lspcmcia (if it's installed)
+    if [ "$(command -v lspcmcia)" ]; then
+        list_pmcmcia_cards ()
+        {
+            lspcmcia "$@" | less -FRX
+        }
+    fi 
 
     # Functions specific to Tailscale (if it's installed)
     if [ "$(command -v tailscale)" ]; then

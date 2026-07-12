@@ -109,6 +109,14 @@ alias uxterm='xterm -class UXTerm'
 if [ "$OS_NAME" = "Linux" ]; then
     alias ii='ip addr'
 
+    alias lscpu='list_cpus'
+    alias lshw='list_hardware'
+    alias lsdev='list_devices'
+
+    if [ "$(command -v lspcmcia)" ]; then
+        alias lspcmcia='list_pcmcia'
+    fi
+
     alias reb='systemctl reboot'
     alias rebfirm='systemctl reboot --firmware-setup'
     alias shut='systemctl poweroff'
