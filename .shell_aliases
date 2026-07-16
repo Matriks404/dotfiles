@@ -153,6 +153,8 @@ if [ "$OS_NAME" = "Linux" ]; then
     alias ran='restart_all_networks'
 fi
 
+alias rn='restart_network_service'
+
 alias sus='su_update_software'
 alias susg='su_upgrade_system'
 
