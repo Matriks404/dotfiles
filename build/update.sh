@@ -108,7 +108,7 @@ echo ""
 if [ $(command -v xrdb) ]; then
     echo "=== Generating .Xresources.generated... ==="
 
-    DPI="$(xdpyinfo 2>/dev/null | grep resolution | awk '{print $2}' | cut -dx -f1)"
+    DPI="$(xdpyinfo 2>/dev/null | grep resolution | awk '{print $2}' | cut -d 'x' -f 1)"
 
     if [ -z "$DPI" ]; then
         DPI=96
