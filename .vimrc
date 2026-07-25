@@ -1,13 +1,9 @@
-" Set color scheme.
-colorscheme habamax
-
-
 " Enable syntax higlighting.
 syntax on
 
 
 " Set spacebar as the leader shortcut key.
-let mapleader = " "  
+let mapleader = " "
 
 
 " Delete to black hole register (no clipboard overwrite).
@@ -86,4 +82,24 @@ augroup HelpMouse
     "
     " Reset mouse when entering any other buffer type
     autocmd BufEnter * if &filetype !=# 'help' | set mouse= | endif
+augroup END
+
+
+" Set color scheme.
+set background=dark
+
+if !empty($XDG_CURRENT_DESKTOP)
+    colorscheme habamax
+else
+    colorscheme darkblue
+
+    highlight Normal guibg=#000b1e
+    highlight NonText guibg=#000b1e
+endif
+
+augroup StripTrailingWhitespace
+    autocmd!
+
+    " Automatically remove trailing whitespace before saving.
+    autocmd BufWritePre * %s/\s\+$//e
 augroup END
