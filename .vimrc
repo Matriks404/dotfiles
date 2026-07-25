@@ -7,6 +7,11 @@ vnoremap <leader>d "_d
 nnoremap <leader>dd "_dd
 
 
+" Various settings
+set backup
+set scrolloff=8
+
+
 " Code indentation and tab spacing rules
 set autoindent
 set smartindent
@@ -30,3 +35,22 @@ set hlsearch
 set incsearch
 "set ignorecase
 "set smartcase
+
+
+" Persistent undo
+if has('persistent_undo')
+    if !isdirectory(expand('~/.vim/undodir'))
+        call mkdir(expand('~/.vim/undodir'), 'p')
+    endif
+
+    set undodir=~/.vim/undodir
+    set undofile
+endif
+
+
+" Centralized swap files
+if !isdirectory(expand('~/.vim/swapdir'))
+    call mkdir(expand('~/.vim/swapdir'), 'p')
+endif
+
+set directory=~/.vim/swapdir//
