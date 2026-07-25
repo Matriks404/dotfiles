@@ -8,6 +8,7 @@ XTerm*foreground: white
 XTerm*font: 8x13bold
 XTerm*geometry: 80x32
 XTerm*termName: xterm-256color
+XTerm*saveLines: 32768
 
 ! UXTerm settings
 UXTerm*background: black
@@ -16,6 +17,7 @@ UXTerm*faceName: Hack
 !UXTerm*faceSize: 10
 UXTerm*geometry: 80x24
 UXTerm*termName: xterm-256color
+UXTerm*saveLines: 32768
 
 ! Fix behaviour where on some operating systems (e.g. OpenBSD) delete key works
 ! like backspace key (it deletes characters backwards instead of forwards).
