@@ -1,3 +1,6 @@
+" Enable backups
+set backup=".bak"
+
 " Interface preferences
 set nonumber
 set showmode
