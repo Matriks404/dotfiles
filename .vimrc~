@@ -80,10 +80,8 @@ endif
 
 augroup HelpMouse
     autocmd!
-
     " Enable mouse in help buffers
     autocmd FileType help setlocal mouse=a
-    "
     " Reset mouse when entering any other buffer type
     autocmd BufEnter * if &filetype !=# 'help' | set mouse= | endif
 augroup END
