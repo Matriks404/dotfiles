@@ -42,7 +42,6 @@ If you have dotfiles installed, just run the following command within **Bash** s
 ```bash
 clone-dotfiles-repository
 cd ~/repos/dotfiles
-tools/initial_repository_setup.sh
 ```
 
 Or alternatively, in your usual directory where you put clone repositories enter following commands:
