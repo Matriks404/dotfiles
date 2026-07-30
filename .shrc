@@ -8,7 +8,7 @@ case $- in
       *) return;;
 esac
 
-# Only run this if the shell is interactive and stdin is a TTY
+# Only run this if the shell is interactive and stdin is a TTY.
 if [ -t 0 ]; then
     CURRENT_TTY=$(tty)
     case "$CURRENT_TTY" in
@@ -104,4 +104,10 @@ fi
 
 if [ -f ~/.shell_aliases.local ]; then
     . ~/.shell_aliases.local
+fi
+
+
+# If running ksh source '.kshrc'.
+if [ -n "KSH_VERSION" ] && [ -f "$HOME/.kshrc" ]; then
+    . "$HOME/.kshrc"
 fi
