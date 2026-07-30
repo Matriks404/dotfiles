@@ -105,3 +105,9 @@ fi
 if [ -f ~/.shell_aliases.local ]; then
     . ~/.shell_aliases.local
 fi
+
+
+# If running ksh source '.kshrc'.
+if [ -n "KSH_VERSION" ] && [ -f "$HOME/.kshrc" ]; then
+    . "$HOME/.kshrc"
+fi

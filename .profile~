@@ -29,17 +29,5 @@ fi
 
 PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
-case "$SHELL" in
-    *ksh*)
-        if [ -f "$HOME/.kshrc" ]; then
-            export ENV="$HOME/.kshrc"
-        else
-            export ENV="$HOME/.shrc"
-        fi
-        ;;
-    *)
-        export ENV="$HOME/.shrc"
-        ;;
-esac
-
+export ENV="$HOME/.shrc"
 export PATH HOME TERM
