@@ -6,8 +6,6 @@ Legacy versions of dotfiles for other operating systems:
 
 For the list of files in the repository [go here](Documentation/FILE_LIST.md) -- **NOTE:** This list is updated only occasionally and might be outdated.
 
-**Note:** These dotfiles are at pre-alpha preview state and things might break! Use at your own risk.
-
 # Prerequirements
 
 Before getting dotfiles, you need to make sure to have all neccessary packages.
