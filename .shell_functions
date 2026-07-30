@@ -85,7 +85,7 @@ reinstall_backup_script ()
     else
         local OPTS="-vm 0744 -o root -g root"
     fi
-    
+
     "$SU_CMD" install $INSTALL_OPTS "${SOURCE_SCRIPTS_DIR}/backup_job.sh" "${TARGET_SCRIPTS_DIR}/backup_job.sh"
     "$SU_CMD" cp -v "${SOURCE_SCRIPTS_DIR}/backup_job.sh.version" "${TARGET_SCRIPTS_DIR}"
 }
@@ -246,11 +246,11 @@ if [ "$(command -v doas)" ]; then
         local target=$(realpath "$1")
         local tempfile=$(mktemp -t doasedit.XXXXXXXXXX)
 
-        trap 'rm -f "$tempfile; return 1"' INT TERM
+        trap 'rm -f "$tempfile"; return 1' INT TERM
 
         if doas cat "$target" > "$tempfile" 2>/dev/null; then
             $EDITOR "$tempfile"
-            
+
             doas dd if="$tempfile" of="$target" status=none
         else
             echo -e "Error: Authentication failed or file unreadable."
@@ -368,7 +368,7 @@ EOF
         {
             lspcmcia "$@" | less -FRX
         }
-    fi 
+    fi
 
     # Functions specific to Tailscale (if it's installed)
     if [ "$(command -v tailscale)" ]; then
