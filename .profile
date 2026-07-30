@@ -27,8 +27,10 @@ if [ "$OS_NAME" = "Linux" ] && [ -x "$(command -v flatpak)" ]; then
     PATH="$HOME/.local/bin/flatpak-executables:$PATH"
 fi
 
+# 6. Load more things into the PATH
 PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
+# 7. Depending on the shell export the appropriate ENV variable
 case "$SHELL" in
     *ksh*)
         if [ -f "$HOME/.kshrc" ]; then
@@ -42,4 +44,5 @@ case "$SHELL" in
         ;;
 esac
 
+# 8. Export the rest of stuff
 export PATH HOME TERM
