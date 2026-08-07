@@ -3,7 +3,7 @@ syntax on
 
 
 " Set spacebar as the leader shortcut key.
-let mapleader = " "
+let mapleader = "\<Space>"
 
 
 " Delete to black hole register (no clipboard overwrite).
