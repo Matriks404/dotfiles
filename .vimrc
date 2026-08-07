@@ -95,15 +95,26 @@ else
     highlight NonText guibg=#000b1e
 endif
 
+" Automatically remove trailing whitespace before saving.
 augroup StripTrailingWhitespace
     autocmd!
 
-    " Automatically remove trailing whitespace before saving.
     autocmd BufWritePre * %s/\s\+$//e
 augroup END
 
+
+" When editing/viewing text or markdown files use the ignorecase and smartcase
+" options.
 augroup NotesCase
     autocmd!
 
     autocmd FileType markdown,text setlocal ignorecase smartcase
+augroup END
+
+
+" Re-detect filetype when saving a file that currently has no filetype.
+augroup DynamicFiletype
+    autocmd!
+
+    autocmd BufWritePost * if &filetype == '' | filetype detect | endif
 augroup END
