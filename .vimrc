@@ -39,8 +39,6 @@ set background=dark
 " Search behavior tweaks.
 set hlsearch
 set incsearch
-"set ignorecase
-"set smartcase
 
 
 " Persistent undo.
@@ -102,4 +100,10 @@ augroup StripTrailingWhitespace
 
     " Automatically remove trailing whitespace before saving.
     autocmd BufWritePre * %s/\s\+$//e
+augroup END
+
+augroup NotesCase
+    autocmd!
+
+    autocmd FileType markdown,text setlocal ignorecase smartcase
 augroup END
