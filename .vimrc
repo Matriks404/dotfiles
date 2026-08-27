@@ -39,6 +39,8 @@ set background=dark
 " Search behavior tweaks.
 set hlsearch
 set incsearch
+"set ignorecase
+"set smartcase
 
 
 " Persistent undo.
@@ -59,6 +61,15 @@ endif
 
 set directory=~/.vim/swapdir//
 
+
+" Centralized backup files.
+if has ('backup')
+    if !isdirectory(expand('~/.vim/backupdir'))
+        call mkdir(expand('~/.vim/backupdir'), 'p')
+    endif
+
+    set backupdir=~/.vim/backupdir//
+endif
 
 " Enable 24-bit RGB true color in terminal.
 if has('termguicolors')
