@@ -77,9 +77,10 @@ if has('termguicolors')
 endif
 
 
-" Add 'matchit' optional package.
-if has ('syntax') && has('eval')
+" Load optional built-in packages safely on startup
+if has ('vim_starting') && has('eval')
     packadd! matchit
+    silent! packadd! comment
 endif
 
 
