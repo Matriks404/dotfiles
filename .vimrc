@@ -88,7 +88,7 @@ augroup HelpMouse
     autocmd!
 
     " Enable mouse in help buffers
-    autocmd FileType help setlocal mouse=a
+    autocmd FileType help set mouse=a
 
     " Reset mouse when entering any other buffer type
     autocmd BufEnter *
