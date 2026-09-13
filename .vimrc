@@ -120,6 +120,13 @@ augroup StripTrailingWhitespace
 augroup END
 
 
+" Set up the default file type as text.
+augroup DefaultTextFileType
+    autocmd!
+
+    autocmd BufEnter * if empty(&filetype) | setfiletype text | endif
+augroup END
+
 " When editing/viewing text or markdown files use the ignorecase and smartcase
 " options.
 augroup NotesCase
