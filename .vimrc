@@ -39,8 +39,6 @@ set background=dark
 " Search behavior tweaks.
 set hlsearch
 set incsearch
-"set ignorecase
-"set smartcase
 
 
 " Persistent undo.
@@ -120,13 +118,6 @@ augroup StripTrailingWhitespace
 augroup END
 
 
-" Set up the default file type as text.
-augroup DefaultTextFileType
-    autocmd!
-
-    autocmd BufEnter * if empty(&filetype) | setfiletype text | endif
-augroup END
-
 " When editing/viewing text or markdown files use the ignorecase and smartcase
 " options.
 augroup NotesCase
@@ -140,5 +131,5 @@ augroup END
 augroup DynamicFiletype
     autocmd!
 
-    autocmd BufWritePost * if &filetype == '' | filetype detect | endif
+    autocmd BufWritePost * if empty(&filetype) | filetype detect | endif
 augroup END
