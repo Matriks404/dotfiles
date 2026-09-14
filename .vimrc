@@ -12,7 +12,6 @@ nnoremap <leader>dd "_dd
 
 
 " Various settings.
-set backup
 set display+=lastline
 set scrolloff=8
 
@@ -61,13 +60,14 @@ set directory=~/.vim/swapdir//
 
 
 " Centralized backup files.
-if has ('backup')
+if has('writebackup')
     if !isdirectory(expand('~/.vim/backupdir'))
         call mkdir(expand('~/.vim/backupdir'), 'p')
     endif
 
     set backupdir=~/.vim/backupdir//
 endif
+
 
 " Enable 24-bit RGB true color in terminal.
 if has('termguicolors')
@@ -109,6 +109,7 @@ else
     highlight Normal guibg=#000b1e
     highlight NonText guibg=#000b1e
 endif
+
 
 " Automatically remove trailing whitespace before saving.
 augroup StripTrailingWhitespace
