@@ -142,6 +142,9 @@ set background=dark
 
 if !empty($XDG_CURRENT_DESKTOP)
     colorscheme habamax
+
+    highlight StatusLine ctermfg=White ctermbg=DarkBlue cterm=bold guifg=#ffffff guibg=#1e3a8a gui=bold
+    highlight StatusLineNC ctermfg=Black ctermbg=Cyan cterm=NONE guifg=#334155 guibg=#e2e8f0 gui=NONE
 else
     colorscheme darkblue
 
