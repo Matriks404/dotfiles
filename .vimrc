@@ -11,6 +11,10 @@ vnoremap <leader>d "_d
 nnoremap <leader>dd "_dd
 
 
+" Go to the next and previous link.
+nnoremap <leader>j /\|\zs.\{-}\ze\|<CR>
+nnoremap <leader>k ?\|\zs.\{-}\ze\|<CR>
+
 " Various settings.
 set display+=lastline
 set scrolloff=8
