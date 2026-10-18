@@ -15,6 +15,11 @@ nnoremap <leader>dd "_dd
 nnoremap <leader>j /\|\zs.\{-}\ze\|<CR>
 nnoremap <leader>k ?\|\zs.\{-}\ze\|<CR>
 
+
+" Disable hlsearch temporarily after following a link.
+nnoremap <C-]> <C-]>:noh<CR>
+
+
 " Various settings.
 set display+=lastline
 set scrolloff=8
@@ -80,7 +85,7 @@ endif
 
 
 " Load optional built-in packages safely on startup
-if has ('vim_starting') && has('eval')
+if has('vim_starting') && has('syntax') && has('eval')
     silent! packadd! comment
     silent! packadd! matchit
 endif
