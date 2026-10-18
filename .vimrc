@@ -34,6 +34,8 @@ set shiftwidth=4
 set softtabstop=4
 set tabstop=4
 
+
+" Enable filetype magic.
 filetype plugin indent on
 
 
@@ -47,6 +49,10 @@ set background=dark
 " Search behavior tweaks.
 set hlsearch
 set incsearch
+
+
+" History tweaks.
+set history=1000
 
 
 " Persistent undo.
