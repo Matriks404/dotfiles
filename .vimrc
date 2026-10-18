@@ -20,10 +20,26 @@ nnoremap <leader>k ?\|\zs.\{-}\ze\|<CR>
 nnoremap <C-]> <C-]>:noh<CR>
 
 
+" Don't use Q for Ex mode, use it for formatting (except for select mode).
+map Q gq
+sunmap Q
+
+
+" CTRL+U in insert mode deletes a lot. Use CTRL+G u to first break undo,
+" so that CTRL+U can be undone after inserting a line break.
+inoremap <C-U> <C-G>u<C-U>
+
+
+" Keymap key bindings for English, Russian, and Ukrainian.
+nnoremap <leader>ge :set keymap=<CR>
+nnoremap <leader>gr :set keymap=russian-jcukenwin<CR>
+nnoremap <leader>gu :set keymap=ukrainian-jcuken<CR>
+
+
 " Various settings.
 set display+=lastline
 set scrolloff=8
-
+set nrformats-=octal
 
 " Code indentation and tab spacing rules.
 set autoindent
@@ -97,6 +113,14 @@ if has('vim_starting') && has('syntax') && has('eval')
 endif
 
 
+" Convenient command to see the difference between the current buffer and the
+" file it was loaded from, thus the changes you made.
+if !exists(":DiffOrig")
+    command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
+        \ | wincmd p | diffthis
+endif
+
+
 augroup HelpMouse
     autocmd!
 
@@ -105,11 +129,11 @@ augroup HelpMouse
 
     " Reset mouse when entering any other buffer type
     autocmd BufEnter *
-                \ if &filetype ==# 'help' |
-                \   setlocal mouse=a |
-                \ else |
-                \   setlocal mouse= |
-                \ endif
+        \ if &filetype ==# 'help' |
+        \   setlocal mouse=a |
+        \ else |
+        \   setlocal mouse= |
+        \ endif
 augroup END
 
 
