@@ -110,6 +110,7 @@ endif
 if has('vim_starting') && has('syntax') && has('eval')
     silent! packadd! comment
     silent! packadd! matchit
+    silent! packadd! nohlsearch
 endif
 
 
