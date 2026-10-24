@@ -109,6 +109,7 @@ endif
 " Load optional built-in packages safely on startup
 if has('vim_starting') && has('syntax') && has('eval')
     silent! packadd! comment
+    silent! packadd! hlyank | let g:hlyank_duration = 250
     silent! packadd! matchit
     silent! packadd! nohlsearch
 endif
