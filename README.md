@@ -10,3 +10,10 @@ Versions of dotfiles for other operating systems:
 # Prerequirements
 
 * **[Vim](https://github.com/vim/vim-win32-installer/releases)**
+
+# Getting latest version
+
+Run following command as a user for who you want to install dotfiles:
+```bat
+curl https://raw.githubusercontent.com/Matriks404/dotfiles/refs/heads/windows/_vimrc -o "%USERPROFILE%\_vimrc"
+```
