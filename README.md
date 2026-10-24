@@ -1,7 +1,8 @@
 These are my personal dotfiles that should work on **Debian GNU/Linux** 11+ (bullseye), latest version of **Linux Mint** and **OpenBSD**.
 
-Legacy versions of dotfiles for other operating systems:
+Versions of dotfiles for other operating systems:
 
+* **Microsoft Windows** 24H2+ - [windows branch](https://github.com/Matriks404/dotfiles/tree/windows) - latest commit.
 * **openSUSE Tumbleweed** - [opensuse branch](https://github.com/Matriks404/dotfiles/tree/opensuse) - commit **f8b2734** as of 2025-05-16 (deprecated and not supported).
 
 **Note:** These dotfiles are at pre-alpha preview state and things might break! Use at your own risk.
