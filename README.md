@@ -6,3 +6,7 @@ Versions of dotfiles for other operating systems:
 * **openSUSE Tumbleweed** - [opensuse branch](https://github.com/Matriks404/dotfiles/tree/opensuse) - commit **f8b2734** as of 2025-05-16 (deprecated and not supported).
 
 **Note:** These dotfiles are at pre-alpha preview state and things might break! Use at your own risk.
+
+# Prerequirements
+
+* **[Vim](https://github.com/vim/vim-win32-installer/releases)**
