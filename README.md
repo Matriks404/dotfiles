@@ -1,4 +1,4 @@
-These are my personal dotfiles that should work on **Debian GNU/Linux** 11+ (bullseye), latest version of **Linux Mint** and **OpenBSD**.
+These are my personal dotfiles that should work on **Debian GNU/Linux** 11+ (bullseye), latest version of **Linux Mint** and **OpenBSD** 7.9+.
 
 Versions of dotfiles for other operating systems:
 
