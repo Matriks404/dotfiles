@@ -21,7 +21,7 @@ nnoremap <C-]> <C-]>:noh<CR>
 
 
 " Don't use Q for Ex mode, use it for formatting (except for select mode).
-map Q gq
+noremap Q gq
 sunmap Q
 
 
