@@ -17,6 +17,15 @@ vnoremap <leader>d "_d
 inoremap <C-U> <C-G>u<C-U>
 
 
+" Toggle line numbers
+nnoremap <leader>n :set number!<CR>
+
+
+" Quick save and quit
+nnoremap <leader>w :w<CR>
+nnoremap <leader>q :q<CR>
+
+
 " Go to the next and previous link in normal mode.
 nnoremap <leader>j /\|\zs.\{-}\ze\|<CR>
 nnoremap <leader>k ?\|\zs.\{-}\ze\|<CR>

@@ -29,6 +29,10 @@ set incsearch
 set history=1000
 
 
+" Disable automatic comment insertion when opening a new line.
+set formatoptions-=o
+
+
 " Persistent undo.
 if has('persistent_undo')
     if !isdirectory(expand('~/.vim/undodir'))
