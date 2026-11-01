@@ -1,5 +1,21 @@
-" Enable syntax higlighting.
-syntax on
+" Enable syntax higlighting and set color scheme if current terminal supports colors.
+if &t_Co > 1
+    syntax on
+
+    set background=dark
+
+    if !empty($XDG_CURRENT_DESKTOP)
+        colorscheme habamax
+
+        highlight StatusLine ctermfg=White ctermbg=DarkBlue cterm=bold guifg=#ffffff guibg=#1e3a8a gui=bold
+        highlight StatusLineNC ctermfg=Black ctermbg=Cyan cterm=NONE guifg=#334155 guibg=#e2e8f0 gui=NONE
+    else
+        colorscheme darkblue
+
+        highlight Normal guibg=#000b1e
+        highlight NonText guibg=#000b1e
+    endif
+endif
 
 
 " Set spacebar as the leader shortcut key.
@@ -137,22 +153,6 @@ augroup HelpMouse
         \   setlocal mouse= |
         \ endif
 augroup END
-
-
-" Set color scheme.
-set background=dark
-
-if !empty($XDG_CURRENT_DESKTOP)
-    colorscheme habamax
-
-    highlight StatusLine ctermfg=White ctermbg=DarkBlue cterm=bold guifg=#ffffff guibg=#1e3a8a gui=bold
-    highlight StatusLineNC ctermfg=Black ctermbg=Cyan cterm=NONE guifg=#334155 guibg=#e2e8f0 gui=NONE
-else
-    colorscheme darkblue
-
-    highlight Normal guibg=#000b1e
-    highlight NonText guibg=#000b1e
-endif
 
 
 " Automatically remove trailing whitespace before saving.
