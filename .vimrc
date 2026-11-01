@@ -1,3 +1,11 @@
+" Source autocommands.
+source ~/.vim/config/autocmds.vim
+
+
+" Enable filetype magic.
+filetype plugin indent on
+
+
 " Enable syntax higlighting and set color scheme if current terminal supports colors.
 if &t_Co > 1
     syntax on
@@ -6,14 +14,8 @@ if &t_Co > 1
 
     if !empty($XDG_CURRENT_DESKTOP)
         colorscheme habamax
-
-        highlight StatusLine ctermfg=White ctermbg=DarkBlue cterm=bold guifg=#ffffff guibg=#1e3a8a gui=bold
-        highlight StatusLineNC ctermfg=Black ctermbg=Cyan cterm=NONE guifg=#334155 guibg=#e2e8f0 gui=NONE
     else
         colorscheme darkblue
-
-        highlight Normal guibg=#000b1e
-        highlight NonText guibg=#000b1e
     endif
 endif
 
@@ -65,10 +67,6 @@ set expandtab
 set shiftwidth=4
 set softtabstop=4
 set tabstop=4
-
-
-" Enable filetype magic.
-filetype plugin indent on
 
 
 " User interface preferences.
