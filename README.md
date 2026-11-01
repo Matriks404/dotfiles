@@ -16,6 +16,8 @@ Versions of dotfiles for other operating systems:
 Run following command as a user for who you want to install dotfiles:
 ```bat
 curl https://raw.githubusercontent.com/Matriks404/dotfiles/refs/heads/windows/_vimrc -o "%USERPROFILE%\_vimrc"
+
+mkdir "%USERPROFILE%\vimfiles\config"
 curl https://raw.githubusercontent.com/Matriks404/dotfiles/refs/heads/windows/vimfiles/config/autocmds.vim -o "%USERPROFILE%\vimfiles\config\autocmds.vim"
 curl https://raw.githubusercontent.com/Matriks404/dotfiles/refs/heads/windows/vimfiles/config/mappings.vim -o "%USERPROFILE%\vimfiles\config\mappings.vim"
 curl https://raw.githubusercontent.com/Matriks404/dotfiles/refs/heads/windows/vimfiles/config/options.vim -o "%USERPROFILE%\vimfiles\config\options.vim"
