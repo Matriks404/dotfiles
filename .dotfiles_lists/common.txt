@@ -5,6 +5,8 @@
 .local/scripts.noexecute/backup_job_files/include.txt
 .local/scripts.noexecute/backup_job_files/settings.sh
 .vim/config/autocmds.vim
+.vim/config/mappings.vim
+.vim/config/options.vim
 .bash_aliases
 .bash_bindings
 .bash_functions
