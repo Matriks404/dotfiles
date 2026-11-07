@@ -70,3 +70,30 @@ endif
 if has('termguicolors')
     set termguicolors
 endif
+
+
+" Set gVim stuff.
+if has('gui_running')
+    " Remove all GUI decorations (menu, toolbar, left/right scrollbars).
+    set guioptions-=m " Remove menu bar.
+    set guioptions-=T " Remove toolbar.
+    set guioptions-=r " Remove right scrollbar.
+    set guioptions-=R " Remove right scrollbar (split windows).
+    set guioptions-=l " Remove left scrollbar.
+    set guioptions-=L " Remove left scrollbar (split windows).
+    set guioptions-=b " Remove bottom scrollbar.
+    "set guioptions+=c " Use console dialogs instead of popup windows.
+
+    " Match terminal tabline style.
+    set guioptions-=e " Use text-based tabline instead of GTK tab widgets.
+
+    " Use preferred monospace font.
+    try
+        set guifont=Hack\ 10
+    catch /E596/
+        set guifont=Monsopace\ 10
+    endtry
+
+    " Disable cursor blinking
+    set guicursor+=a:blinkon0
+endif
