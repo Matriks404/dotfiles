@@ -12,14 +12,16 @@ set shiftwidth=4
 set softtabstop=4
 set tabstop=4
 
-set mouse=a
-
 
 " User interface preferences.
+set background=dark
+
 set number
 set showcmd
 set wildmenu
-set background=dark
+
+set laststatus=2
+set mouse=a
 
 
 " Search behavior tweaks.
