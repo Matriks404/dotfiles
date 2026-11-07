@@ -37,3 +37,11 @@ if &t_Co > 1 || has('gui_running')
     endif
 endif
 
+" 6. Font setup on GUI
+if has('gui_running')
+    try
+        set guifont=Hack\ 10
+    catch /E596/
+        set guifont=Monsopace\ 10
+    endtry
+endif
