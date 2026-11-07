@@ -218,6 +218,52 @@ set_up_backup_script ()
     #TODO: Make it possible to do it here.
 }
 
+su_edit ()
+{
+    # Require at least one argument.
+    if [ "$#" -eq 0 ]; then
+        echo "Usage: su_edit <file>" >&2
+
+        return 1
+    fi
+
+    # Resolve target path.
+    case "$1" in
+        /*) target_path="$1" ;;
+        *) target_path="$PWD/$1" ;;
+    esac
+
+    # Match path.
+    case "$target_path" in
+        /etc/*)
+            etc_subpath="${target_path#/etc}"
+            target_dir=$(dirname "$etc_subpath")
+            filename=$(basename "$target_path")
+
+            if [ "$target_dir" = "." ] || [ "$target_dir" = "/" ]; then
+                backup_dir="$HOME/.etc_orig"
+            else
+                backup_dir="$HOME/.etc_orig$target_dir"
+            fi
+
+            backup_file="$backup_dir/$filename"
+
+            # Only back up if target exists and backup copy does not exist yet.
+            if [ -f "$target_path" ] && [ ! -f "$backup_file" ]; then
+                mkdir -p "$backup_dir" 2>/dev/null
+                cp -p "$target_path" "$backup_file" 2>/dev/null || "$SU_CMD" cp -p "$target_path" "$backup_file" 2>/dev/null
+            fi
+            ;;
+    esac
+
+    # Launch editor with root rights.
+    if [ "$(command -v sudo)" ]; then
+        sudoedit "$@"
+    elif [ "$(command -v doas)" ]; then
+        doasedit "$@"
+    fi
+}
+
 # Package updates / System upgrades
 
 su_update_software ()
