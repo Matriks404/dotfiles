@@ -1,19 +1,3 @@
-augroup HelpMouse
-    autocmd!
-
-    " Enable mouse in help buffers
-    autocmd FileType help set mouse=a
-
-    " Reset mouse when entering any other buffer type
-    autocmd BufEnter *
-        \ if &filetype ==# 'help' |
-        \   setlocal mouse=a |
-        \ else |
-        \   setlocal mouse= |
-        \ endif
-augroup END
-
-
 " Automatically remove trailing whitespace before saving.
 augroup StripTrailingWhitespace
     autocmd!

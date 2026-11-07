@@ -12,6 +12,7 @@ set shiftwidth=4
 set softtabstop=4
 set tabstop=4
 
+set mouse=a
 
 " User interface preferences.
 set number
