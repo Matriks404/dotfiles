@@ -7,6 +7,10 @@ noremap Q gq
 sunmap Q
 
 
+" Remap :h to always open in a vertical split on the right.
+cnoreabbrev h vert rightbelow help
+
+
 " Delete to black hole register (no clipboard overwrite).
 nnoremap <leader>dd "_dd
 vnoremap <leader>d "_d
@@ -44,3 +48,7 @@ nnoremap <BS> :put! _<CR>
 nnoremap <leader>ge :set keymap=<CR>
 nnoremap <leader>gr :set keymap=russian-jcukenwin<CR>
 nnoremap <leader>gu :set keymap=ukrainian-jcuken<CR>
+
+
+" Use <ESC> key in terminal mode to exit it easily.
+tnoremap <leader><ESC> <C-\><C-n>
