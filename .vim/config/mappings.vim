@@ -7,6 +7,10 @@ noremap Q gq
 sunmap Q
 
 
+" Remap :h to always open in a vertical split on the right.
+cnoreabbrev h vert rightbelow help
+
+
 " Delete to black hole register (no clipboard overwrite).
 nnoremap <leader>dd "_dd
 vnoremap <leader>d "_d

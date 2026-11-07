@@ -37,6 +37,3 @@ if &t_Co > 1
     endif
 endif
 
-
-
-
