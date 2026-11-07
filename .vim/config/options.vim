@@ -14,6 +14,7 @@ set tabstop=4
 
 set mouse=a
 
+
 " User interface preferences.
 set number
 set showcmd

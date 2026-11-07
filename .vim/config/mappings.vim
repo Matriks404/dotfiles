@@ -44,3 +44,7 @@ nnoremap <BS> :put! _<CR>
 nnoremap <leader>ge :set keymap=<CR>
 nnoremap <leader>gr :set keymap=russian-jcukenwin<CR>
 nnoremap <leader>gu :set keymap=ukrainian-jcuken<CR>
+
+
+" Use <ESC> key in terminal mode to exit it easily.
+tnoremap <leader><ESC> <C-\><C-n>
