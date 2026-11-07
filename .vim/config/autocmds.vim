@@ -28,8 +28,8 @@ augroup CustomColors
     autocmd!
 
     autocmd ColorScheme habamax
-        \ highlight StatusLine cterm=bold guifg=#ffffff guibg=#1e3a8a |
-        \ highlight StatusLineNC cterm=NONE guifg=#334155 guibg=#e2e8f0
+        \ highlight StatusLine cterm=bold gui=bold guifg=#ffffff guibg=#1e3a8a |
+        \ highlight StatusLineNC cterm=NONE gui=NONE guifg=#334155 guibg=#e2e8f0
 
     autocmd ColorScheme darkblue
         \ highlight Normal guibg=#000b1e |
