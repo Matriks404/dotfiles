@@ -73,6 +73,16 @@ edit_backup_settings ()
     fi
 }
 
+gtfo ()
+{
+    bg "%${1:-1}" && disown "%${1:-1}" && exit
+}
+
+kick ()
+{
+    bg "%${1:-1}" && disown "%${1:-1}"
+}
+
 reinstall_backup_script ()
 {
     local SOURCE_SCRIPTS_DIR="$HOME/.local/scripts.noexecute"
@@ -278,6 +288,13 @@ su_update_software ()
 su_upgrade_system ()
 {
     "$SU_CMD" "$HOME/.local/bin/su-upgrade-system.sh"
+}
+
+yeet ()
+{
+    "$@" >/dev/null 2>&1 &
+    disown
+    exit
 }
 
 # Functions available only if doas is installed

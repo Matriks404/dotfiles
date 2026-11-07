@@ -9,7 +9,6 @@ alias cls='clear'
 alias h='history'
 alias hl='history | less'
 
-alias kick='bg $1 && disown $1'
 
 # Vi-like aliases
 alias :q='exit'
