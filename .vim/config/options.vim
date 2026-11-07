@@ -22,6 +22,7 @@ set wildmenu
 
 set laststatus=2
 set mouse=a
+set mousemodel=popup
 
 
 " Search behavior tweaks.
@@ -96,4 +97,7 @@ if has('gui_running')
 
     " Disable cursor blinking
     set guicursor+=a:blinkon0
+
+    " Set the popup model to use for the mouse.
+    set mousemodel=popup
 endif
