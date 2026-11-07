@@ -25,7 +25,7 @@ endif
 
 
 " 5. Syntax and color scheme setup
-if &t_Co > 1
+if &t_Co > 1 || has('gui_running')
     syntax on
 
     set background=dark
