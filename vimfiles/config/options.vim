@@ -84,8 +84,8 @@ if has('gui_running')
     set guioptions-=b " Remove bottom scrollbar.
     "set guioptions+=c " Use console dialogs instead of popup windows.
 
-    " Match terminal tabline style.
     set guioptions-=e " Use text-based tabline instead of GTK tab widgets.
+    set guioptions+=a " Enables autoselect.
 
     " Use preferred monospace font.
     try
@@ -96,4 +96,7 @@ if has('gui_running')
 
     " Disable cursor blinking
     set guicursor+=a:blinkon0
+
+    " Set the popup model to use for the mouse.
+    set mousemodel=popup
 endif
