@@ -22,7 +22,6 @@ set wildmenu
 
 set laststatus=2
 set mouse=a
-set mousemodel=popup
 
 
 " Search behavior tweaks.
