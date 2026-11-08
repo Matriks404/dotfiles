@@ -33,8 +33,10 @@ set incsearch
 set history=1000
 
 
-" Disable automatic comment insertion when opening a new line.
+" Disable automatic comment insertion when opening a new line and after
+" hitting <Enter> in Insert mode.
 set formatoptions-=o
+set formatoptions-=r
 
 
 " Persistent undo.
